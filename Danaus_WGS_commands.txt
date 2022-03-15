@@ -1,0 +1,21 @@
+#commands for ***
+
+#1. Genotyping
+
+
+
+########
+#1. GENOTYPING
+########
+
+
+bcftools mpileup -a AD,DP,SP -Ou -f $REF \
+./align/*_sort.bam | bcftools call -f GQ,GP \
+-mO z -o ./cichlid.vcf.gz
+
+#bam list one per line
+--bam-list 
+
+#specify chromosome
+--regions chr_name
+
