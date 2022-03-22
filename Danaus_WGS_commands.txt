@@ -20,7 +20,35 @@ cp Wild100list_90inds_bam.list Wild100list_90inds_full_filepath_bam.list
 
 sed -i 's/^/\/data\/martin\/genomics\/analyses\/Danaus_mapping\//g' Wild100list_90inds_full_filepath_bam.list
 
+#want 2 test sets - start with contig2.1 and the z which is contig1.1
+
 sconda genomics_general
+
+touch geno_test1_1pop.txt
+#will use default of one homogenous population for calling
+cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
+do
+echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list -r "${line}" | bcftools call -m -f GQ -O u bgzip > /scratch/rdekayne/genotyping/"${line}".raw1.vcf.gz" >> geno_test1_1pop.txt
+done
+
+touch geno_test1_nohwe.txt
+
+#this time we specify -G - to avoid any hwe filtering
+cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
+do
+echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list -r "${line}" | bcftools call -m -f GQ -G - -O u bgzip > /scratch/rdekayne/genotyping/"${line}".raw2.vcf.gz" >> geno_test1_1pop.txt
+done
+
+head -n2 genotype_run.txt > test.geno.txt
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno.txt
+
+
+
+
+
+
+###################
 
 touch genotype_run.txt
 
