@@ -36,12 +36,16 @@ touch geno_test1_nohwe.txt
 #this time we specify -G - to avoid any hwe filtering
 cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
 do
-echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list -r "${line}" | bcftools call -m -f GQ -G - -O u bgzip > /scratch/rdekayne/genotyping/"${line}".raw2.vcf.gz" >> geno_test1_1pop.txt
+echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list -r "${line}" | bcftools call -m -f GQ -G - -O u bgzip > /scratch/rdekayne/genotyping/"${line}".raw2.vcf.gz" >> geno_test1_nohwe.txt
 done
 
-head -n2 genotype_run.txt > test.geno.txt
+head -n2 geno_test1_1pop.txt > test.geno_test1_1pop.txt
 
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno.txt
+head -n2 geno_test1_nohwe.txt > test.geno_test1_nohwe.txt
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno_test1_1pop.txt
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno_test1_nohwe.txt
+
 
 
 
@@ -58,6 +62,10 @@ echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analys
 done
 
 #parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: genotype_run.txt
+
+head -n2 genotype_run.txt > test.geno.txt
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno.txt
 
 head -n2 genotype_run.txt > test.geno.txt
 
