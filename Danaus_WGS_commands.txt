@@ -46,10 +46,63 @@ head -n2 geno_test1_nohwe.txt > test.geno_test1_nohwe.txt
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno_test1_1pop.txt
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno_test1_nohwe.txt
 
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: geno_test1_1pop.txt
+
+
+#now trying re-alignment:
+# bam output dir. /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned
+
+#executible is: /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
 
 
 
+###Stairplot
+#stairplot
+qstat -f -u "*"
 
+conda create -n angsd 
+sconda angsd
+conda install -c bioconda angsd=0.921
+conda install -c conda-forge parallel
+
+ls /data/martin/genomics/analyses/Danaus_mapping/SM16S*.Dchry2.2.*.bam > bam.list
+
+cp /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa .
+cp /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai .
+
+cut -f1 Dchry2.2.fa.fai | grep -v "contig0." | grep -v "contig15.1" > /data/martin/genomics/analyses/Danaus_popgen/StHelena_project/angsd/chrom.list
+
+cat chrom.list | while read line
+do
+	echo 'angsd -gl 2 -dosaf 1 -bam /scratch/rdekayne/angsd/bam.list -ref /scratch/rdekayne/angsd/Dchry2.2.fa -anc /scratch/rdekayne/angsd/Dchry2.2.fa -nThreads 1 -r '${line}' -baq 1 -C 50 -minMapQ 1 -P 30 -minQ 20 -out /scratch/rdekayne/angsd/output.'${line}'.baq1MQ1Q20GL2' >> angsd_run.txt
+done
+
+parallel -j 1 'qsub -cwd -N angsd -V -pe smp64 1 -l h=bigbang -b yes {}' :::: angsd_run.txt
+
+#grep "Number of sites retained after filtering" *.e* | wc -l
+#40
+
+#grep "Number of sites retained after filtering" *.e* | cut -d':' -f3 > lengths.txt
+#cat lengths.txt | awk '{SUM+=$1}END{print SUM}'
+#310150036
+
+#check output makes sense
+realSFS print output.contig13.1.baq1MQ1Q20GL2.saf.idx | head
+
+realSFS cat -outnames mergedALL *.idx
+
+realSFS mergedALL.saf.idx -P 30 -maxIter 100 -bootstrap 20 > output.mergedALL.baq1MQ1Q20GL2.BS20.sfs
+
+realSFS merged.saf.idx -P 60 -maxIter 100 -bootstrap 20 -fold 1 > output.merged.fodlded.baq1MQ1Q20GL2.BS20.sfs
+
+#fold this manually with simon's R function
+
+###OUTPUT
+	-> Only read nSites: 0 will therefore prepare next chromosome (or exit)
+
+	-> NB NB output is no longer log probs of the frequency spectrum!
+	-> Output is now simply the expected values! 
+	-> You can convert to the old format simply with log(norm(x))
 
 
 ###################
