@@ -50,11 +50,48 @@ parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' ::::
 
 
 #now trying re-alignment:
+
+conda create -n gatk
+sconda gatk
+conda install -c conda-forge parallel
+conda install -c conda-forge openjdk
+
+
 # bam output dir. /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned
 
 #executible is: /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
 
+#e.g. https://gatk.broadinstitute.org/hc/en-us/articles/360035531852-Intervals-and-interval-lists
+#for bam in list want to run:
+sed -i -e "s/\r//g" ../Wild100list_90inds_full_filepath_bam.list
+sed -i -e "s/\r//g" ../Wild100list_90inds_bam.list
 
+touch gatk_indel_realignment_creator.txt
+cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list | while read line
+do
+cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
+do
+echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -L contig2.1 -I ${line} -o /scratch/rdekayne/gatk/realigner.intervals.${bam}.contig2.1.intervals" >> gatk_indel_realignment_creator_step1.txt
+done
+done
+
+head gatk_indel_realignment_creator_step1.txt -n1 > test.gatk.txt
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.gatk.txt
+
+touch gatk_indel_realignment_creator_step2.txt
+cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list | while read line
+do
+cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
+do
+echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -L contig2.1 -I ${line} -targetIntervals /scratch/rdekayne/gatk/realigner.intervals.${bam}.contig2.1.intervals -o /scratch/rdekayne/gatk/realigned.${bam}" >> gatk_indel_realignment_creator_step2.txt
+done
+done
+
+head gatk_indel_realignment_creator_step2.txt -n1 > test2.gatk.txt
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test2.gatk.txt
+
+realigner.intervals.ABRI183097.EDSW200018989-1a.220308.Dchry2.2.bwa.default.rmdup.bam.contig2.1
+realigner.intervals.ABRI183097.EDSW200018989-1a.220308.Dchry2.2.bwa.default.rmdup.bam.contig2.1 
 
 ###Stairplot
 #stairplot
