@@ -114,7 +114,11 @@ done
 
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
 
-&& rsync /scratch/rdekayne/gatk/realigned.${bam} /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned.${bam} && rm /scratch/rdekayne/gatk/realigned.${bam}
+
+touch move_and_delete_scratch_bams.txt
+cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
+do
+echo "rsync /scratch/rdekayne/gatk/realigned.${bam} /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned.${bam} && rm /scratch/rdekayne/gatk/realigned.${bam}" >> move_and_delete_scratch_bams.txt
 
 
 
