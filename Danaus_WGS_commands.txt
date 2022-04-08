@@ -110,16 +110,41 @@ cp *.intervals /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/in
 touch gatk_indel_realignment_creator_FULL_step2.txt
 cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
 do
-echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -targetIntervals /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/intervals/realigner.intervals.${bam}.intervals -o /scratch/rdekayne/gatk/realigned.${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned_confirmed/realigned.${bam}.done" >> gatk_indel_realignment_creator_FULL_step2.txt
+echo "java -Xmx8G -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -targetIntervals /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/intervals/realigner.intervals.${bam}.intervals -o /scratch/rdekayne/gatk/realigned.${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned_confirmed/realigned.${bam}.done" >> gatk_indel_realignment_creator_FULL_step2.txt
 done
 
 ssh bigfoot
 mkdir -p /scratch/rdekayne/gatk/
 
-parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 3 -l h=bigfoot -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
 
+#now to genotyping (bigfoot)
+cd /scratch/rdekayne/genotyping
 
+#prepare list of bams
+#need to add full filepath
+ls /scratch/rdekayne/gatk/*.bam > bam.list
 
+#want 2 test sets - start with contig2.1 and the z which is contig1.1
+
+sconda genomics_general
+
+touch geno_realigned_1pop.txt
+#will use default of one homogenous population for calling
+cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
+do
+echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/gatk/bam.list -r "${line}" | bcftools call -m -f GQ -O u | bgzip > /scratch/rdekayne/genotyping/"${line}".realigned.raw.vcf.gz" >> geno_realigned_1pop.txt
+done
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: geno_realigned_1pop.txt
+
+#now merge the chromosome/contig vcfs:
+cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
+sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
+mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
+bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output.vcf.gz"
+
+bcftools view -H 96indiv_allchroms_output.vcf.gz | wc -l
 
 touch move_and_delete_scratch_bams.txt
 cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
