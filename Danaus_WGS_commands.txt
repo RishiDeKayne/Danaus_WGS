@@ -142,15 +142,43 @@ parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' ::::
 cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
 sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
 mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
-bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output.vcf.gz"
+bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output.vcf.gz
 
-bcftools view -H 96indiv_allchroms_output.vcf.gz | wc -l
+bcftools view -H Wild90_allchroms_output.vcf.gz | wc -l
+
+#filter one chromosome
+#raw
+bcftools view -H contig31.1.raw1.vcf.gz | wc -l
+4430099
+
+#realigned
+bcftools view -H contig31.1.realigned.raw.vcf.gz | wc -l
+4430099
+
+bcftools filter -Oz ./contig31.1.raw1.vcf.gz -e 'FORMAT/DP < 8 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./contig31.1.filt.vcf.gz
+
+bcftools filter -Oz ../contig31.1.realigned.raw.vcf.gz -e 'FORMAT/DP < 8 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./contig31.1.realigned.filt.vcf.gz
+
+bcftools view -H contig31.1.filt.vcf.gz | wc -l
+4321554
+
+bcftools view -H contig31.1.realigned.filt.vcf.gz | wc -l
+4321531
+
+##########
+#Error test
+
+python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py -i ./contig31.1.realigned.filt.vcf.gz --skipIndels | bgzip > contig31.filt.geno.gz
+
+python /ceph/users/smartin/Research/genomics_general/countGenotypePatterns.py -i contig31.filt.geno.gz -s IG19G114,SM19M056,AB19401 -o contig31.counts.output.csv
+
+
+
 
 touch move_and_delete_scratch_bams.txt
 cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
 do
 echo "rsync /scratch/rdekayne/gatk/realigned.${bam} /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned.${bam} && rm /scratch/rdekayne/gatk/realigned.${bam}" >> move_and_delete_scratch_bams.txt
-
 
 
 
