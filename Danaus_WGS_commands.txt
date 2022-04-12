@@ -179,10 +179,20 @@ bcftools view -H contig31.1.realigned.filt.vcf.gz | wc -l
 
 python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py -i ./contig31.1.realigned.filt.vcf.gz --skipIndels | bgzip > contig31.filt.geno.gz
 
+python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py -i ./contig31.1.realigned.filt7.vcf.gz --skipIndels | bgzip > contig31.filt7.geno.gz
+
+python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py -i ./contig31.1.realigned.filt9.vcf.gz --skipIndels | bgzip > contig31.filt9.geno.gz
+
+
 python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py -i ./contig31.1.filt.vcf.gz --skipIndels | bgzip > contig31.filt.raw.geno.gz
 
 
 python /ceph/users/smartin/Research/genomics_general/countGenotypePatterns.py -i contig31.filt.geno.gz -s IG19G114,SM19M056,AB19401 -o contig31.counts.output.csv
+
+python /ceph/users/smartin/Research/genomics_general/countGenotypePatterns.py -i contig31.filt7.geno.gz -s IG19G114,SM19M056,AB19401 -o contig31.counts7.output.csv
+
+python /ceph/users/smartin/Research/genomics_general/countGenotypePatterns.py -i contig31.filt9.geno.gz -s IG19G114,SM19M056,AB19401 -o contig31.counts9.output.csv
+
 
 python /ceph/users/smartin/Research/genomics_general/countGenotypePatterns.py -i contig31.filt.raw.geno.gz -s IG19G114,SM19M056,AB19401 -o contig31.counts.raw.output.csv
 
@@ -190,7 +200,7 @@ conda create -n PCA
 sconda PCA
 conda install -c bioconda plink
 
-bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz -e 'F_MISSING<1' -Ou | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz
+bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz -e 'INFO/MAF > 0.05 | AN < 90' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vc.gz
 
 
 plink --vcf Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz --double-id --allow-extra-chr \
