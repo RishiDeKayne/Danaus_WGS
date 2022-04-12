@@ -147,7 +147,7 @@ bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -O
 bcftools view -H Wild90_allchroms_output.vcf.gz | wc -l
 
 #filt all
-bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 8 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_maf0.5_miss1_qual30_mindepth3_maxdepth50.vcf.gz
+bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 8 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz
 
 #filter one chromosome
 #raw
@@ -158,9 +158,15 @@ bcftools view -H contig31.1.raw1.vcf.gz | wc -l
 bcftools view -H contig31.1.realigned.raw.vcf.gz | wc -l
 4430099
 
+##pre-indel realignment
 bcftools filter -Oz ./contig31.1.raw1.vcf.gz -e 'FORMAT/DP < 8 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./contig31.1.filt.vcf.gz
 
+##post-indel realignment
 bcftools filter -Oz ../contig31.1.realigned.raw.vcf.gz -e 'FORMAT/DP < 8 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./contig31.1.realigned.filt.vcf.gz
+
+bcftools filter -Oz ../contig31.1.realigned.raw.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./contig31.1.realigned.filt7.vcf.gz
+
+bcftools filter -Oz ../contig31.1.realigned.raw.vcf.gz -e 'FORMAT/DP < 9 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./contig31.1.realigned.filt9.vcf.gz
 
 bcftools view -H contig31.1.filt.vcf.gz | wc -l
 4321554
@@ -179,6 +185,22 @@ python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py 
 python /ceph/users/smartin/Research/genomics_general/countGenotypePatterns.py -i contig31.filt.geno.gz -s IG19G114,SM19M056,AB19401 -o contig31.counts.output.csv
 
 python /ceph/users/smartin/Research/genomics_general/countGenotypePatterns.py -i contig31.filt.raw.geno.gz -s IG19G114,SM19M056,AB19401 -o contig31.counts.raw.output.csv
+
+conda create -n PCA
+sconda PCA
+conda install -c bioconda plink
+
+bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz -e 'F_MISSING<1' -Ou | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz --double-id --allow-extra-chr \
+--set-missing-var-ids @:# \
+--indep-pairwise 50 10 0.1 --out all90_filt_noout
+
+# prune and create pca
+plink --vcf Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
+--extract all90_filt_noout.prune.in \
+--make-bed --pca --out all90_filt_noout
 
 
 
