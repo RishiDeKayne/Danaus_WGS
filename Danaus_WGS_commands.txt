@@ -147,7 +147,7 @@ bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -O
 bcftools view -H Wild90_allchroms_output.vcf.gz | wc -l
 
 #filt all
-bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 8 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz
+bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30.vcf.gz
 
 #filter one chromosome
 #raw
@@ -200,8 +200,9 @@ conda create -n PCA
 sconda PCA
 conda install -c bioconda plink
 
-bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz -e 'INFO/MAF > 0.05 | AN < 90' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vc.gz
+bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz -e 'INFO/MAF > 0.05 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vcf.gz
 
+bcftools view -m2 -M2 -v snps Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vc.gz | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90_biallelic.vcf.gz
 
 plink --vcf Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz --double-id --allow-extra-chr \
 --set-missing-var-ids @:# \
