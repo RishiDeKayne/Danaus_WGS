@@ -147,7 +147,7 @@ bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -O
 bcftools view -H Wild90_allchroms_output.vcf.gz | wc -l
 
 #filt all
-bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30.vcf.gz
+bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
 #filter one chromosome
 #raw
@@ -200,6 +200,32 @@ conda create -n PCA
 sconda PCA
 conda install -c bioconda plink
 
+t#est on one chromosome:
+#contig31.1.realigned.filt7.vcf.gz
+
+bcftools filter -Oz ./contig31.1.realigned.filt7.vcf.gz -e 'INFO/MAF > 0.05 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./contig31.1.realigned.filt7.test.vcf.gz
+
+bcftools view -H contig31.1.realigned.filt7.test.vcf.gz | wc -l
+
+grep "SM17H" indiv.list > excl.list
+grep "AB19" indiv.list >> excl.list
+grep "RB20110" indiv.list >> excl.list
+grep "SM20BE01" indiv.list >> excl.list
+
+bcftools view -S ^excl.list -o contig31.1.realigned.filt7.test_droppedindivs.vcf.gz contig31.1.realigned.filt7.test.vcf.gz
+
+
+plink --vcf contig31.1.realigned.filt7.test_droppedindivs.vcf.gz --double-id --allow-extra-chr \
+--set-missing-var-ids @:# \
+--indep-pairwise 50 10 0.1 --out test_filt_noout
+
+# prune and create pca
+plink --vcf contig31.1.realigned.filt7.test_droppedindivs.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
+--extract test_filt_noout.prune.in \
+--make-bed --pca --out test_filt_noout
+
+scp *.eigen* /data/martin/genomics/analyses/Danaus_popgen/Wild90/
+
 bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz -e 'INFO/MAF > 0.05 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vcf.gz
 
 bcftools view -m2 -M2 -v snps Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vc.gz | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90_biallelic.vcf.gz
@@ -222,6 +248,25 @@ do
 echo "rsync /scratch/rdekayne/gatk/realigned.${bam} /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned.${bam} && rm /scratch/rdekayne/gatk/realigned.${bam}" >> move_and_delete_scratch_bams.txt
 
 
+##mosdepth
+#/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
+
+touch mosdepth_run.txt
+cat /scratch/rdekayne/gatk/bam.list | while read bam
+do
+cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read prefix
+do
+echo "mosdepth -n ${prefix} ${bam}" >> mosdepth_run.txt
+done
+done
+
+cp mosdepth_run.txt /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
+
+parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: test_mosdepth.txt
+
+parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: mosdepth_run.txt
+
+scripts/plot-dist.py \*global.dist.txt
 
 
 
