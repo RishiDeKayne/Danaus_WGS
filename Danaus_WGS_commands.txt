@@ -174,14 +174,15 @@ done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: geno_realigned_1pop.txt
 
-
-##HERE##
-
 #now merge the chromosome/contig vcfs:
 cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
 sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
 mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
-bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output.vcf.gz
+bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild89_allchroms_output.vcf.gz
+
+
+###HERE####
+
 
 bcftools view -H Wild90_allchroms_output.vcf.gz | wc -l
 
