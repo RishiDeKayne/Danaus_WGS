@@ -180,14 +180,10 @@ sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
 mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
 bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild89_allchroms_output.vcf.gz
 
-
-###HERE####
-
-
-bcftools view -H Wild90_allchroms_output.vcf.gz | wc -l
-
 #filt all
-bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz
+bcftools filter -Oz ./Wild89_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild89_allchroms_output_filt_mindepth7_minqual30.vcf.gz
+
+##HERE##
 
 #filter one chromosome
 #raw
