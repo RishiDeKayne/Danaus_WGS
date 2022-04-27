@@ -76,6 +76,8 @@ done
 
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: gatk_indel_realignment_creator_FULL_step1.txt
 
+java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam -o /scratch/rdekayne/gatk/realigner.intervals.SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam.intervals
+
 touch run.last.sample.txt
 echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam -o /scratch/rdekayne/gatk/realigner.intervals.SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam.intervals" >> run.last.sample.txt
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: run.last.sample.txt
@@ -92,6 +94,8 @@ ssh bigfoot
 mkdir -p /scratch/rdekayne/gatk/
 
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 3 -l h=bigfoot -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
+
+java -Xmx8G -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam -targetIntervals /scratch/rdekayne/gatk/realigner.intervals.SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam.intervals -o /scratch/rdekayne/gatk/realigned.SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned_confirmed/realigned.SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam.done
 
 ###assess bams with MOSDEPTH
 #/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
