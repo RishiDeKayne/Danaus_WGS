@@ -145,7 +145,7 @@ samtools index realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.
 #now move old bam into rejected_indivs
 mv realigned.SM18W01.UKDSW02200* rejected_indivs
 
-#this leaves 89 individuals - 88 original and new subsampled SM18W01
+#this leaves 90 individuals - 89 original and new subsampled SM18W01
 
 #run mosdepth on this one sample - in /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
 echo "mosdepth -n realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam /scratch/rdekayne/gatk/realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam" > subsampled_mosdepth.txt
@@ -165,7 +165,7 @@ cd /scratch/rdekayne/genotyping
 ls /scratch/rdekayne/gatk/*.bam > bam.list
 
 wc -l bam.list
-#89
+#90
 
 sconda genomics_general
 
@@ -177,6 +177,17 @@ echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analys
 done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: geno_realigned_1pop.txt
+
+
+######
+HERE
+#####
+
+
+
+
+
+
 
 #now merge the chromosome/contig vcfs:
 cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
