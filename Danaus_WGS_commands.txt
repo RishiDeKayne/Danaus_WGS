@@ -179,6 +179,12 @@ done
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: geno_realigned_1pop.txt
 
 
+#now merge the chromosome/contig vcfs:
+cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
+sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
+mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
+bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output.vcf.gz
+
 ######
 HERE
 #####
@@ -189,11 +195,11 @@ HERE
 
 
 
-#now merge the chromosome/contig vcfs:
-cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
-sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
-mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
-bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild89_allchroms_output.vcf.gz
+
+
+
+
+
 
 #filt all
 bcftools filter -Oz ./Wild89_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild89_allchroms_output_filt_mindepth7_minqual30.vcf.gz
