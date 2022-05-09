@@ -185,6 +185,9 @@ sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
 mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
 bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output.vcf.gz
 
+#filt all
+bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz
+
 ######
 HERE
 #####
@@ -200,9 +203,6 @@ HERE
 
 
 
-
-#filt all
-bcftools filter -Oz ./Wild89_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild89_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
 ##HERE##
 
@@ -257,7 +257,7 @@ conda create -n PCA
 sconda PCA
 conda install -c bioconda plink
 
-t#est on one chromosome:
+#test on one chromosome:
 #contig31.1.realigned.filt7.vcf.gz
 
 bcftools filter -Oz ./contig31.1.realigned.filt7.vcf.gz -e 'INFO/MAF > 0.05 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./contig31.1.realigned.filt7.test.vcf.gz
