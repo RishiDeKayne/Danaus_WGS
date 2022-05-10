@@ -188,6 +188,9 @@ bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -O
 #filt all
 bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
+bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAF > 0.05 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz
+
+
 ######
 HERE
 #####
