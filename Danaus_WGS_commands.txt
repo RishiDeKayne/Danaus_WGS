@@ -235,6 +235,15 @@ plink --vcf /scratch/rdekayne/genotyping/popgen/Wild90_allchroms_output_filt_min
 
 cp 90_chr15*eigen* /data/martin/genomics/analyses/Danaus_popgen/Wild90/
 
+bcftools view /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz --regions contig15.1 -Oz > /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz
+
+sconda PCA
+plink --vcf /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 90_chr15_nomissing_filt_noout
+
+plink --vcf /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 90_chr15_nomissing_filt_noout.prune.in --make-bed --pca --out 90_chr15_nomissing_filt_noout
+
+cp 90_chr15*eigen* /data/martin/genomics/analyses/Danaus_popgen/Wild90/
+
 ######
 HERE
 #####
