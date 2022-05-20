@@ -212,19 +212,28 @@ SM20BE01
 bcftools view -S ^excl_list.txt -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz
 
 sconda PCA
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indiv
-s.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 90_filt_noout
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 90_filt_noout
 
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indiv
-s.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 90_filt_noout.prune.in --make-bed --pca --out 90_filt_noout
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 90_filt_noout.prune.in --make-bed --pca --out 90_filt_noout
 
 cp 90_filt_noout.eigenval 90_filt_noout.eigenvec /data/martin/genomics/analyses/Danaus_popgen/Wild90/
+
 bcftools query -l Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.vcf.gz > indiv.list
 cp indiv.list /data/martin/genomics/analyses/Danaus_popgen/Wild90/
 
+#now do a pca with just chr15 loci:
 
+cp Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf
 
+bcftools view /scratch/rdekayne/genotyping/popgen/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz --regions contig15.1 -Oz > /scratch/rdekayne/genotyping/popgen/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_CHR15.vcf.gz
 
+sconda PCA
+plink --vcf /scratch/rdekayne/genotyping/popgen/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_CHR15.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 90_chr15_filt_noout
+
+plink --vcf /scratch/rdekayne/genotyping/popgen/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_CHR15.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 90_chr15_filt_noout.prune.in --make-bed --pca --out 90_chr15_filt_noout
+#149882 variants remaining
+
+cp 90_chr15*eigen* /data/martin/genomics/analyses/Danaus_popgen/Wild90/
 
 ######
 HERE
