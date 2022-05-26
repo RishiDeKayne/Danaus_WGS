@@ -248,6 +248,13 @@ cp 90_chr15*eigen* /data/martin/genomics/analyses/Danaus_popgen/Wild90/
 HERE
 #####
 
+#get genome wide pi estimates
+mkdir /scratch/rdekayne/genotyping/popgen/pi && cd /scratch/rdekayne/genotyping/popgen/pi
+python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py -i /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=5 max=50 -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30.geno.gz
+
+
+python /ceph/users/smartin/Research/genomics_general/popgenWindows.py -w 100000 -m 10 -g ../Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.geno.gz -o ./all_Wild90.csv.gz -f phased -T 2 --analysis indHet popDist popFreq -p popA SM17H01,SM17H02,SM17H03,SM17H04,SM17H05,SM17H07
+
 conda create -n faststructure
 sconda faststructure
 conda install -c bioconda faststructure
