@@ -248,17 +248,18 @@ cp 90_chr15*eigen* /data/martin/genomics/analyses/Danaus_popgen/Wild90/
 HERE
 #####
 
+conda create -n faststructure
+sconda faststructure
 conda install -c bioconda faststructure
-
 
 #faststructure
 convert vcf (with no chr15 to bed file plus the .fam and .bim
 https://rajanil.github.io/fastStructure/ 
 
 sconda PCA
-plink2 --vcf 41samples_scaff_22.vcf --allow-extra-chr --out 41samples_scaff_22
+plink --vcf /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz --allow-extra-chr --out fast_struct_chr15_90
 
-python structure.py -K 3 --format=bed --cv=20 --input=Tse_43samples_scaff_22_SNP-INDEL_variants_filt_rnd2_TRUNC2 --output=Tse43_Chr24 --full --seed=100 --prior=logistic
+python fastStructure/structure.py -K 3 --format=bed --cv=20 --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_out --full --seed=100 --prior=logistic
 
 
 
