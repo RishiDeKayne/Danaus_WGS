@@ -295,9 +295,9 @@ cd /scratch/rdekayne/genotyping/popgen/faststructure
 plink --vcf /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz --allow-extra-chr --out fast_struct_chr15_90
 
 sconda faststructure
-python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 3 --format=bed --cv=20 --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_out --full --seed=100 --prior=logistic
+python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 3 --format=bed --cv=20 --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_simp_out --full --seed=100 --prior=simple
 
-python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 4 --format=bed --cv=20 --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_out --full --seed=100 --prior=logistic
+python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 4 --format=bed --cv=20 --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_simp_out --full --seed=100 --prior=simple
 
 #test best k
 python /ceph/users/rdekayne/.conda/envs/faststructure/bin/chooseK.py --input=fast_struct_chr15_90_out
