@@ -276,31 +276,37 @@ conda install -c bioconda admixture
 mkdir -p /scratch/rdekayne/genotyping/popgen/admixture && cd /scratch/rdekayne/genotyping/popgen/admixture
 sconda PCA
 
-echo "1 contig15.1" >> chr_name_conv.txt
+echo "contig15.1 chr1" >> chr_name_conv.txt
 bcftools annotate --rename-chrs chr_name_conv.txt /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz | bgzip > /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15_renamed.vcf.gz
-
 
 VCF_FILE=/scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15_renamed.vcf.gz
 plink --vcf $VCF_FILE --double-id --autosome-num 1 \
 --set-missing-var-ids @:# \
 --indep-pairwise 50 10 0.1 --out admix_in
 
-#Pruned 279162 variants from chromosome 27, leaving 151963.
+#Pruned 279162 variants from chromosome 1, leaving 151963.
 
 # prune and create pca
 plink --vcf $VCF_FILE --double-id --autosome-num 1 --set-missing-var-ids @:# \
 --extract admix_in.prune.in \
 --make-bed --pca --out admix_in
 
-#151963 variants and 90 people pass filters and QC.
+#151963 variants and 90 samples pass filters and QC.
+
+admixture --cv=20 -j8 admix_in.bed 2 | tee log2_admix_in.out
+CV error (K=2): 0.17235
+
+admixture --cv=20 -j8 admix_in.bed 3 | tee log3_admix_in.out
 
 
-admixture --cv=20 -j8 admix_in.bed 2 | tee log2_all99_filt_noout.out
-
-for K in {2..14}
+touch admixture_run.txt
+for K in {2..10}
 do 
-admixture --cv=20 -j8 all99_filt_noout.bed ${K} | tee log${K}_all99_filt_noout.out
+echo "admixture --cv=20 -j8 /scratch/rdekayne/genotyping/popgen/admixture/admix_in.bed ${K} | tee /scratch/rdekayne/genotyping/popgen/admixture/log${K}_admix_in.out" >> admixture_run.txt
 done
+
+parallel -j 1 'qsub -cwd -N convert -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run.txt
+
 
 
 ######
