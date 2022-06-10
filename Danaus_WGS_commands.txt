@@ -265,9 +265,70 @@ parallel -j 1 'qsub -cwd -N convert -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: 
 
 
 ######
-HERE
+Active
 #####
 
+#admixture
+conda create -n admixture
+sconda admixture
+conda install -c bioconda admixture
+
+mkdir -p /scratch/rdekayne/genotyping/popgen/admixture && cd /scratch/rdekayne/genotyping/popgen/admixture
+sconda PCA
+
+echo "1 contig15.1" >> chr_name_conv.txt
+bcftools annotate --rename-chrs chr_name_conv.txt /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz | bgzip > /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15_renamed.vcf.gz
+
+
+VCF_FILE=/scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15_renamed.vcf.gz
+plink --vcf $VCF_FILE --double-id --autosome-num 1 \
+--set-missing-var-ids @:# \
+--indep-pairwise 50 10 0.1 --out admix_in
+
+#Pruned 279162 variants from chromosome 27, leaving 151963.
+
+# prune and create pca
+plink --vcf $VCF_FILE --double-id --autosome-num 1 --set-missing-var-ids @:# \
+--extract admix_in.prune.in \
+--make-bed --pca --out admix_in
+
+#151963 variants and 90 people pass filters and QC.
+
+
+admixture --cv=20 -j8 admix_in.bed 2 | tee log2_all99_filt_noout.out
+
+for K in {2..14}
+do 
+admixture --cv=20 -j8 all99_filt_noout.bed ${K} | tee log${K}_all99_filt_noout.out
+done
+
+
+######
+Active
+#####
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+plink --vcf /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz --allow-extra-chr --out fast_struct_chr15_90
+
+
+for K in {2..14}
+do 
+admixture --cv=20 -j8 all99_filt_noout.bed ${K} | tee log${K}_all99_filt_noout.out
+done
 
 
 
@@ -278,6 +339,9 @@ python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py 
 
 
 python /ceph/users/smartin/Research/genomics_general/popgenWindows.py -w 100000 -m 10 -g ../Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.geno.gz -o ./all_Wild90.csv.gz -f phased -T 2 --analysis indHet popDist popFreq -p popA SM17H01,SM17H02,SM17H03,SM17H04,SM17H05,SM17H07
+
+
+
 
 conda create -n faststructure
 sconda faststructure
@@ -295,15 +359,19 @@ cd /scratch/rdekayne/genotyping/popgen/faststructure
 plink --vcf /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_CHR15.vcf.gz --allow-extra-chr --out fast_struct_chr15_90
 
 sconda faststructure
-python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 3 --format=bed --cv=20 --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_simp_out --full --seed=100 --prior=simple
+python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 3 --format=bed --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_simp_out --full --seed=100 --prior=simple
 
-python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 4 --format=bed --cv=20 --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_simp_out --full --seed=100 --prior=simple
+python /ceph/users/rdekayne/.conda/envs/faststructure/bin/structure.py -K 4 --format=bed --input=fast_struct_chr15_90 --output=fast_struct_chr15_90_simp_out --full --seed=100 --prior=simple
 
 #test best k
-python /ceph/users/rdekayne/.conda/envs/faststructure/bin/chooseK.py --input=fast_struct_chr15_90_out
+python /ceph/users/rdekayne/.conda/envs/faststructure/bin/chooseK.py --input=fast_struct_chr15_90_simp_out
 
 #plot data
-$ python /ceph/users/rdekayne/.conda/envs/faststructure/bin/distruct.py -K 4 --input=fast_struct_chr15_90_out --output=fast_struct_chr15_90_out_distruct.svg
+#copy distruct.py . and add:
+#import matplotlib
+#matplotlib.use('Agg')
+
+python /ceph/users/rdekayne/.conda/envs/faststructure/bin/distruct.py -K 4 --input=fast_struct_chr15_90_simp_out --output=fast_struct_chr15_90_simp_out_distruct.svg
 
 
 
