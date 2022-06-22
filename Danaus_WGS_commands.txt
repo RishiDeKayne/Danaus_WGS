@@ -47,6 +47,8 @@ do
 echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -o /scratch/rdekayne/gatk/realigner.intervals.${bam}.intervals && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned_confirmed/intervals.${bam}.done" >> gatk_indel_realignment_creator_FULL_step1.txt
 done
 
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: gatk_indel_realignment_creator_FULL_step1.txt
+
 
 #############################################################
 HERE
