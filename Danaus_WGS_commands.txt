@@ -19,37 +19,11 @@ cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > /d
 cp Wild100list_90inds_bam.list Wild100list_90inds_full_filepath_bam.list
 
 sed -i 's/^/\/data\/martin\/genomics\/analyses\/Danaus_mapping\//g' Wild100list_90inds_full_filepath_bam.list
-
-#want 2 test sets - start with contig2.1 and the z which is contig1.1
-
-sconda genomics_general
-
-touch geno_test1_1pop.txt
-#will use default of one homogenous population for calling
-cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
-do
-echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list -r "${line}" | bcftools call -m -f GQ -O u | bgzip > /scratch/rdekayne/genotyping/"${line}".raw1.vcf.gz" >> geno_test1_1pop.txt
-done
-
-touch geno_test1_nohwe.txt
-
-#this time we specify -G - to avoid any hwe filtering
-cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
-do
-echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list -r "${line}" | bcftools call -m -f GQ --group-samples -O u | bgzip > /scratch/rdekayne/genotyping/"${line}".raw2.vcf.gz" >> geno_test1_nohwe.txt
-done
-
-head -n2 geno_test1_1pop.txt > test.geno_test1_1pop.txt
-
-head -n2 geno_test1_nohwe.txt > test.geno_test1_nohwe.txt
-
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno_test1_1pop.txt
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno_test1_nohwe.txt
-
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: geno_test1_1pop.txt
+sed -i -e "s/\r//g" ./Wild100list_90inds_full_filepath_bam.list
+sed -i -e "s/\r//g" ./Wild100list_90inds_bam.list
 
 #############################################
-#now trying indel re-alignment:
+#indel re-alignment:
 #############################################
 
 #make conda env for gatk
@@ -60,23 +34,29 @@ conda install -c conda-forge openjdk
 
 # bam output dir. /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned
 
-#executible is: /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
+# executible is: /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
 
 #e.g. https://gatk.broadinstitute.org/hc/en-us/articles/360035531852-Intervals-and-interval-lists
-#for bam in list want to run:
-sed -i -e "s/\r//g" ../Wild100list_90inds_full_filepath_bam.list
-sed -i -e "s/\r//g" ../Wild100list_90inds_bam.list
 
 ###FULL RUN
+cd /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned
+
 touch gatk_indel_realignment_creator_FULL_step1.txt
 cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
 do
-echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -o /scratch/rdekayne/gatk/realigner.intervals.${bam}.intervals" >> gatk_indel_realignment_creator_FULL_step1.txt
+echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -o /scratch/rdekayne/gatk/realigner.intervals.${bam}.intervals && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned_confirmed/intervals.${bam}.done" >> gatk_indel_realignment_creator_FULL_step1.txt
 done
 
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: gatk_indel_realignment_creator_FULL_step1.txt
 
-java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam -o /scratch/rdekayne/gatk/realigner.intervals.SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam.intervals
+#############################################################
+HERE
+#############################################################
+
+
+
+
+
 
 touch run.last.sample.txt
 echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam -o /scratch/rdekayne/gatk/realigner.intervals.SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam.intervals" >> run.last.sample.txt
