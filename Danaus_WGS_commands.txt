@@ -103,29 +103,24 @@ samtools view -s 0.30 -b realigned.SM18W01.UKDSW02200-C.220307.Dchry2.2.bwa.defa
 
 samtools index realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam
 
-
-############################################################
-HERE
-############################################################
-
-
 #now move old bam into rejected_indivs
-mv realigned.SM18W01.UKDSW02200* rejected_indivs
+mv realigned.SM18W01.UKDSW02200* rejected_individuals
 
 #this leaves 90 individuals - 89 original and new subsampled SM18W01
 
 #run mosdepth on this one sample - in /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
 echo "mosdepth -n realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam /scratch/rdekayne/gatk/realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam" > subsampled_mosdepth.txt
 
-parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: subsampled_mosdepth.txt
+parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigbang -b yes {}' :::: subsampled_mosdepth.txt
 
 #run mosdepth plot again for all 89 individuals
 cd /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/plot_dist
-python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt -o 89_dist.html
+python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt -o 90_inc_downsampled_dist.html
 #and download
 
 #now to genotyping (bigfoot)
-cd /scratch/rdekayne/genotyping
+ssh bigbang
+mkdir -p /scratch/rdekayne/genotyping && cd /scratch/rdekayne/genotyping
 
 #prepare list of bams
 #need to add full filepath
@@ -140,11 +135,14 @@ touch geno_realigned_1pop.txt
 #will use default of one homogenous population for calling
 cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
 do
-echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/genotyping/bam.list -r "${line}" | bcftools call -m -f GQ -O u | bgzip > /scratch/rdekayne/genotyping/"${line}".realigned.raw.vcf.gz" >> geno_realigned_1pop.txt
+echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/genotyping/bam.list -r "${line}" | bcftools call -m -f GQ -O u | bgzip > /scratch/rdekayne/genotyping/"${line}".realigned.raw.vcf.gz && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/genotyping/done_files/"${line}".realigned.raw.vcf.gz.done" >> geno_realigned_1pop.txt
 done
 
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: geno_realigned_1pop.txt
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: geno_realigned_1pop.txt
 
+############################################################
+HERE
+############################################################
 
 #now merge the chromosome/contig vcfs:
 cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
