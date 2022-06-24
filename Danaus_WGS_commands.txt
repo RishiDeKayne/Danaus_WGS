@@ -61,13 +61,12 @@ done
 
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
 
-############################################################
-HERE
-############################################################
-
-
 ###assess bams with MOSDEPTH
 #/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
+
+ssh bigbang
+mkdir /scratch/rdekayne/mosdepth_danaus/
+cd /scratch/rdekayne/gatk
 
 ls *.bam > /scratch/rdekayne/mosdepth_danaus/bam_nofilepath.list
 
@@ -79,7 +78,8 @@ done
 
 cp mosdepth_run.txt /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
 
-parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: mosdepth_run.txt
+sconda genomics_general
+parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigbang -b yes {}' :::: mosdepth_run.txt
 
 mkdir plot_dist
 cd plot_dist/
@@ -88,28 +88,26 @@ python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt
 
 scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/plot_dist/dist.html .
 
-#../realigned.SM17H06.EDSW200018974-1a.220308.Dchry2.2.bwa.default.rmdup.bam.mosdepth.summary.txt:total  354020300       2628302217      7.42    0       2553
-#../realigned.SM18W01.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam.mosdepth.summary.txt:total      354020300       34859745395     98.47   0       22276
+grep "total" ../realigned.SM18W01.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam.mosdepth.summary.txt
+#total   354020300       34859745395     98.47   0       22276
 
 mkdir low_high_indivs
-mv ../*SM17H06* low_high_indivs
 mv ../*SM18W01* low_high_indivs
 
-python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt -o 88_dist.html
-
-scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/plot_dist/88_dist.html .
-
 #before genotyping want to downsample SM18W01 and move SM17H06 to rejected folder due to low coverage
-ssh bigfoot
+ssh bigbang
 cd /scratch/rdekayne/gatk/
-
-mkdir rejected_indivs
-mv *SM17H06* rejected_indivs
 
 sconda genomics_general
 samtools view -s 0.30 -b realigned.SM18W01.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam > realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam
 
 samtools index realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam
+
+
+############################################################
+HERE
+############################################################
+
 
 #now move old bam into rejected_indivs
 mv realigned.SM18W01.UKDSW02200* rejected_indivs
