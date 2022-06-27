@@ -144,7 +144,17 @@ parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' ::::
 mkdir /data/martin/genomics/analyses/Danaus_popgen/Wild90/raw_chr_vcfs
 scp *.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/raw_chr_vcfs/
 
-mkdir /data/martin/genomics/analyses/Danaus_popgen/Wild90/raw_chr_genos
+#now make a file listing these vcfs 
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/raw_chr_vcfs/
+ls *.gz > vcf.list
+
+#now convert these to .geno format
+touch make.chr.genos.txt
+cat /data/martin/genomics/analyses/Danaus_popgen/Wild90/raw_chr_vcfs/vcf.list | while read line
+do
+echo "python /scratch/rdekayne/genotyping/popgen/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/Wild90/raw_chr_vcfs/"${line}".vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".done" >> make.chr.genos.txt
+done
+
 
 ############################################################
 HERE
