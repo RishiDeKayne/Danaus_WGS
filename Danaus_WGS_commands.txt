@@ -167,7 +167,7 @@ cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos
 touch make.chr.genos.txt
 cat /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_vcfs/filt_vcf.list | while read line
 do
-echo "python /scratch/rdekayne/genotyping/popgen/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_vcfs/"${line}" --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".minQual30.mindp7.maxdp50.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".done" >> make.chr.genos.txt
+echo "python /data/martin/genomics/analyses/Danaus_popgen/Wild90/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_vcfs/"${line}" --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".minQual30.mindp7.maxdp50.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".done" >> make.chr.genos.txt
 done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: make.chr.genos.txt
@@ -205,8 +205,6 @@ SM17H04
 SM17H05
 SM17H07
 AB19401
-RB20110
-SM20BE01
 
 bcftools view -S ^excl_list.txt -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz
 
