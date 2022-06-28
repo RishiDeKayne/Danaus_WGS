@@ -172,22 +172,21 @@ done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: make.chr.genos.txt
 
+#merge into a single file:
+ls /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_vcfs/*.gz > vcf_to_merge.txt
+
+bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz
+
+bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAF > 0.05 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz
+
+
+
 
 
 ############################################################
 HERE
 ############################################################
 
-#now merge the chromosome/contig vcfs:
-cp /data/martin/genomics/analyses/Danaus_mapping/scaf.list . 
-sed -i 's/$/.realigned.raw.vcf.gz/' /scratch/rdekayne/genotyping/scaf.list
-mkdir -p /scratch/rdekayne/genotyping/combined_vcf && cd /scratch/rdekayne/genotyping/combined_vcf
-bcftools concat -Ou -f /scratch/rdekayne/genotyping/scaf.list | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output.vcf.gz
-
-#filt all
-bcftools filter -Oz ./Wild90_allchroms_output.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz
-
-bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAF > 0.05 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz
 
 ##splitstree
 bcftools +prune -l 0.2 -w 10000 /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz -Oz -o Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.vcf.gz
