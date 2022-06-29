@@ -179,6 +179,10 @@ bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne
 
 bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAF > 0.05 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz
 
+bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
+
+bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz | wc -l
+
 
 
 
