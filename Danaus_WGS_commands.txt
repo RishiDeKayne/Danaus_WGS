@@ -374,6 +374,14 @@ plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_
 #4470 variants and 83 people pass filters and QC.
 
 
+#now move everything
+mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA 
+mv *.vcf.gz ../../merged_vcfs/
+mv *.tbi ../../merged_vcfs/
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/Wild90/PCAs/.
+
 ############################################################
 HERE
 ############################################################
