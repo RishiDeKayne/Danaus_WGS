@@ -207,8 +207,23 @@ gzip Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf
 #all run with st helena + AB19401 and then without
 cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA
 
+zcat Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz
+
+zcat Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz
+
+ssh bigbang
+cd /scratch/rdekayne/genotyping/combined_vcf
+
+cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz .
+cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz .
+
+#remove small contigs
+
+
 #############
 #1. full genome excluding chr 15
+
+
 
 sconda PCA
 plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_all_filt_noout
