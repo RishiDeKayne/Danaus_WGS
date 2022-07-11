@@ -458,6 +458,8 @@ mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/
 cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA 
 mv *.vcf.gz ../../merged_vcfs/
 
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/*.eigen* .
+
 ######################
 ######################
 #	ADMIXTURE
