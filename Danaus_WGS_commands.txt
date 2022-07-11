@@ -408,8 +408,55 @@ cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA
 mv *.vcf.gz ../../merged_vcfs/
 mv *.tbi ../../merged_vcfs/
 
-scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/Wild90/PCAs/.
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/Wild90/PCAs/
 
+#############
+#8. chr15 region 1.1 - contig15.1	4035981	5322257
+
+echo "contig15.1 4035981 5322257" > region1.1.txt
+sed -i 's/ /\t/g' region1.1.txt
+
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region1.1.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.1.b.vcf.gz
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region1.1.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.1.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 8_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 8_chr15_all_filt_noout.prune.in --make-bed --pca --out 8_chr15_all_filt_noout
+#16519 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 8_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 8_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 8_chr15_dropped_filt_noout
+#16091 variants and 83 people pass filters and QC.
+
+#############
+#9. chr15 region 1.1 - contig15.1	5323805	6220875
+
+echo "contig15.1 5323805 6220875" > region1.2.txt
+sed -i 's/ /\t/g' region1.2.txt
+
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region1.2.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.2.b.vcf.gz
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region1.2.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.2.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 9_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 9_chr15_all_filt_noout.prune.in --make-bed --pca --out 9_chr15_all_filt_noout
+#5695 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 9_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 9_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 9_chr15_dropped_filt_noout
+#5541 variants and 83 people pass filters and QC.
+
+mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA 
+mv *.vcf.gz ../../merged_vcfs/
 
 ######################
 ######################
