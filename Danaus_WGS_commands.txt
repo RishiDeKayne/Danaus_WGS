@@ -505,6 +505,45 @@ done
 parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigbang -b yes {}' :::: admixture_run.txt
 
 
+######################
+######################
+#	WHATSHAP
+######################
+######################
+
+#whatshap for phasing of wild90 dataset
+
+ssh bigshot
+mkdir -p /scratch/rdekayne/whatshap && cd /scratch/rdekayne/whatshap
+
+#first we want to have haploid genotypes for the known alleles we have previously assembled
+
+#first align whole assembly of MB18102MAT to the reference (-a option exports SAM format)
+cp /data/martin/genomics/analyses/Danaus_genome/MB181_trio/KKIM_assemblies/v8/polished/MB18102_MAT.fasta.gz .
+cp /data/martin/genomics/analyses/Danaus_genome/MB181_trio/KKIM_assemblies/v8/polished/MB18102_PAT.fasta.gz .
+
+gunzip *.gz
+
+sconda /ceph/users/smartin/.conda/envs/minimap2/
+
+minimap2 -ax asm10 -R '@RG\\tID:MB18102MAT\\tSM:MB18102MAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./MB18102_MAT.fasta | samtools view -Sb > Dchry2.2_MB18102MAT_minimap2.asm10.bam
+
+minimap2 -ax asm10 -R '@RG\\tID:MB18102PAT\\tSM:MB18102PAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./MB18102_PAT.fasta | samtools view -Sb > Dchry2.2_MB18102PAT_minimap2.asm10.bam
+
+
+#sort bam
+samtools sort Dchry2.2_MB18102MAT_minimap2.asm10.bam > Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam
+samtools sort Dchry2.2_MB18102PAT_minimap2.asm10.bam > Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam
+
+#genotype (could use -r to specify just the region of interest, DP == 1 because we only want single copy alignments)
+bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam | bcftools call -m --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z | MB18102MAT_minimap2.asm10.vcf.gz
+
+bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam | bcftools call -m --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z | MB18102MAT_minimap2.asm10.vcf.gz
+
+#we want the vcf to have max 10% missing data and biallelic snps
+
+
+
 
 ######################
 ######################
@@ -518,21 +557,6 @@ bcftools +prune -l 0.2 -w 10000 /scratch/rdekayne/genotyping/combined_vcf/Wild90
 python /ceph/users/smartin/Research/genomics_general/VCF_processing/parseVCF.py -i /scratch/rdekayne/genotyping/popgen/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=5 max=50 -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.geno.gz
 
 python /ceph/users/smartin/Research/genomics_general/distMat.py -g Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.geno.gz -f phased --windType cat -o Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.LD_FILT.dist
-
-
-######################
-######################
-#	WHATSHAP
-######################
-######################
-
-#whatshap for phasing of wild90 dataset
-
-#we want the vcf to have max 10% missing data and biallelic snps
-
-
-
-
 
 
 ######################
