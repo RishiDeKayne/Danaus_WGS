@@ -177,12 +177,22 @@ ls /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_vcfs/*.gz > vcf_
 
 bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
-bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAF > 0.05 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz
+ssh bigshot
+mkdir -p /scratch/rdekayne/PCAs && cd /scratch/rdekayne/PCAs
+
+bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
+
+bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz
 
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
 #349214931
-bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz | wc -l
+bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz | wc -l
 #12963087
+bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | wc -l
+#12963087
+
+mv *.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs
+
 
 #make excl_list.txt listing individuals to get rid of:
 SM17H01
@@ -810,106 +820,306 @@ grep "SM20BE01" indiv.list >> excl.list
 bcftools view -S ^excl.list -o contig31.1.realigned.filt7.test_droppedindivs.vcf.gz contig31.1.realigned.filt7.test.vcf.gz
 
 
-plink --vcf contig31.1.realigned.filt7.test_droppedindivs.vcf.gz --double-id --allow-extra-chr \
---set-missing-var-ids @:# \
---indep-pairwise 50 10 0.1 --out test_filt_noout
-
-# prune and create pca
-plink --vcf contig31.1.realigned.filt7.test_droppedindivs.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
---extract test_filt_noout.prune.in \
---make-bed --pca --out test_filt_noout
-
-scp *.eigen* /data/martin/genomics/analyses/Danaus_popgen/Wild90/
-
-bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth8_minqual30.vc.gz -e 'INFO/MAF > 0.05 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vcf.gz
-
-bcftools view -m2 -M2 -v snps Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90.vc.gz | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth8_minqual30_maf0.05_missing90_biallelic.vcf.gz
-
-plink --vcf Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz --double-id --allow-extra-chr \
---set-missing-var-ids @:# \
---indep-pairwise 50 10 0.1 --out all90_filt_noout
-
-# prune and create pca
-plink --vcf Wild90_allchroms_output_filt_mindepth8_minqual30_nomissing.vc.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
---extract all90_filt_noout.prune.in \
---make-bed --pca --out all90_filt_noout
 
 
 
 
-touch move_and_delete_scratch_bams.txt
-cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
-do
-echo "rsync /scratch/rdekayne/gatk/realigned.${bam} /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned.${bam} && rm /scratch/rdekayne/gatk/realigned.${bam}" >> move_and_delete_scratch_bams.txt
 
 
-
-###Stairplot
-#stairplot
-qstat -f -u "*"
-
-conda create -n angsd 
-sconda angsd
-conda install -c bioconda angsd=0.921
-conda install -c conda-forge parallel
-
-ls /data/martin/genomics/analyses/Danaus_mapping/SM16S*.Dchry2.2.*.bam > bam.list
-
-cp /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa .
-cp /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai .
-
-cut -f1 Dchry2.2.fa.fai | grep -v "contig0." | grep -v "contig15.1" > /data/martin/genomics/analyses/Danaus_popgen/StHelena_project/angsd/chrom.list
-
-cat chrom.list | while read line
-do
-	echo 'angsd -gl 2 -dosaf 1 -bam /scratch/rdekayne/angsd/bam.list -ref /scratch/rdekayne/angsd/Dchry2.2.fa -anc /scratch/rdekayne/angsd/Dchry2.2.fa -nThreads 1 -r '${line}' -baq 1 -C 50 -minMapQ 1 -P 30 -minQ 20 -out /scratch/rdekayne/angsd/output.'${line}'.baq1MQ1Q20GL2' >> angsd_run.txt
-done
-
-parallel -j 1 'qsub -cwd -N angsd -V -pe smp64 1 -l h=bigbang -b yes {}' :::: angsd_run.txt
-
-#grep "Number of sites retained after filtering" *.e* | wc -l
-#40
-
-#grep "Number of sites retained after filtering" *.e* | cut -d':' -f3 > lengths.txt
-#cat lengths.txt | awk '{SUM+=$1}END{print SUM}'
-#310150036
-
-#check output makes sense
-realSFS print output.contig13.1.baq1MQ1Q20GL2.saf.idx | head
-
-realSFS cat -outnames mergedALL *.idx
-
-realSFS mergedALL.saf.idx -P 30 -maxIter 100 -bootstrap 20 > output.mergedALL.baq1MQ1Q20GL2.BS20.sfs
-
-realSFS merged.saf.idx -P 60 -maxIter 100 -bootstrap 20 -fold 1 > output.merged.fodlded.baq1MQ1Q20GL2.BS20.sfs
-
-#fold this manually with simon's R function
-
-###OUTPUT
-	-> Only read nSites: 0 will therefore prepare next chromosome (or exit)
-
-	-> NB NB output is no longer log probs of the frequency spectrum!
-	-> Output is now simply the expected values! 
-	-> You can convert to the old format simply with log(norm(x))
 
 
 ###################
 
-touch genotype_run.txt
 
-cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
-do
-echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_full_filepath_bam.list -r "${line}" | bcftools call -m -f GQ -O u | bcftools filter -e 'FORMAT/DP < 5 | FORMAT/GQ < 20' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bgzip > /scratch/rdekayne/genotyping/"${line}".vcf.gz" >> genotype_run.txt
-done
 
-#parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: genotype_run.txt
 
-head -n2 genotype_run.txt > test.geno.txt
+#############################
+##############################
+#	RARE VARIANTS
+##############################
+#############################
 
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno.txt
+bcftools filter -Oz ./Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAF > 3 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz
 
-head -n2 genotype_run.txt > test.geno.txt
 
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.geno.txt
+bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
+#349214931
+bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz | wc -l
+#12963087
 
+#make excl_list.txt listing individuals to get rid of:
+SM17H01
+SM17H02
+SM17H03
+SM17H04
+SM17H05
+SM17H07
+AB19401
+
+bcftools view -S ^excl_list.txt -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf
+
+gzip Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf
+
+######################
+######################
+#	PCAS
+######################
+######################
+
+#using no missing data for PCAs in total = 
+#all run with st helena + AB19401 and then without
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA
+
+zcat Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz
+
+zcat Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz
+
+ssh bigbang
+cd /scratch/rdekayne/genotyping/combined_vcf
+
+cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz .
+cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz .
+
+#remove small contigs
+grep "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > small_scafs.txt
+
+awk '{print $1, $2}' small_scafs.txt | sed 's/ /\t0\t/g' > small_scafs_remove.txt
+
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz -T ^small_scafs_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz -T ^small_scafs_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs.b.vcf.gz
+
+#############
+#1. full genome excluding chr 15
+
+grep "contig15.1" /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > chr15_info.txt
+
+awk '{print $1, $2}' chr15_info.txt | sed 's/ /\t0\t/g' > chr15_info_remove.txt
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_nochr15.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz
+
+
+sconda PCA
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 1_all_filt_noout.prune.in --make-bed --pca --out 1_all_filt_noout
+#4735421 variants and 90 people pass filters and QC.
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 1_dropped_filt_noout.prune.in --make-bed --pca --out 1_dropped_filt_noout
+#4639957 variants and 83 people pass filters and QC.
+
+
+cp *_filt_noout.eigenval 90_filt_noout.eigenvec /data/martin/genomics/analyses/Danaus_popgen/Wild90/analyses/PCAs
+
+#############
+#2. all chr15
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 2_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 2_chr15_all_filt_noout.prune.in --make-bed --pca --out 2_chr15_all_filt_noout
+#152527 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 2_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 2_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 2_chr15_dropped_filt_noout
+#149224 variants and 83 people pass filters and QC.
+
+#for the next set use: Dchry2.2_region_coordinates.tsv
+#############
+#3. chr15 no SVs 
+
+sed -i 's/chr15/contig15.1/g' Dchry2.2_region_coordinates.tsv
+
+#now want to just keep columns 1,5,6,8
+
+awk '{print $1,$5,$6,$8}' Dchry2.2_region_coordinates.tsv | tail -n +2 > Dchry2.2_region_coordinates_simple.bed
+
+awk '{print $1}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > chr.txt
+awk '{print $2}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > start.txt
+awk '{print $3}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > end.txt
+
+paste -d '\t' chr.txt start.txt > chr_start.txt
+paste -d '\t' chr_start.txt end.txt > targets.txt 
+
+wc -l targets.txt
+#28 targets.txt
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T ^targets.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_nosvs.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T ^targets.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_nosvs.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_nosvs.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 3_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_nosvs.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 3_chr15_all_filt_noout.prune.in --make-bed --pca --out 3_chr15_all_filt_noout
+#131727 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_nosvs.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 3_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_nosvs.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 3_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 3_chr15_dropped_filt_noout
+#128865 variants and 83 people pass filters and QC.
+
+#############
+#4. chr15 region 1 - contig15.1	4035981	6220875
+
+echo "contig15.1 4035981 6220875" > region1.txt
+sed -i 's/ /\t/g' region1.txt
+
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region1.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region1.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 4_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 4_chr15_all_filt_noout.prune.in --make-bed --pca --out 4_chr15_all_filt_noout
+#22206 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 4_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 4_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 4_chr15_dropped_filt_noout
+#21633 variants and 83 people pass filters and QC.
+
+#############
+#5. chr15 region 2 - contig15.1 6251636-7829094
+
+echo "contig15.1 6251636 7829094" > region2.txt
+sed -i 's/ /\t/g' region2.txt
+
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region2.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region2.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region2.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region2.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 5_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 5_chr15_all_filt_noout.prune.in --make-bed --pca --out 5_chr15_all_filt_noout
+#10138 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 5_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 5_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 5_chr15_dropped_filt_noout
+#9924 variants and 83 people pass filters and QC.
+
+#############
+#6. chr15 region 4 - contig15.1 14803486-15299732
+
+echo "contig15.1 14803486 15299732" > region4.txt
+sed -i 's/ /\t/g' region4.txt
+
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region4.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region4.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region4.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region4.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region4.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 6_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region4.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 6_chr15_all_filt_noout.prune.in --make-bed --pca --out 6_chr15_all_filt_noout
+#6072 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region4.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 6_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region4.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 6_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 6_chr15_dropped_filt_noout
+#5959 variants and 83 people pass filters and QC.
+
+#############
+#7. chr15 region 3
+
+awk -F' ' '{if ($4=="3") print $0}' Dchry2.2_region_coordinates_simple.bed > region3.bed
+
+awk '{print $1}' region3.bed | tail -n +2 > region3_chr.txt
+awk '{print $2}' region3.bed | tail -n +2 > region3_start.txt
+awk '{print $3}' region3.bed | tail -n +2 > region3_end.txt
+
+paste -d '\t' region3_chr.txt region3_start.txt > region3_chr_start.txt
+paste -d '\t' region3_chr_start.txt region3_end.txt > region3_targets.txt 
+
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region3_targets.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region3.b.vcf.gz
+
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region3_targets.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region3.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region3.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 7_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region3.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 7_chr15_all_filt_noout.prune.in --make-bed --pca --out 7_chr15_all_filt_noout
+#4559 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region3.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 7_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region3.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 7_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 7_chr15_dropped_filt_noout
+#4470 variants and 83 people pass filters and QC.
+
+
+#now move everything
+mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA 
+mv *.vcf.gz ../../merged_vcfs/
+mv *.tbi ../../merged_vcfs/
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/Wild90/PCAs/
+
+#############
+#8. chr15 region 1.1 - contig15.1	4035981	5322257
+
+echo "contig15.1 4035981 5322257" > region1.1.txt
+sed -i 's/ /\t/g' region1.1.txt
+
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region1.1.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.1.b.vcf.gz
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region1.1.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.1.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 8_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 8_chr15_all_filt_noout.prune.in --make-bed --pca --out 8_chr15_all_filt_noout
+#16519 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 8_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.1.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 8_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 8_chr15_dropped_filt_noout
+#16091 variants and 83 people pass filters and QC.
+
+#############
+#9. chr15 region 1.1 - contig15.1	5323805	6220875
+
+echo "contig15.1 5323805 6220875" > region1.2.txt
+sed -i 's/ /\t/g' region1.2.txt
+
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz -T region1.2.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.2.b.vcf.gz
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz -T region1.2.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.2.b.vcf.gz
+
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 9_chr15_all_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 9_chr15_all_filt_noout.prune.in --make-bed --pca --out 9_chr15_all_filt_noout
+#5695 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 9_chr15_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15_region1.2.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 9_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 9_chr15_dropped_filt_noout
+#5541 variants and 83 people pass filters and QC.
+
+mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA 
+mv *.vcf.gz ../../merged_vcfs/
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA/*.eigen* .
 
