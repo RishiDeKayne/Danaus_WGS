@@ -182,17 +182,20 @@ mkdir -p /scratch/rdekayne/PCAs && cd /scratch/rdekayne/PCAs
 
 bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
 
-bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz
+bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz
+
+bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 162' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz
 
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
 #349214931
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz | wc -l
-#12963087
+#2150522
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | wc -l
-#12963087
+#18817583
+bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz | wc -l
+#11511103
 
 mv *.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs
-
 
 #make excl_list.txt listing individuals to get rid of:
 SM17H01
@@ -203,9 +206,30 @@ SM17H05
 SM17H07
 AB19401
 
-bcftools view -S ^excl_list.txt -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf
+bcftools view -S ^excl_list.txt -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180_dropped_indivs.vcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
 
-gzip Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf
+bcftools view -S ^excl_list.txt -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90_dropped_indivs.vcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz
+
+bcftools view -S ^excl_list.txt -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs.vcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz
+
+
+gzip Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180_dropped_indivs.vcf 
+gzip Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90_dropped_indivs.vcf 
+gzip Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs.vcf 
+
+mv *.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs
+
+#assess missing data %s across individuals
+vcftools --gzvcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz --missing-indv --out missing_AN90
+
+vcftools --gzvcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz --missing-indv --out missing_AN162
+
+vcftools --gzvcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz --missing-indv --out missing_AN180
+
+cp *missing_*.imiss /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/summary_stats
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/summary_stats/* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/Wild90/summary_stats
+
 
 ######################
 ######################
@@ -213,29 +237,26 @@ gzip Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf
 ######################
 ######################
 
-#using no missing data for PCAs in total = 
+#using our AN162 set for PCAs in total = 
 #all run with st helena + AB19401 and then without
 cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/PCA
 
-zcat Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz
+zcat /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.b.vcf.gz
 
-zcat Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz
+zcat /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs.b.vcf.gz
 
-ssh bigbang
-cd /scratch/rdekayne/genotyping/combined_vcf
-
-cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz .
-cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz .
+ssh bigshot
+cd /scratch/rdekayne/PCAs
 
 #remove small contigs
 grep "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > small_scafs.txt
 
 awk '{print $1, $2}' small_scafs.txt | sed 's/ /\t0\t/g' > small_scafs_remove.txt
 
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.b.vcf.gz -T ^small_scafs_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs.b.vcf.gz
 
-bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing.b.vcf.gz -T ^small_scafs_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs.b.vcf.gz
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs.b.vcf.gz -T ^small_scafs_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs.b.vcf.gz
 
-bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs.b.vcf.gz -T ^small_scafs_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs.b.vcf.gz
 
 #############
 #1. full genome excluding chr 15
@@ -244,43 +265,53 @@ grep "contig15.1" /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.f
 
 awk '{print $1, $2}' chr15_info.txt | sed 's/ /\t0\t/g' > chr15_info_remove.txt
 
-bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_nochr15.b.vcf.gz
+#filter out chr15
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15.b.vcf.gz
 
-bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz
 
-
+#make filtered PCAs
 sconda PCA
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_all_filt_noout
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_all_filt_noout
 
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 1_all_filt_noout.prune.in --make-bed --pca --out 1_all_filt_noout
-#4735421 variants and 90 people pass filters and QC.
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 1_all_filt_noout.prune.in --make-bed --pca --out 1_all_filt_noout
+#3708139 variants and 90 people pass filters and QC.
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_dropped_filt_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 1_dropped_filt_noout.prune.in --make-bed --pca --out 1_dropped_filt_noout
+#3726061 variants and 83 people pass filters and QC.
 
 
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_dropped_filt_noout
+#make unfiltered PCAs
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --make-bed --pca --out 1_all_noout
+#10961897 variants and 90 people pass filters and QC.
 
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 1_dropped_filt_noout.prune.in --make-bed --pca --out 1_dropped_filt_noout
-#4639957 variants and 83 people pass filters and QC.
-
-
-cp *_filt_noout.eigenval 90_filt_noout.eigenvec /data/martin/genomics/analyses/Danaus_popgen/Wild90/analyses/PCAs
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --make-bed --pca --out 1_dropped_noout
+#10961897 variants and 83 people pass filters and QC.
 
 #############
 #2. all chr15
 
-bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz
 
-bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz
+bcftools view ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz
 
+#make filtered PCAs
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 2_chr15_all_filt_noout
 
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 2_chr15_all_filt_noout
-
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 2_chr15_all_filt_noout.prune.in --make-bed --pca --out 2_chr15_all_filt_noout
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 2_chr15_all_filt_noout.prune.in --make-bed --pca --out 2_chr15_all_filt_noout
 #152527 variants and 90 people pass filters and QC.
 
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 2_chr15_dropped_filt_noout
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 2_chr15_dropped_filt_noout
 
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_maf0.05_no_missing_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 2_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 2_chr15_dropped_filt_noout
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract 2_chr15_dropped_filt_noout.prune.in --make-bed --pca --out 2_chr15_dropped_filt_noout
 #149224 variants and 83 people pass filters and QC.
+
+#make unfiltered PCAs
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --make-bed --pca --out 2_chr15_all_noout
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_dropped_indivs_nosmallcontigs_CHR15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --make-bed --pca --out 2_chr15_dropped_noout
 
 #for the next set use: Dchry2.2_region_coordinates.tsv
 #############
