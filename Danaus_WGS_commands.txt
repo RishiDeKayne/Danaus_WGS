@@ -558,7 +558,7 @@ sconda admixture
 conda install -c bioconda admixture
 
 ssh bigshot
-mkdir -p /scratch/rdekayne/popgen/admixture && cd /scratch/rdekayne/popgen/admixture
+mkdir -p /scratch/rdekayne/PCAs && cd /scratch/rdekayne/PCAs
 
 sconda PCA
 
@@ -573,7 +573,7 @@ plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 41 \
 --set-missing-var-ids @:# \
 --indep-pairwise 50 10 0.1 --out admix_in
 
-Pruning complete.  7716241 of 12451662 variants removed.
+Pruning complete.  7253758 of 10961897 variants removed.
 
 
 # prune and create pca
@@ -581,16 +581,20 @@ plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 41 --set-miss
 --extract admix_in.prune.in \
 --make-bed --pca --out admix_in
 
-#4735421 variants and 90 samples pass filters and QC.
+#3708139 variants and 90 samples pass filters and QC.
 
 cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture
 touch admixture_run.txt
 for K in {2..12}
 do 
-echo "admixture --cv=20 -j8 /scratch/rdekayne/genotyping/popgen/admixture/admix_in.bed ${K} | tee /scratch/rdekayne/genotyping/popgen/admixture/log${K}_admix_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/log${K}_admix_in.out.done" >> admixture_run.txt
+echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/log${K}_admix_in.out.done" >> admixture_run.txt
 done
 
-parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigbang -b yes {}' :::: admixture_run.txt
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_run.txt
+
+ssh bigshot
+cd /scratch/rdekayne/PCAs/
+mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/
 
 
 ######################
