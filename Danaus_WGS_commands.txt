@@ -596,6 +596,10 @@ ssh bigshot
 cd /scratch/rdekayne/PCAs/
 mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/
 
+#get error
+grep "CV error" *.o*
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/admix_in.3.Q .
 
 ######################
 ######################
