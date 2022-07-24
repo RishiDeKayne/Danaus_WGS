@@ -573,7 +573,7 @@ plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 41 \
 --set-missing-var-ids @:# \
 --indep-pairwise 50 10 0.1 --out admix_in
 
-Pruning complete.  7253758 of 10961897 variants removed.
+#Pruning complete.  7253758 of 10961897 variants removed.
 
 
 # prune and create pca
@@ -600,6 +600,35 @@ mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/
 grep "CV error" *.o*
 
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/admix_in.3.Q .
+
+##now for chr15
+bcftools annotate --rename-chrs rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_renamed.b.vcf.gz
+
+VCF_FILE=Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_renamed.b.vcf.gz
+plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 \
+--set-missing-var-ids @:# \
+--indep-pairwise 50 10 0.1 --out admix_chr15_in
+
+#Pruning complete.  390483 of 487392 variants removed.
+
+
+# prune and create pca
+plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--extract admix_chr15_in.prune.in \
+--make-bed --pca --out admix_chr15_in
+
+#96909 variants and 90 samples pass filters and QC.
+
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/chr15
+touch admixture_chr15.run.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_chr15_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_chr15_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/chr15/log${K}_admix_chr15_in.out.done" >> admixture_chr15.run.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_chr15.run.txt
+
+
 
 ######################
 ######################
