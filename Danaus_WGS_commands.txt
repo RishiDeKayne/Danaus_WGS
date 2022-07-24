@@ -609,6 +609,7 @@ admixture.o112749:CV error (K=12): 0.65982
 
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/*.Q .
 
+
 #################
 ##now for chr15
 bcftools annotate --rename-chrs rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_renamed.b.vcf.gz
@@ -649,6 +650,39 @@ scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixtu
 ssh bigshot
 cd /scratch/rdekayne/PCAs/
 mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/
+
+
+###########
+#now just sv regions
+touch SV_regions.txt
+echo "contig15.1 4035981 5322257" >> SV_regions.txt
+echo "contig15.1 5323805 6220875" >> SV_regions.txt
+echo "contig15.1 6251636 7829094" >> SV_regions.txt
+echo "contig15.1 14803486 15299732" >> SV_regions.txt
+sed -i 's/ /\t/g' SV_regions.txt
+
+bcftools view /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz -T SV_regions.txt -Oz > ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_SV_regions.b.vcf.gz
+
+bcftools annotate --rename-chrs rename_file.txt Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_SV_regions.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_SV_regions_renamed.b.vcf.gz
+
+VCF_FILE=Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_SV_regions_renamed.b.vcf.gz
+
+# prune and create pca
+plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_chr15_SVs_in
+
+#141862 variants and 90 samples pass filters and QC.
+
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/chr15_SVs
+touch admixture_chr15_SVs.run.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_chr15_SVs_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}admix_chr15_SVs_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/chr15_SVs/log${K}admix_chr15_SVs_in.out.done" >> admixture_chr15_SVs.run.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_chr15_SVs.run.txt
+
+grep "CV error" *.o*
 
 ######################
 ######################
