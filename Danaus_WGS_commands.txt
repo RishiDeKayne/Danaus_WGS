@@ -632,6 +632,18 @@ parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::
 
 grep "CV error" *.o*
 
+admixture.o112774:CV error (K=2): 0.31080
+admixture.o112775:CV error (K=3): 0.30768
+admixture.o112776:CV error (K=4): 0.29351
+admixture.o112777:CV error (K=5): 0.29437
+admixture.o112778:CV error (K=6): 0.29945
+admixture.o112779:CV error (K=7): 0.30119
+admixture.o112780:CV error (K=8): 0.32494
+admixture.o112781:CV error (K=9): 0.33887
+admixture.o112782:CV error (K=10): 0.36928
+admixture.o112783:CV error (K=11): 0.38326
+admixture.o112784:CV error (K=12): 0.38820
+
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/*.Q .
 
 ssh bigshot
