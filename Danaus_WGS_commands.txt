@@ -849,6 +849,7 @@ minimap2 -ax asm10 -R '@RG\\tID:MB18102MAT\\tSM:MB18102MAT' /data/martin/genomic
 
 minimap2 -ax asm10 -R '@RG\\tID:MB18102PAT\\tSM:MB18102PAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./MB18102_PAT.fasta | samtools view -Sb > Dchry2.2_MB18102PAT_minimap2.asm10.bam
 
+#___HERE____#
 
 #sort bam
 samtools sort Dchry2.2_MB18102MAT_minimap2.asm10.bam > Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam
