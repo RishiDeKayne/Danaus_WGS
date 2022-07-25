@@ -837,6 +837,8 @@ mkdir -p /scratch/rdekayne/whatshap && cd /scratch/rdekayne/whatshap
 
 #first we want to have haploid genotypes for the known alleles we have previously assembled
 
+
+########MB18102#########
 #first align whole assembly of MB18102MAT to the reference (-a option exports SAM format)
 cp /data/martin/genomics/analyses/Danaus_genome/MB181_trio/KKIM_assemblies/v8/polished/MB18102_MAT.fasta.gz .
 cp /data/martin/genomics/analyses/Danaus_genome/MB181_trio/KKIM_assemblies/v8/polished/MB18102_PAT.fasta.gz .
@@ -849,26 +851,33 @@ minimap2 -ax asm10 -R '@RG\\tID:MB18102MAT\\tSM:MB18102MAT' /data/martin/genomic
 
 minimap2 -ax asm10 -R '@RG\\tID:MB18102PAT\\tSM:MB18102PAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./MB18102_PAT.fasta | samtools view -Sb > Dchry2.2_MB18102PAT_minimap2.asm10.bam
 
-#___HERE____#
+mv *.bam /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap
+
+ssh bigfoot
+cd /scratch/rdekayne/whatshap_wild90
+sconda genomics_general
 
 #sort bam
-samtools sort Dchry2.2_MB18102MAT_minimap2.asm10.bam > Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam
-samtools sort Dchry2.2_MB18102PAT_minimap2.asm10.bam > Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam
+samtools sort /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102MAT_minimap2.asm10.bam > ./Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam
+samtools sort /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102PAT_minimap2.asm10.bam > ./Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam
 
-rm Dchry2.2_MB18102MAT_minimap2.asm10.bam
-rm Dchry2.2_MB18102PAT_minimap2.asm10.bam
+mv *.bam /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap
+
+rm /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102MAT_minimap2.asm10.bam
+rm /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102PAT_minimap2.asm10.bam
 
 #genotype (could use -r to specify just the region of interest, DP == 1 because we only want single copy alignments)
 
-bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > MB18102MAT_minimap2.asm10.vcf.gz
+bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > MB18102MAT_minimap2.asm10.vcf.gz
 
-bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > MB18102PAT_minimap2.asm10.vcf.gz
+bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > MB18102PAT_minimap2.asm10.vcf.gz
 
-#now filter these loci to only include sites in our main vcf:
+#now filter these loci in the same way as our main vcf:
 
-bcftools filter -Oz MB18102MAT_minimap2.asm10.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . | bcftools sort -Oz -o MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz
 
-bcftools filter -Oz MB18102PAT_minimap2.asm10.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . | bcftools sort -Oz -o MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz
+
+
+
 
 #now merge vcfs:
 #first need to bgzip and tabix all vcfs
@@ -876,6 +885,7 @@ zcat MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18
 
 zcat MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
 
+########SB211#########
 #now for the SB211 assemblies
 cp /data/martin/genomics/analyses/Danaus_genome/SB211_trio/assemblies/SB211_MAT.fasta.gz .
 cp /data/martin/genomics/analyses/Danaus_genome/SB211_trio/assemblies/SB211_PAT.fasta.gz .
@@ -895,7 +905,6 @@ samtools sort Dchry2.2_SB211PAT_minimap2.asm10.bam > Dchry2.2_SB211PAT_minimap2.
 rm Dchry2.2_SB211MAT_minimap2.asm10.bam
 rm Dchry2.2_SB211PAT_minimap2.asm10.bam
 
-____
 #genotype (could use -r to specify just the region of interest, DP == 1 because we only want single copy alignments)
 
 bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > MB18102MAT_minimap2.asm10.vcf.gz
@@ -915,6 +924,13 @@ zcat MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18
 zcat MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
 
 
+#now get list of sites in our main vcf:
+
+cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz .
+
+zcat Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz
+
+bcftools query -f %CHROM %POS\n' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites.txt
 
 
 
