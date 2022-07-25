@@ -890,13 +890,13 @@ zcat MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18
 cp /data/martin/genomics/analyses/Danaus_genome/SB211_trio/assemblies/SB211_MAT.fasta.gz .
 cp /data/martin/genomics/analyses/Danaus_genome/SB211_trio/assemblies/SB211_PAT.fasta.gz .
 
-gunzip *.gz
+gunzip SB211*.gz
 
 sconda /ceph/users/smartin/.conda/envs/minimap2/
 
-minimap2 -ax asm10 -R '@RG\\tID:SB211MAT\\tSM:SB211MAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./SB211MAT.fasta | samtools view -Sb > Dchry2.2_SB211MAT_minimap2.asm10.bam
+minimap2 -ax asm10 -R '@RG\\tID:SB211MAT\\tSM:SB211MAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./SB211_MAT.fasta | samtools view -Sb > Dchry2.2_SB211MAT_minimap2.asm10.bam
 
-minimap2 -ax asm10 -R '@RG\\tID:SB211PAT\\tSM:SB211PAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./SB211PAT.fasta | samtools view -Sb > Dchry2.2_SB211PAT_minimap2.asm10.bam
+minimap2 -ax asm10 -R '@RG\\tID:SB211PAT\\tSM:SB211PAT' /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./SB211_PAT.fasta | samtools view -Sb > Dchry2.2_SB211PAT_minimap2.asm10.bam
 
 #sort bam
 samtools sort Dchry2.2_SB211MAT_minimap2.asm10.bam > Dchry2.2_SB211MAT_minimap2.asm10.sort.bam
@@ -913,10 +913,6 @@ bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/D
 
 #now filter these loci to only include sites in our main vcf:
 
-bcftools filter -Oz MB18102MAT_minimap2.asm10.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . | bcftools sort -Oz -o MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz
-
-bcftools filter -Oz MB18102PAT_minimap2.asm10.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . | bcftools sort -Oz -o MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz
-
 #now merge vcfs:
 #first need to bgzip and tabix all vcfs
 zcat MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
@@ -931,6 +927,8 @@ cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchr
 zcat Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz
 
 bcftools query -f %CHROM %POS\n' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites.txt
+
+bcftools view -H MB18102MAT_minimap2.asm10.b.vcf.gz | wc -l
 
 
 
