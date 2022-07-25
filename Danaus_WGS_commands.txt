@@ -684,6 +684,146 @@ parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::
 
 grep "CV error" *.o*
 
+###########
+#now just region1.1
+
+bcftools annotate --rename-chrs rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region1.1.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region1.1_renamed.b.vcf.gz
+
+VCF_FILE=Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region1.1_renamed.b.vcf.gz
+
+# prune and create pca
+plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_chr15_1.1_in
+
+#44062 variants and 90 samples pass filters and QC.
+
+/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region1_1
+touch admixture_chr15_1_1.run.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_chr15_1.1_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}admix_chr15_1.1_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region1_1/log${K}admix_chr15_1.1_in.out.done" >> admixture_chr15_1_1.run.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_chr15_1_1.run.txt
+
+grep "CV error" *.o*
+admixture.o112822:CV error (K=2): 0.27112
+admixture.o112823:CV error (K=3): 0.26009
+admixture.o112824:CV error (K=4): 0.24243
+admixture.o112825:CV error (K=5): 0.23631
+admixture.o112826:CV error (K=6): 0.23711
+admixture.o112827:CV error (K=7): 0.23773
+admixture.o112828:CV error (K=8): 0.25986
+admixture.o112829:CV error (K=9): 0.26922
+admixture.o112830:CV error (K=10): 0.28153
+admixture.o112831:CV error (K=11): 0.29048
+admixture.o112832:CV error (K=12): 0.32202
+
+###########
+#now just region1.2
+
+bcftools annotate --rename-chrs rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region1.2.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region1.2_renamed.b.vcf.gz
+
+VCF_FILE=Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region1.2_renamed.b.vcf.gz
+
+# prune and create pca
+plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_chr15_1.2_in
+
+#27417 variants and 90 samples pass filters and QC.
+
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region1_2
+touch admixture_chr15_1_2.run.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_chr15_1.2_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}admix_chr15_1.2_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region1_2/log${K}admix_chr15_1.2_in.out.done" >> admixture_chr15_1_2.run.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_chr15_1_2.run.txt
+
+grep "CV error" *.o*
+admixture.o112833:CV error (K=2): 0.27599
+admixture.o112834:CV error (K=3): 0.18538
+admixture.o112835:CV error (K=4): 0.15799
+admixture.o112836:CV error (K=5): 0.12770
+admixture.o112837:CV error (K=6): 0.11967
+admixture.o112838:CV error (K=7): 0.11794
+admixture.o112839:CV error (K=8): 0.12679
+admixture.o112840:CV error (K=9): 0.12508
+admixture.o112841:CV error (K=10): 0.13903
+admixture.o112842:CV error (K=11): 0.14252
+admixture.o112843:CV error (K=12): 0.14602
+
+###########
+#now just region2
+
+bcftools annotate --rename-chrs rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region2.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region2_renamed.b.vcf.gz
+
+VCF_FILE=Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region2_renamed.b.vcf.gz
+
+# prune and create pca
+plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_chr15_2_in
+
+#47470 variants and 90 samples pass filters and QC.
+
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region2
+touch admixture_chr15_2.run.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_chr15_2_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}admix_chr15_2_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region2/log${K}admix_chr15_2_in.out.done" >> admixture_chr15_2.run.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_chr15_2.run.txt
+
+grep "CV error" *.o*
+admixture.o112844:CV error (K=2): 0.30578
+admixture.o112845:CV error (K=3): 0.21263
+admixture.o112846:CV error (K=4): 0.17768
+admixture.o112847:CV error (K=5): 0.16711
+admixture.o112848:CV error (K=6): 0.14204
+admixture.o112849:CV error (K=7): 0.14709
+admixture.o112850:CV error (K=8): 0.14127
+admixture.o112851:CV error (K=9): 0.15247
+admixture.o112852:CV error (K=10): 0.15464
+admixture.o112853:CV error (K=11): 0.15580
+admixture.o112854:CV error (K=12): 0.16153
+
+###########
+#now just region4
+
+bcftools annotate --rename-chrs rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region4.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region4_renamed.b.vcf.gz
+
+VCF_FILE=Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_region4_renamed.b.vcf.gz
+
+# prune and create pca
+plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_chr15_4_in
+
+#22913 variants and 90 samples pass filters and QC.
+
+cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region4
+touch admixture_chr15_4.run.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_chr15_4_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}admix_chr15_4_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/region4/log${K}admix_chr15_4_in.out.done" >> admixture_chr15_4.run.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_chr15_4.run.txt
+
+grep "CV error" *.o*
+admixture.o112855:CV error (K=2): 0.32323
+admixture.o112856:CV error (K=3): 0.29803
+admixture.o112857:CV error (K=4): 0.28747
+admixture.o112858:CV error (K=5): 0.26698
+admixture.o112859:CV error (K=6): 0.26972
+admixture.o112860:CV error (K=7): 0.27037
+admixture.o112861:CV error (K=8): 0.26194
+admixture.o112862:CV error (K=9): 0.27706
+admixture.o112863:CV error (K=10): 0.28213
+admixture.o112864:CV error (K=11): 0.29393
+admixture.o112865:CV error (K=12): 0.30239
+
 ######################
 ######################
 #	WHATSHAP
