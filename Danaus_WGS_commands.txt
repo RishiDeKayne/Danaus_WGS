@@ -826,6 +826,22 @@ admixture.o112865:CV error (K=12): 0.30239
 
 ######################
 ######################
+#	GEMMA - GWAS
+######################
+######################
+
+#install GEMMA
+
+#1. hindwing colour
+
+#2. forewing patch
+
+#3. white hindwing
+
+
+
+######################
+######################
 #	WHATSHAP
 ######################
 ######################
@@ -874,16 +890,12 @@ bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/D
 
 #now filter these loci in the same way as our main vcf:
 
-
-
-
-
-
 #now merge vcfs:
 #first need to bgzip and tabix all vcfs
-zcat MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
+zcat MB18102MAT_minimap2.asm10.vcf.gz | bgzip -c > MB18102MAT_minimap2.asm10.b.vcf.gz && tabix MB18102MAT_minimap2.asm10.b.vcf.gz
 
-zcat MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
+zcat MB18102PAT_minimap2.asm10.vcf.gz | bgzip -c > MB18102PAT_minimap2.asm10.b.vcf.gz && tabix MB18102PAT_minimap2.asm10.b.vcf.gz
+
 
 ########SB211#########
 #now for the SB211 assemblies
@@ -907,14 +919,12 @@ rm Dchry2.2_SB211PAT_minimap2.asm10.bam
 
 #genotype (could use -r to specify just the region of interest, DP == 1 because we only want single copy alignments)
 
-bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > MB18102MAT_minimap2.asm10.vcf.gz
+bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_SB211MAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > SB211MAT_minimap2.asm10.vcf.gz
 
-bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > MB18102PAT_minimap2.asm10.vcf.gz
+bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --min-MQ 60 --annotate FORMAT/DP Dchry2.2_SB211PAT_minimap2.asm10.sort.bam | bcftools call -m -f GQ --ploidy 1 | bcftools filter -i 'FORMAT/DP == 1' -O z > SB211PAT_minimap2.asm10.vcf.gz
 
 #now filter these loci to only include sites in our main vcf:
 
-#now merge vcfs:
-#first need to bgzip and tabix all vcfs
 zcat MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
 
 zcat MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
@@ -926,7 +936,7 @@ cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchr
 
 zcat Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz
 
-bcftools query -f %CHROM %POS\n' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites.txt
+bcftools query -f '%CHROM %POS\n' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites.txt
 
 bcftools view -H MB18102MAT_minimap2.asm10.b.vcf.gz | wc -l
 
