@@ -963,6 +963,14 @@ bcftools view ./SB211MAT_minimap2.asm10.b.vcf.gz -T ./Wild90_allchroms_output_fi
 
 bcftools view ./SB211PAT_minimap2.asm10.b.vcf.gz -T ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites_formatted.txt -Oz > ./SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz
 
+#now check after
+bcftools view -H MB18102MAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
+
+bcftools view -H MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
+
+bcftools view -H SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
+
+bcftools view -H SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
 
 
 
