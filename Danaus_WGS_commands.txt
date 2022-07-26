@@ -925,9 +925,9 @@ bcftools mpileup --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/D
 
 #now filter these loci to only include sites in our main vcf:
 
-zcat MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
+zcat SB211MAT_minimap2.asm10.vcf.gz | bgzip -c > SB211MAT_minimap2.asm10.b.vcf.gz && tabix SB211MAT_minimap2.asm10.b.vcf.gz
 
-zcat MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.vcf.gz | bgzip -c > MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz && tabix MB18102PAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz
+zcat SB211PAT_minimap2.asm10.vcf.gz | bgzip -c > SB211PAT_minimap2.asm10.b.vcf.gz && tabix SB211PAT_minimap2.asm10.b.vcf.gz
 
 
 #now get list of sites in our main vcf:
@@ -939,11 +939,16 @@ zcat Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | bgzip -
 bcftools query -f '%CHROM %POS\n' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites.txt
 
 bcftools view -H MB18102MAT_minimap2.asm10.b.vcf.gz | wc -l
+#185073482
 
+bcftools view -H MB18102PAT_minimap2.asm10.b.vcf.gz | wc -l
+#214253076
 
+bcftools view -H SB211MAT_minimap2.asm10.b.vcf.gz | wc -l
+#
 
-
-
+bcftools view -H SB211PAT_minimap2.asm10.b.vcf.gz | wc -l
+#
 
 
 
