@@ -995,23 +995,22 @@ Dchry2.2_SB211PAT_minimap2.asm10.sort.bam SB211PAT
 
 bcftools reheader -s rename_indivs.txt -o merged.92_renamed.b.vcf merged.92.b.vcf.gz
 bcftools sort -Oz -o merged.92_renamed_sorted.b.vcf merged.92_renamed.b.vcf
-bgzip -c merged.92_renamed_sorted.b.vcf > merged.92_renamed.b.vcf.gz
+mv merged.92_renamed_sorted.b.vcf merged.92_renamed_sorted.b.vcf.gz
+tabix merged.92_renamed_sorted.b.vcf.gz
+
+#now filter file to max 10% missing data
+
+#use vcf lib to adjust the AN count
+vcffixup merged.92_renamed_sorted.b.vcf.gz > merged.92_renamed_sorted_fixed.b.vcf.gz
 
 
+bcftools filter -Oz merged.92_renamed_sorted_fixed.b.vcf.gz -e 'AN < 162' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./merged.92_renamed_sorted_fixed_AN162.b.vcf.gz
 
-tabix merged.92_renamed.b.vcf.gz
-
-bcftools query -l merged.92_renamed.b.vcf.gz
 
 
 #now for phasing
+samtools view -b /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/realigned.SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam contig15.1 > test.bam
 
-
-
-
-
-
-#we want the vcf to have max 10% missing data and biallelic snps
 
 
 
