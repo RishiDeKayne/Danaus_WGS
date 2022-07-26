@@ -965,23 +965,17 @@ bcftools view ./SB211PAT_minimap2.asm10.b.vcf.gz -T ./Wild90_allchroms_output_fi
 
 #now check after
 bcftools view -H MB18102MAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
+#13212003
 
 bcftools view -H MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
+#14322440
 
 bcftools view -H SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
 
 bcftools view -H SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
 
-
-
-cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz .
-zcat Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz | bgzip -c > Wild90_allchroms_output_filt_mindepth7_minqual30.b.vcf.gz && tabix Wild90_allchroms_output_filt_mindepth7_minqual30.b.vcf.gz
-
-
-
-
-bcftools merge Wild90_allchroms_output_filt_mindepth7_minqual30.b.vcf.gz MB18102MAT_minimap2.asm10_filt_mindepth7_minqual30.b.vcf.gz Wild90_allchroms_output_filt_mindepth7_minqual30.b.vcf.gz | bgzip -c Merged
- > out.vcf
+#and now merge everything
+bcftools merge Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz MB18102MAT_minimap2.asm10_shared_sites.b.vcf.gz MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz | bgzip -c  > Merged.b.vcf.gz
 
 
 
