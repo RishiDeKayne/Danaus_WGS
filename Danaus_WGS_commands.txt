@@ -971,11 +971,34 @@ bcftools view -H MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
 #14322440
 
 bcftools view -H SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
+#13298040
 
 bcftools view -H SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz | wc -l
+#13829875
+
+#generate indices
+tabix MB18102MAT_minimap2.asm10_shared_sites.b.vcf.gz
+tabix MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz
+tabix SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz
+tabix SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz
 
 #and now merge everything
-bcftools merge Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz MB18102MAT_minimap2.asm10_shared_sites.b.vcf.gz MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz | bgzip -c  > Merged.b.vcf.gz
+bcftools merge Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz MB18102MAT_minimap2.asm10_shared_sites.b.vcf.gz MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz | bgzip -c  > merged.92.b.vcf.gz && tabix merged.92.b.vcf.gz
+
+bcftools query -l merged.92.b.vcf.gz
+
+#fix weird naming: rename_indivs.txt
+/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam MB18102MAT
+/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam MB18102PAT
+Dchry2.2_SB211MAT_minimap2.asm10.sort.bam SB211MAT
+Dchry2.2_SB211PAT_minimap2.asm10.sort.bam SB211PAT
+
+bcftools reheader merged.92.b.vcf.gz -s rename_indivs.txt | bgzip -c  > merged.92_renamed.b.vcf.gz && tabix merged.92_renamed.b.vcf.gz
+
+bcftools query -l merged.92_renamed.b.vcf.gz
+
+
+#now for phasing
 
 
 
