@@ -988,12 +988,18 @@ bcftools merge Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.
 bcftools query -l merged.92.b.vcf.gz
 
 #fix weird naming: rename_indivs.txt
-/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam MB18102MAT
-/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam MB18102PAT
+\/data\/martin\/genomics\/analyses\/Danaus_popgen\/Wild90\/analysis\/whatshap\/Dchry2.2_MB18102MAT_minimap2.asm10.sort.bam MB18102MAT
+\/data\/martin\/genomics\/analyses\/Danaus_popgen\/Wild90\/analysis\/whatshap\/Dchry2.2_MB18102PAT_minimap2.asm10.sort.bam MB18102PAT
 Dchry2.2_SB211MAT_minimap2.asm10.sort.bam SB211MAT
 Dchry2.2_SB211PAT_minimap2.asm10.sort.bam SB211PAT
 
-bcftools reheader merged.92.b.vcf.gz -s rename_indivs.txt | bgzip -c  > merged.92_renamed.b.vcf.gz && tabix merged.92_renamed.b.vcf.gz
+bcftools reheader -s rename_indivs.txt -o merged.92_renamed.b.vcf merged.92.b.vcf.gz
+bcftools sort -Oz -o merged.92_renamed_sorted.b.vcf merged.92_renamed.b.vcf
+bgzip -c merged.92_renamed_sorted.b.vcf > merged.92_renamed.b.vcf.gz
+
+
+
+tabix merged.92_renamed.b.vcf.gz
 
 bcftools query -l merged.92_renamed.b.vcf.gz
 
