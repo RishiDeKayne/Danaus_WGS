@@ -938,6 +938,10 @@ zcat Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | bgzip -
 
 bcftools query -f '%CHROM %POS\n' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites.txt
 
+awk '{print $1,$2,$2}' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites.txt  > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites_formatted.txt
+
+sed -i 's/ /\t/g' Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites_formatted.txt
+
 bcftools view -H MB18102MAT_minimap2.asm10.b.vcf.gz | wc -l
 #185073482
 
@@ -945,11 +949,19 @@ bcftools view -H MB18102PAT_minimap2.asm10.b.vcf.gz | wc -l
 #214253076
 
 bcftools view -H SB211MAT_minimap2.asm10.b.vcf.gz | wc -l
-#
+#188801246
 
 bcftools view -H SB211PAT_minimap2.asm10.b.vcf.gz | wc -l
-#
+#202842085
 
+#now filter for only the positions shared with our main vcf:
+bcftools view ./MB18102MAT_minimap2.asm10.b.vcf.gz -T ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites_formatted.txt -Oz > ./MB18102MAT_minimap2.asm10_shared_sites.b.vcf.gz
+
+bcftools view ./MB18102PAT_minimap2.asm10.b.vcf.gz -T ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites_formatted.txt -Oz > ./MB18102PAT_minimap2.asm10_shared_sites.b.vcf.gz
+
+bcftools view ./SB211MAT_minimap2.asm10.b.vcf.gz -T ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites_formatted.txt -Oz > ./SB211MAT_minimap2.asm10_shared_sites.b.vcf.gz
+
+bcftools view ./SB211PAT_minimap2.asm10.b.vcf.gz -T ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.sites_formatted.txt -Oz > ./SB211PAT_minimap2.asm10_shared_sites.b.vcf.gz
 
 
 
