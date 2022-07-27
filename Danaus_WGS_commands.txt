@@ -1077,6 +1077,14 @@ rm -f "${INDIV_BAM}".contig15.1.bam
 echo 'whatshap phase -o ./phased/'"${indiv}"'.contig15.1.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'.contig15.1.vcf.gz '"${INDIV_BAM}"'.contig15.1.sorted.bam --ignore-read-groups --chromosome contig15.1 --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'.contig15.1.done' >> whatshap_run.txt
 done
 
+#/scratch/rdekayne/whatshap_wild90/run/whatshap_run.txt 
+cp whatshap_run.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/run/
+
+sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_wild90\/run \&\& whatshap phase/g' whatshap_run.txt 
+
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigbird -b yes {}' :::: whatshap_run.txt
+
+
 ######################
 ######################
 #	SPLITSTREE
