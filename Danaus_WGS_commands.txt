@@ -1024,6 +1024,8 @@ INDIV_BAM=`cat ${INDIV}.bam.location.txt`
 
 bcftools view -s ${INDIV} -r ${REGION} -o ./${INDIV}.${REGION}.vcf /scratch/rdekayne/whatshap_wild90/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz
  
+bgzip -c ./${INDIV}.${REGION}.vcf > ${INDIV}.${REGION}.vcf.gz && rm -f ${INDIV}.${REGION}.vcf
+
 samtools view -b /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/${INDIV_BAM} ${REGION} > ${INDIV_BAM}.${REGION}.bam
 
 samtools sort ${INDIV_BAM}.${REGION}.bam >  ${INDIV_BAM}.${REGION}.sorted.bam
@@ -1031,11 +1033,39 @@ samtools sort ${INDIV_BAM}.${REGION}.bam >  ${INDIV_BAM}.${REGION}.sorted.bam
 samtools index ${INDIV_BAM}.${REGION}.sorted.bam
 
 sconda whatshap
-whatshap phase -o ./phased/${INDIV}.${REGION}.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./${INDIV}.${REGION}.vcf ${INDIV_BAM}.${REGION}.sorted.bam --ignore-read-groups --chromosome ${REGION} --sample=${INDIV} && touch ./done/phased.${INDIV}.${REGION}.done
+whatshap phase -o ./phased/${INDIV}.${REGION}.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./${INDIV}.${REGION}.vcf.gz ${INDIV_BAM}.${REGION}.sorted.bam --ignore-read-groups --chromosome ${REGION} --sample=${INDIV} && touch ./done/phased.${INDIV}.${REGION}.done
+
+bgzip -c ./phased/${INDIV}.${REGION}.phased.vcf > ./phased/${INDIV}.${REGION}.phased.vcf.gz && rm -f ./phased/${INDIV}.${REGION}.phased.vcf
+
 
 grep "|" SM17H01.contig15.1.phased.vcf | awk -F: '{print $9}' | sort -n -k1 -t n | uniq | wc -l
 #5013
 
+bcftools query -l /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/run/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz > indiv.list
+head -n1 indiv.list > test.list
+
+#now make into script to run on bigbird
+
+touch whatshap_run.txt
+
+cat test.list | while read indiv
+do
+echo "${indiv}"
+grep "${indiv}" /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/bam.list > "${indiv}".bam.location.txt
+INDIV_BAM=`cat "${indiv}".bam.location.txt`
+bcftools view -s "${indiv}" -r contig15.1 -o ./"${indiv}".contig15.1.vcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/run/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz 
+bgzip -c ./"${indiv}".contig15.1.vcf > "${indiv}".contig15.1.vcf.gz && rm -f "${indiv}".contig15.1.vcf
+samtools view -b /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/"${INDIV_BAM}" contig15.1 > "${INDIV_BAM}".contig15.1.bam
+samtools sort "${INDIV_BAM}".contig15.1.bam > "${INDIV_BAM}".contig15.1.sorted.bam && samtools index "${INDIV_BAM}".contig15.1.sorted.bam
+rm "${INDIV_BAM}".contig15.1.bam
+echo 'whatshap phase -o ./phased/'"${indiv}"'.contig15.1.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'.contig15.1.vcf.gz '"${INDIV_BAM}"'.contig15.1}.sorted.bam --ignore-read-groups --chromosome contig15.1 --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'.contig15.1.done' >> whatshap_run.txt
+done
+
+cat test.list | while read indiv
+do
+echo "${indiv}"
+echo 'test '"${indiv}" >> whatshap_run.txt
+done
 
 
 ######################
