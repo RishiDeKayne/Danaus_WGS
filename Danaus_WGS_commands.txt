@@ -1031,7 +1031,7 @@ samtools sort ${INDIV_BAM}.${REGION}.bam >  ${INDIV_BAM}.${REGION}.sorted.bam
 samtools index ${INDIV_BAM}.${REGION}.sorted.bam
 
 sconda whatshap
-whatshap phase -o ./phased/${INDIV}.${REGION}.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./${INDIV}.${REGION}.vcf ${INDIV_BAM}.${REGION}.sorted.bam --ignore-read-groups --sample=${INDIV} && touch ./done/phased.${INDIV}.${REGION}.done
+whatshap phase -o ./phased/${INDIV}.${REGION}.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./${INDIV}.${REGION}.vcf ${INDIV_BAM}.${REGION}.sorted.bam --ignore-read-groups --chromosome ${REGION} --sample=${INDIV} && touch ./done/phased.${INDIV}.${REGION}.done
 
 
 
