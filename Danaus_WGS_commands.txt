@@ -1011,8 +1011,27 @@ bcftools filter -Oz merged.92_renamed_sorted_fixed.b.vcf.gz -e 'AN < 162' | bcft
 #now for phasing
 samtools view -b /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/realigned.SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam contig15.1 > test.bam
 
+#######testrun with whatshap
+#try with a single individual: e.g. SM17H01
 
+extract individual from vcf
+INDIV=SM17H01
+REGION=contig15.1
 
+grep "${INDIV}" /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/bam.list > ${INDIV}.bam.location.txt
+
+INDIV_BAM=`cat ${INDIV}.bam.location.txt`
+
+bcftools view -s ${INDIV} -o ./${INDIV}.${REGION}.vcf /scratch/rdekayne/whatshap_wild90/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz
+ 
+samtools view -b /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/${INDIV_BAM} ${REGION} > ${INDIV_BAM}.${REGION}.bam
+
+samtools sort ${INDIV_BAM}.${REGION}.bam >  ${INDIV_BAM}.${REGION}.sorted.bam
+
+samtools index ${INDIV_BAM}.${REGION}.sorted.bam
+
+sconda whatshap
+whatshap phase -o ./phased/${INDIV}.${REGION}.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./${INDIV}.${REGION}.vcf ${INDIV_BAM}.${REGION}.sorted.bam --ignore-read-groups --sample=${INDIV} && touch ./done/phased.${INDIV}.${REGION}.done
 
 
 
