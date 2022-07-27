@@ -1069,6 +1069,7 @@ echo "${indiv}"
 grep "${indiv}" /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/bam.list > "${indiv}".bam.location.txt
 INDIV_BAM=`cat "${indiv}".bam.location.txt`
 bcftools view -s "${indiv}" -r contig15.1 -o ./"${indiv}".contig15.1.vcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/whatshap/run/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.b.vcf.gz 
+tabix ./"${indiv}".contig15.1.vcf 
 bgzip -c ./"${indiv}".contig15.1.vcf > "${indiv}".contig15.1.vcf.gz && rm -f "${indiv}".contig15.1.vcf
 samtools view -b /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/"${INDIV_BAM}" contig15.1 > "${INDIV_BAM}".contig15.1.bam
 samtools sort "${INDIV_BAM}".contig15.1.bam > "${INDIV_BAM}".contig15.1.sorted.bam && samtools index "${INDIV_BAM}".contig15.1.sorted.bam
