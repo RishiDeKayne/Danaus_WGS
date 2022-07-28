@@ -1084,6 +1084,16 @@ sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_wild90\/run \&\& whats
 
 parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigbird -b yes {}' :::: whatshap_run.txt
 
+cd phased/
+touch haplotype_count.txt
+touch haplotype_count_indiv.txt
+
+for i in *.vcf
+do
+echo $i >> haplotype_count_indiv.txt
+grep "|" $i | awk -F: '{print $9}' | sort -n -k1 -t n | uniq | wc -l >> haplotype_count.txt
+done
+
 
 ######################
 ######################
