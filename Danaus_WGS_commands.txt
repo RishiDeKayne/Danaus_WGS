@@ -982,22 +982,22 @@ cp ../gemma_in* .
 rm gemma_in.fam
 cp relatedness.fam gemma_in.fam
 
-gemma -bfile gemma_in -k gemma_in_rel_white.sXX.txt -lmm 4 -o forewing
+gemma -bfile gemma_in -k gemma_in_rel_white.sXX.txt -lmm 4 -o white
 
 8112464 snps 
 0.05/8112464=6.16335555e-9
 
 cd output
 min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' white.assoc.txt` ; echo $min
-#5.531381e-13
+#4.770382e-11
 
 awk '{if($15 < 6.16335555e-9){print}}' white.assoc.txt > white.assoc_significant.txt
 
 wc -l white.assoc_significant.txt
-#3495
+#299
 
-grep "5.531381e-13" white.assoc_significant.txt
-#
+grep "4.770382e-11" white.assoc_significant.txt
+#6       chr6:1891435    1891435 2       G       A       0.068   1.604478e+00    1.324086e-01    -4.109950e+01   1.000000e+05    1.000000e+05    1.866795e-20    5.511960e-21    4.770382e-11
 
 awk '{print $1,$3,$15}' white.assoc.txt > white.assoc_toplot.txt
 
