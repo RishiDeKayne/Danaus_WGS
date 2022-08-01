@@ -845,24 +845,35 @@ conda install -c conda-forge parallel
 
 #need to make PLINK ped file
 
-#test dataset: /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
-
-#from admixture analysis/bigshot
-cp Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma
-
-cp Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz
+#now we want file for relatedness matrix: ssh bigshot 
+#cd /scratch/rdekayne/PCAs
+#cp Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
 
 ssh bigbird
 mkdir -p /scratch/rdekayne/gemma && cd /scratch/rdekayne/gemma
-sconda PCA
-plink --vcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+
+mkdir /scratch/rdekayne/gemma/relatedness && cd /scratch/rdekayne/gemma/relatedness
+cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz .
+
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out relatedness
 #10961897 variants and 90 samples pass filters and QC.
 
-scp *.csv qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma
 
+#test dataset: Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs.b.vcf.gz
+
+cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs.b.vcf.gz .
+
+bcftools annotate --rename-chrs rename_file.txt Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_renamed.b.vcf.gz
+
+sconda PCA
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_renamed.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+#11449289 variants and 90 samples pass filters and QC.
+
+#get files from R script gemma_input.R and copy to folder
+#scp *.csv qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma
 #ssh bigbird
+#cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/*.csv .
 
-cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/*.csv .
 sconda gemma
 
 mkdir background
@@ -870,22 +881,24 @@ mkdir white
 mkdir forewing
 
 ######################1. hindwing colour
+cd background
 
 #take our hindwing phenotype file: background_colour_values.csv and add to fam file in 6th column
 
-awk '{print $1,$2,$3,$4,$5}' gemma_in.fam > gemma_in.fam_start.txt
+awk '{print $1,$2,$3,$4,$5}' ../relatedness/relatedness.fam > relatedness_start.txt
 
-paste gemma_in.fam_start.txt background_colour_values.csv > pre_background.fam
+paste relatedness_start.txt ../background_colour_values.csv > pre_background.fam
 
-cd background
-cp ../gemma_in* .
+cp ../relatedness/relatedness* .
+rm /scratch/rdekayne/gemma/background/relatedness.fam 
 
-awk '{print $1,$2,$3,$4,$5,$7}' ../pre_background.fam > ./gemma_in.fam
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > /scratch/rdekayne/gemma/background/relatedness.fam
 
-gemma -bfile gemma_in -gk 2 -o gemma_in_rel
+gemma -bfile relatedness -gk 2 -o gemma_in_rel_background
 
 cp output/* .
 
+cp ../gemma_in* .
 gemma -bfile gemma_in -k gemma_in_rel.sXX.txt -lmm 4 -o background
 
 7771911 snps 
