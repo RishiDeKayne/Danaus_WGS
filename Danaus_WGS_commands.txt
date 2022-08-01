@@ -899,19 +899,39 @@ gemma -bfile relatedness -gk 2 -o gemma_in_rel_background
 cp output/* .
 
 cp ../gemma_in* .
-gemma -bfile gemma_in -k gemma_in_rel.sXX.txt -lmm 4 -o background
+rm gemma_in.fam
+cp relatedness.fam gemma_in.fam
 
-7771911 snps 
-0.05/7771911=6.43342416e-9
+gemma -bfile gemma_in -k gemma_in_rel_background.sXX.txt -lmm 4 -o background
+
+8112464 snps 
+0.05/8112464=6.16335555e-9
 
 min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' background.assoc.txt` ; echo $min
 
-awk '{if($15 < 6.43342416e-9){print}}' background.assoc.txt > background.assoc_significant.txt
+awk '{if($15 < 6.16335555e-9){print}}' background.assoc.txt > background.assoc_significant.txt
 
 
-#2. forewing patch
+#############2. forewing patch
+cd forewing
+awk '{print $1,$2,$3,$4,$5}' ../relatedness/relatedness.fam > relatedness_start.txt
 
-paste gemma_in.fam_start.txt background_colour_values.csv > pre_background.fam
+paste relatedness_start.txt ../forewing_band_values.csv > pre_background.fam
+
+cp ../relatedness/relatedness* .
+rm /scratch/rdekayne/gemma/forewing/relatedness.fam 
+
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > /scratch/rdekayne/gemma/forewing/relatedness.fam
+
+gemma -bfile relatedness -gk 2 -o gemma_in_rel_forewing
+
+cp output/* .
+
+cp ../gemma_in* .
+rm gemma_in.fam
+cp relatedness.fam gemma_in.fam
+
+gemma -bfile gemma_in -k gemma_in_rel_forewing.sXX.txt -lmm 4 -o forewing
 
 
 #3. white hindwing
