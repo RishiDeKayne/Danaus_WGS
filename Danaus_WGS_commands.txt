@@ -850,6 +850,8 @@ conda install -c conda-forge parallel
 #from admixture analysis/bigshot
 cp Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma
 
+cp Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz
+
 ssh bigbird
 mkdir -p /scratch/rdekayne/gemma && cd /scratch/rdekayne/gemma
 sconda PCA
@@ -867,7 +869,7 @@ mkdir background
 mkdir white
 mkdir forewing
 
-#1. hindwing colour
+######################1. hindwing colour
 
 #take our hindwing phenotype file: background_colour_values.csv and add to fam file in 6th column
 
@@ -882,10 +884,22 @@ awk '{print $1,$2,$3,$4,$5,$7}' ../pre_background.fam > ./gemma_in.fam
 
 gemma -bfile gemma_in -gk 2 -o gemma_in_rel
 
+cp output/* .
 
+gemma -bfile gemma_in -k gemma_in_rel.sXX.txt -lmm 4 -o background
+
+7771911 snps 
+0.05/7771911=6.43342416e-9
+
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' background.assoc.txt` ; echo $min
+
+awk '{if($15 < 6.43342416e-9){print}}' background.assoc.txt > background.assoc_significant.txt
 
 
 #2. forewing patch
+
+paste gemma_in.fam_start.txt background_colour_values.csv > pre_background.fam
+
 
 #3. white hindwing
 
