@@ -831,6 +831,24 @@ admixture.o112865:CV error (K=12): 0.30239
 ######################
 
 #install GEMMA
+conda create -n gemma
+sconda gemma
+conda install -c bioconda gemma
+conda install -c conda-forge parallel
+
+
+./gemma -bfile [prefix] -gk [num] -o [prefix]
+
+#-gk [num] - relatedness matrix to estimate, “-gk 1” calculates the centered relatedness matrix while “-gk 2” calculates the standardized relatedness matrix
+#-bfile [prefix] - specifies PLINK binary ped file prefix
+#-o [prefix] - specifies output file prefix
+
+#need to make PLINK ped file
+
+#test dataset: /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
+
+sconda PCA
+/data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
 
 #1. hindwing colour
 
