@@ -847,8 +847,17 @@ conda install -c conda-forge parallel
 
 #test dataset: /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
 
+#from admixture analysis/bigshot
+cp Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma
+
+ssh bigbird
+mkdir -p /scratch/rdekayne/gemma && cd /scratch/rdekayne/gemma
 sconda PCA
-/data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
+plink --vcf /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_nochr15_renamed.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+#10961897 variants and 90 samples pass filters and QC.
+
+sconda gemma
+gemma -bfile gemma_in -gk 2 -o gemma_in_rel
 
 #1. hindwing colour
 
