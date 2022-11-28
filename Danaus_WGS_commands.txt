@@ -12,15 +12,56 @@ qstat -f -u "*"
 ########
 
 #make list of scaffolds
-cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > /data/martin/genomics/analyses/Danaus_mapping/scaf.list
+cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/scaf.list
 
-#prepare list of bams
-#need to add full filepath
-cp Wild100list_90inds_bam.list Wild100list_90inds_full_filepath_bam.list
+#get bams from simon's file: /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_samples.txt
+cut -f3 DC174_samples.txt > DC174_bam_names.txt
 
-sed -i 's/^/\/data\/martin\/genomics\/analyses\/Danaus_mapping\//g' Wild100list_90inds_full_filepath_bam.list
-sed -i -e "s/\r//g" ./Wild100list_90inds_full_filepath_bam.list
-sed -i -e "s/\r//g" ./Wild100list_90inds_bam.list
+cp DC174_bam_names.txt DC174_bam_names_full_file_path.txt
+
+#and add the rest of the filepath
+sed -i 's/^/\/data\/martin\/genomics\/analyses\/Danaus_mapping\//g' DC174_bam_names_full_file_path.txt
+
+#run mosdepth on these bam files in /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw
+touch mosdepth_run.txt
+cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt | while read bam
+do
+echo "mosdepth -n ${bam} /data/martin/genomics/analyses/Danaus_mapping/${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/done_files/${bam}.done" >> mosdepth_run.txt
+done
+
+ssh bigshot
+mkdir -p /scratch/rdekayne/mosdepth_danaus_DC174/ && cd /scratch/rdekayne/mosdepth_danaus_DC174/
+
+sconda genomics_general
+
+#test
+#head -n 1 mosdepth_run.txt > mosdepth_test.txt
+#parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigshot -b yes {}' :::: mosdepth_test.txt
+
+#run
+parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigshot -b yes {}' :::: mosdepth_run.txt
+
+#if no issues
+rm -f mosdepth.*
+
+#extract coverage info
+touch bam_raw_coverage.txt
+cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt | while read bam
+do
+grep 'total' /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/${bam}.summary.txt | cut -f 4 >> bam_raw_coverage.txt
+done
+
+paste /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt bam_raw_coverage.txt > bam_raw_coverage_full.txt
+
+mkdir plot_dist
+cd plot_dist/
+
+python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/plot_dist/dist.html .
+
+
+
 
 #############################################
 #indel re-alignment:
