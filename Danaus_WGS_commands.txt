@@ -48,7 +48,7 @@ rm -f mosdepth.*
 touch bam_raw_coverage.txt
 cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt | while read bam
 do
-grep 'total' /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/${bam}.summary.txt | cut -f4 >> bam_raw_coverage.txt
+grep 'total' /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/${bam}.mosdepth.summary.txt | cut -f4 >> bam_raw_coverage.txt
 done
 
 paste /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt bam_raw_coverage.txt > bam_raw_coverage_full.txt
