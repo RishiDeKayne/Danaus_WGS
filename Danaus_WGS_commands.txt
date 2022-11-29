@@ -85,7 +85,7 @@ conda install -c conda-forge openjdk
 
 #e.g. https://gatk.broadinstitute.org/hc/en-us/articles/360035531852-Intervals-and-interval-lists
 
-###FULL RUN
+##FULL RUN
 cd /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned
 
 touch gatk_indel_realignment_creator_FULL_step1.txt
@@ -97,76 +97,24 @@ done
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_indel_realignment_creator_FULL_step1.txt
 
 #now move intervals to project folder
-cp *.intervals /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/intervals
+cp *.intervals /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/intervals/
 
 #prepare next step - making new bams
 touch gatk_indel_realignment_creator_FULL_step2.txt
-cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
+cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt | while read bam
 do
-echo "java -Xmx8G -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -targetIntervals /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/intervals/realigner.intervals.${bam}.intervals -o /scratch/rdekayne/gatk/realigned.${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned_confirmed/realigned.${bam}.done" >> gatk_indel_realignment_creator_FULL_step2.txt
+echo "java -Xmx8G -jar /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -targetIntervals /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/intervals/realigner.intervals.${bam}.intervals -o /scratch/rdekayne/gatk/realigned.${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/realigned.${bam}.done" >> gatk_indel_realignment_creator_FULL_step2.txt
 done
 
-parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
 
-###assess bams with MOSDEPTH
-#/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
+#if you needed to downsample
+#sconda genomics_general
+#samtools view -s 0.30 -b sample.Dchry2.2.bwa.default.rmdup.bam > sample_downsampled30.Dchry2.2.bwa.default.rmdup.bam
+#samtools index sample_downsampled30.Dchry2.2.bwa.default.rmdup.bam
 
-ssh bigbang
-mkdir /scratch/rdekayne/mosdepth_danaus/
-cd /scratch/rdekayne/gatk
-
-ls *.bam > /scratch/rdekayne/mosdepth_danaus/bam_nofilepath.list
-
-touch mosdepth_run.txt
-cat /scratch/rdekayne/mosdepth_danaus/bam_nofilepath.list | while read bam
-do
-echo "mosdepth -n ${bam} /scratch/rdekayne/gatk/${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/done_files/${bam}.done" >> mosdepth_run.txt
-done
-
-cp mosdepth_run.txt /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
-
-sconda genomics_general
-parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigbang -b yes {}' :::: mosdepth_run.txt
-
-mkdir plot_dist
-cd plot_dist/
-
-python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt
-
-scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/plot_dist/dist.html .
-
-grep "total" ../realigned.SM18W01.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam.mosdepth.summary.txt
-#total   354020300       34859745395     98.47   0       22276
-
-mkdir low_high_indivs
-mv ../*SM18W01* low_high_indivs
-
-#before genotyping want to downsample SM18W01 and move SM17H06 to rejected folder due to low coverage
-ssh bigbang
-cd /scratch/rdekayne/gatk/
-
-sconda genomics_general
-samtools view -s 0.30 -b realigned.SM18W01.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam > realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam
-
-samtools index realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam
-
-#now move old bam into rejected_indivs
-mv realigned.SM18W01.UKDSW02200* rejected_individuals
-
-#this leaves 90 individuals - 89 original and new subsampled SM18W01
-
-#run mosdepth on this one sample - in /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth
-echo "mosdepth -n realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam /scratch/rdekayne/gatk/realigned.SM18W01_downsampled30.UKDSW02200-C.220307.Dchry2.2.bwa.default.rmdup.bam" > subsampled_mosdepth.txt
-
-parallel -j 1 'qsub -cwd -N mosdepth -V -pe smp64 1 -l h=bigbang -b yes {}' :::: subsampled_mosdepth.txt
-
-#run mosdepth plot again for all 89 individuals
-cd /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/plot_dist
-python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt -o 90_inc_downsampled_dist.html
-#and download
-
-#now to genotyping (bigfoot)
-ssh bigbang
+#now to genotyping (biggar)
+ssh biggar
 mkdir -p /scratch/rdekayne/genotyping && cd /scratch/rdekayne/genotyping
 
 #prepare list of bams
