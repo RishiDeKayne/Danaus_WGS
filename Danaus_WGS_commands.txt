@@ -96,17 +96,39 @@ done
 
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_indel_realignment_creator_FULL_step1.txt
 
-#now move intervals to project folder
-cp *.intervals /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/intervals/
+#now copy intervals to project folder
+cp *.intervals /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/intervals/
 
 #prepare next step - making new bams
+rm -f gatk_indel.*
+
 touch gatk_indel_realignment_creator_FULL_step2.txt
 cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt | while read bam
 do
-echo "java -Xmx8G -jar /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -targetIntervals /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/intervals/realigner.intervals.${bam}.intervals -o /scratch/rdekayne/gatk/realigned.${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/realigned.${bam}.done" >> gatk_indel_realignment_creator_FULL_step2.txt
+echo "java -Xmx8G -jar /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -targetIntervals /scratch/rdekayne/gatk/realigner.intervals.${bam}.intervals -o /scratch/rdekayne/gatk/realigned.${bam} && touch /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/realigned.${bam}.done" >> gatk_indel_realignment_creator_FULL_step2.txt
 done
 
-parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_indel_realignment_creator_FULL_step2.txt
+split -l 10 --numeric-suffixes gatk_indel_realignment_creator_FULL_step2.txt gatk_realign
+
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign00
+
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign01
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign02
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign03
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign04
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign05
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign06
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign07
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign08
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign09
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign10
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign11
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign12
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign13
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign14
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign15
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign16
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign17
 
 #if you needed to downsample
 #sconda genomics_general
