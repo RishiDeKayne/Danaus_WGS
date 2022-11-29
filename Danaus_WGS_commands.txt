@@ -58,8 +58,12 @@ cd plot_dist/
 
 python ../mosdepth/scripts/plot-dist.py ../*global.dist.txt
 
-scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/mosdepth/plot_dist/dist.html .
+scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/plot_dist/dist.html .
 
+cd ../
+cp bam_raw_coverage_full.txt bam_raw_coverage_full_plot.txt
+sed -i 's/\t/,/g' bam_raw_coverage_full_plot.txt
+scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/bam_raw_coverage_full_plot.txt .
 
 
 
