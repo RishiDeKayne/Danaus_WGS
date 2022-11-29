@@ -11,6 +11,9 @@ qstat -f -u "*"
 #1. GENOTYPING
 ########
 
+#raw coverage stats:
+#############################################
+
 #make list of scaffolds
 cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/scaf.list
 
@@ -65,9 +68,8 @@ cp bam_raw_coverage_full.txt bam_raw_coverage_full_plot.txt
 sed -i 's/\t/,/g' bam_raw_coverage_full_plot.txt
 scp qmaster:/data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/bam_raw_coverage_full_plot.txt .
 
+#decided to keep all and filter later if necessary
 
-
-#############################################
 #indel re-alignment:
 #############################################
 
@@ -77,22 +79,22 @@ sconda gatk
 conda install -c conda-forge parallel
 conda install -c conda-forge openjdk
 
-# bam output dir. /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned
+# bam output dir. /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned
 
-# executible is: /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
+# executible is: /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
 
 #e.g. https://gatk.broadinstitute.org/hc/en-us/articles/360035531852-Intervals-and-interval-lists
 
 ###FULL RUN
-cd /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned
+cd /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned
 
 touch gatk_indel_realignment_creator_FULL_step1.txt
-cat /data/martin/genomics/analyses/Danaus_mapping/Wild100list_90inds_bam.list | while read bam
+cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/DC174_bam_names.txt | while read bam
 do
-echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -o /scratch/rdekayne/gatk/realigner.intervals.${bam}.intervals && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/realigned_confirmed/intervals.${bam}.done" >> gatk_indel_realignment_creator_FULL_step1.txt
+echo "java -jar /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/${bam} -o /scratch/rdekayne/gatk/realigner.intervals.${bam}.intervals && touch /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_confirmed/intervals.${bam}.done" >> gatk_indel_realignment_creator_FULL_step1.txt
 done
 
-parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=bigbang -b yes {}' :::: gatk_indel_realignment_creator_FULL_step1.txt
+parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_indel_realignment_creator_FULL_step1.txt
 
 #now move intervals to project folder
 cp *.intervals /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/intervals
