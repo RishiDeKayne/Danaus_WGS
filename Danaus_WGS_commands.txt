@@ -111,9 +111,9 @@ done
 split -l 10 --numeric-suffixes gatk_indel_realignment_creator_FULL_step2.txt gatk_realign
 
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign00
-
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign01
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign02
+
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign03
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign04
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign05
