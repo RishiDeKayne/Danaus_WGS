@@ -124,11 +124,11 @@ parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign11
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign12
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign13
-
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign14
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign15
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign16
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign17
+
 
 #if you needed to downsample
 #sconda genomics_general
