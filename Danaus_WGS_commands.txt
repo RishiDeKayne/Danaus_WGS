@@ -129,7 +129,6 @@ parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign16
 parallel -j 1 'qsub -cwd -N gatk_indel -V -pe smp64 1 -l h=biggar -b yes {}' :::: gatk_realign17
 
-
 #if you needed to downsample
 #sconda genomics_general
 #samtools view -s 0.30 -b sample.Dchry2.2.bwa.default.rmdup.bam > sample_downsampled30.Dchry2.2.bwa.default.rmdup.bam
@@ -144,18 +143,23 @@ mkdir -p /scratch/rdekayne/genotyping && cd /scratch/rdekayne/genotyping
 ls /scratch/rdekayne/gatk/*.bam > bam.list
 
 wc -l bam.list
-#90
+#174
+
+#move to genotpying folder
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping
 
 sconda genomics_general
 
 touch geno_realigned_1pop.txt
 #will use default of one homogenous population for calling
-cat /data/martin/genomics/analyses/Danaus_mapping/scaf.list | while read line
+cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/scaf.list | while read line
 do
-echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/genotyping/bam.list -r "${line}" | bcftools call -m -f GQ -O v | bgzip > /scratch/rdekayne/genotyping/"${line}".realigned.raw.vcf.gz && touch /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/genotyping/done_files/"${line}".realigned.raw.vcf.gz.done" >> geno_realigned_1pop.txt
+echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/genotyping/bam.list -r "${line}" | bcftools call -m -f GQ -O v | bgzip > /scratch/rdekayne/genotyping/"${line}".realigned.raw.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/done_files/"${line}".realigned.raw.vcf.gz.done" >> geno_realigned_1pop.txt
 done
 
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: geno_realigned_1pop.txt
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: geno_realigned_1pop.txt
+
+__HERE__
 
 #now move zipped vcfs back to 
 mkdir /data/martin/genomics/analyses/Danaus_popgen/Wild90/raw_chr_vcfs
