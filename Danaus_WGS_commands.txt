@@ -201,25 +201,63 @@ ls /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/*.gz > vcf_t
 
 bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
+#max 10% missing filter
+bcftools filter -Oz ./DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 313' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz
+
+bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
+## old 349214931
+
+bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | wc -l
+## old 11511103
 
 
+######################
+######################
+#	PCAS
+######################
+######################
 
 mkdir -p /scratch/rdekayne/PCAs && cd /scratch/rdekayne/PCAs
 
-#bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
+zcat ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | bgzip -c > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz && tabix ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz
 
-#bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz
+#remove small contigs
+grep "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > small_scafs.txt
 
-bcftools filter -Oz ./DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 162' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz
+awk '{print $1, $2}' small_scafs.txt | sed 's/ /\t0\t/g' > small_scafs_remove.txt
 
-bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
-#349214931
+cd ../genotyping
+bcftools view DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz -T ^small_scafs_remove.txt -Oz > DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz
+
+#############
+#1. full genome excluding chr 15
+
+grep "contig15.1" /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > chr15_info.txt
+
+awk '{print $1, $2}' chr15_info.txt | sed 's/ /\t0\t/g' > chr15_info_remove.txt
+
+#filter out chr15
+bcftools view DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf
+
+#make filtered PCAs
+sconda PCA
+make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 1_all
+
+
+#3708139 variants and 90 people pass filters and QC.
+
+#make unfiltered PCAs
+plink --vcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --make-bed --pca --out 1_all_noout
+
+plink --vcf ${VCF} --double-id --allow-extra-chr --set-missing-var-ids @:# --make-bed --pca --out ${PREFIX}_unfilt_out
+
+#10961897 variants and 90 people pass filters and QC.
+
+
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz | wc -l
 #2150522
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | wc -l
 #18817583
-bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz | wc -l
-#11511103
 
 mv *.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs
 
