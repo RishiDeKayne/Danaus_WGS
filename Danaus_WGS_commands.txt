@@ -193,27 +193,32 @@ parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: 
 
 #parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: make.chr.genos.txt
 
+ssh biggar
+sconda genomics_general
+
 #merge into a single file:
 ls /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/*.gz > vcf_to_merge.txt
 
-bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/combined_vcf/DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz
+bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
-ssh biggar
+
+
+
 mkdir -p /scratch/rdekayne/PCAs && cd /scratch/rdekayne/PCAs
 
 #bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 180' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz
 
 #bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 90' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz
 
-bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 162' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz
+bcftools filter -Oz ./DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 162' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz
 
-bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
+bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
 #349214931
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN180.vcf.gz | wc -l
 #2150522
 bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN90.vcf.gz | wc -l
 #18817583
-bcftools view -H Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz | wc -l
+bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN162.vcf.gz | wc -l
 #11511103
 
 mv *.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs
