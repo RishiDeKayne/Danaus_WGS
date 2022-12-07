@@ -4,7 +4,7 @@
 qstat -f -u "*"
 
 #1. Genotyping
-
+#2. PCAs
 
 
 ########
@@ -211,11 +211,9 @@ bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.
 ## old 11511103
 
 
-######################
-######################
-#	PCAS
-######################
-######################
+########
+#1. PCAs
+########
 
 mkdir -p /scratch/rdekayne/PCAs && cd /scratch/rdekayne/PCAs
 
@@ -237,11 +235,14 @@ grep "contig15.1" /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.f
 awk '{print $1, $2}' chr15_info.txt | sed 's/ /\t0\t/g' > chr15_info_remove.txt
 
 #filter out chr15
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf
+bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
 
 #make filtered PCAs
 sconda PCA
-make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 1_all
+./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 1_all
+
+plink --vcf ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --out 1_all_filt_noout
+
 
 #############
 #2. all chr15
@@ -249,8 +250,10 @@ make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_A
 #only keep chr15
 bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz
 
-make_pca.sh ../DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz 2_chr15
+./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz 2_chr15
 
+#201439 variants and 174 people pass filters and QC.
+#626148 variants and 174 people pass filters and QC.
 
 
 
