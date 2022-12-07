@@ -402,14 +402,16 @@ plink --vcf ../genotyping/$VCF_FILE --double-id --allow-extra-chr --autosome-num
 
 #6778071 variants and 174 samples pass filters and QC.
 
+cp admix_in* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/
+
 cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture
 touch admixture_run.txt
 for K in {2..12}
 do 
-echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/log${K}_admix_in.out.done" >> admixture_run.txt
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/admix_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/log${K}_admix_in.out.done" >> admixture_run.txt
 done
 
-parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=biggar -b yes {}' :::: admixture_run.txt
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run.txt
 
 #get error
 grep "CV error" *.o*
@@ -431,12 +433,12 @@ scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixtu
 
 #################
 ##now for chr15
-bcftools annotate --rename-chrs rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/merged_vcfs/Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15.b.vcf.gz | bgzip > Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_renamed.b.vcf.gz
+bcftools annotate --rename-chrs rename_file.txt ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz | bgzip > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_renamed.b.vcf.gz
 
-VCF_FILE=Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_CHR15_renamed.b.vcf.gz
+VCF_FILE=DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_renamed.b.vcf.gz
 
 # prune and create pca
-plink --vcf $VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+plink --vcf ../$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
 --make-bed --pca --out admix_chr15_in
 
 #487392 variants and 90 samples pass filters and QC.
