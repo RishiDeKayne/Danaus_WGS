@@ -201,7 +201,7 @@ ls /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/*.gz > vcf_t
 
 bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
-#max 10% missing filter
+#max 10% missing filter for SNPs
 bcftools filter -Oz ./DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 313' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz
 
 bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
@@ -209,6 +209,13 @@ bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
 
 bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | wc -l
 ## old 11511103
+
+#assess missing data %s across individuals
+
+vcftools --gzvcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz --missing-indv --out missing_AN313
+
+#if more than 20% missing
+awk '{if($5 >= 0.2){print}}' missing_AN313.imiss > missing_AN313_rejected_indivs.txt
 
 
 ########
