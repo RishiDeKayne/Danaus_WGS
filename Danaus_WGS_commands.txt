@@ -445,39 +445,39 @@ bcftools annotate --rename-chrs rename_file.txt ../genotyping/DC174_allchroms_ou
 VCF_FILE=DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_renamed.b.vcf.gz
 
 # prune and create pca
-plink --vcf ../$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+plink --vcf ../genotyping/$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
 --make-bed --pca --out admix_chr15_in
 
-#487392 variants and 90 samples pass filters and QC.
+#626148 variants and 174 samples pass filters and QC.
 
-cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/chr15
+cp admix_chr15_in* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/
+
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15
 touch admixture_chr15.run.txt
 for K in {2..12}
 do 
-echo "admixture --cv=20 -j8 /scratch/rdekayne/PCAs/admix_chr15_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_chr15_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/chr15/log${K}_admix_chr15_in.out.done" >> admixture_chr15.run.txt
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/admix_chr15_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_chr15_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15/log${K}_admix_chr15_in.out.done" >> admixture_chr15.run.txt
 done
 
-parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigshot -b yes {}' :::: admixture_chr15.run.txt
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_chr15.run.txt
 
-grep "CV error" *.o*
+grep "CV" *chr15_in.out
+log10_admix_chr15_in.out:CV error (K=10): 0.22718
+log11_admix_chr15_in.out:CV error (K=11): 0.24660
+log12_admix_chr15_in.out:CV error (K=12): 0.24211
+log2_admix_chr15_in.out:CV error (K=2): 0.23276
+log3_admix_chr15_in.out:CV error (K=3): 0.23117
+log4_admix_chr15_in.out:CV error (K=4): 0.21715
+log5_admix_chr15_in.out:CV error (K=5): 0.21292
+log6_admix_chr15_in.out:CV error (K=6): 0.21605
+log7_admix_chr15_in.out:CV error (K=7): 0.22601
+log8_admix_chr15_in.out:CV error (K=8): 0.22494
+log9_admix_chr15_in.out:CV error (K=9): 0.22462
 
-admixture.o112774:CV error (K=2): 0.31080
-admixture.o112775:CV error (K=3): 0.30768
-admixture.o112776:CV error (K=4): 0.29351
-admixture.o112777:CV error (K=5): 0.29437
-admixture.o112778:CV error (K=6): 0.29945
-admixture.o112779:CV error (K=7): 0.30119
-admixture.o112780:CV error (K=8): 0.32494
-admixture.o112781:CV error (K=9): 0.33887
-admixture.o112782:CV error (K=10): 0.36928
-admixture.o112783:CV error (K=11): 0.38326
-admixture.o112784:CV error (K=12): 0.38820
+cp 
 
-scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/*.Q .
-
-ssh bigshot
-cd /scratch/rdekayne/PCAs/
-mv * /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/admixture/
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15/*.Q .
 
 
 ###########
