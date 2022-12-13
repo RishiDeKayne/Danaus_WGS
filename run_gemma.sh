@@ -29,7 +29,7 @@ gemma -bfile relatedness -gk 2 -o ${OUT_NAME}
 
 cp output/* .
 
-cp ${FAM}* .
+cp ${FAM}.* .
 rm gemma_in.fam
 cp relatedness.fam gemma_in.fam
 
