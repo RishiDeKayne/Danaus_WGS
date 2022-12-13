@@ -689,25 +689,27 @@ mkdir forewing
 echo "SM16K641" > exclude_indivs.txt
 echo "MB18111" >> exclude_indivs.txt
 
+#make relatedness matrix using genome without chr 15
+bcftools view -S ^exclude_indivs.txt -o ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed.b.vcf.gz
+
+bgzip DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf
+
+plink --vcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out relatedness
+
+
+#now produce input for actual GWAS
 cd /scratch/rdekayne/PCAs
 bcftools annotate --rename-chrs rename_file.txt ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz | bgzip > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz
 
 cd /scratch/rdekayne/gemma
 cp ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz .
-bcftools view -S ^./relatedness/exclude_indivs.txt -o ./gemma_input.vcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz
+bcftools view -S ^./exclude_indivs.txt -o ./gemma_input.vcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz
 
-bgzip Dgemma_input.vcf > gemma_input.vcf .gz
+bgzip gemma_input.vcf
 
 sconda PCA
-plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_renamed_excluded.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+plink --vcf gemma_input.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
 #11449289 variants and 89 samples pass filters and QC.
-
-#get files from R script gemma_input.R and copy to folder
-#scp *.csv qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma
-#ssh bigbird
-#cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/*.csv .
-
-sconda gemma
 
 ######################1. hindwing colour
 cd background
