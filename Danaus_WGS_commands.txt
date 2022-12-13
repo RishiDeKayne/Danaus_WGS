@@ -653,7 +653,281 @@ admixture.o112864:CV error (K=11): 0.29393
 admixture.o112865:CV error (K=12): 0.30239
 
 
+########
+#4. Gemma - GWAS
+########
 
+#install GEMMA
+conda create -n gemma
+sconda gemma
+conda install -c bioconda gemma
+conda install -c conda-forge parallel
+
+#./gemma -bfile [prefix] -gk [num] -o [prefix]
+
+#-gk [num] - relatedness matrix to estimate, “-gk 1” calculates the centered relatedness matrix while “-gk 2” calculates the standardized relatedness matrix
+#-bfile [prefix] - specifies PLINK binary ped file prefix
+#-o [prefix] - specifies output file prefix
+
+#need to make PLINK ped file first
+
+#now we want file for relatedness matrix: ssh biggar 
+mkdir -p /scratch/rdekayne/gemma && cd /scratch/rdekayne/gemma
+
+#prepare inputs 
+
+mkdir background
+mkdir white
+mkdir forewing
+
+#run DC174_make_gemma_input.R
+#move output *csv to /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma
+
+#two samples are missing phenotypes: SM16K641 and MB18111
+
+#no phenotypes for one indiv so drop it
+echo "SM16K641" > exclude_indivs.txt
+echo "MB18111" >> exclude_indivs.txt
+
+cd /scratch/rdekayne/PCAs
+bcftools annotate --rename-chrs rename_file.txt ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz | bgzip > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz
+
+cd /scratch/rdekayne/gemma
+cp ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz .
+bcftools view -S ^./relatedness/exclude_indivs.txt -o ./gemma_input.vcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz
+
+bgzip Dgemma_input.vcf > gemma_input.vcf .gz
+
+sconda PCA
+plink --vcf Wild90_allchroms_output_filt_mindepth7_minqual30_mac4_AN162_nosmallcontigs_renamed_excluded.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+#11449289 variants and 89 samples pass filters and QC.
+
+#get files from R script gemma_input.R and copy to folder
+#scp *.csv qmaster:/data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma
+#ssh bigbird
+#cp /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/*.csv .
+
+sconda gemma
+
+######################1. hindwing colour
+cd background
+
+#take our hindwing phenotype file: background_colour_values.csv and add to fam file in 6th column
+
+awk '{print $1,$2,$3,$4,$5}' ../relatedness/relatedness.fam > relatedness_start.txt
+
+paste relatedness_start.txt ../background_colour_values.csv > pre_background.fam
+
+cp ../relatedness/relatedness* .
+rm /scratch/rdekayne/gemma/background/relatedness.fam 
+
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > /scratch/rdekayne/gemma/background/relatedness.fam
+
+gemma -bfile relatedness -gk 2 -o gemma_in_rel_background
+
+cp output/* .
+
+cp ../gemma_in* .
+rm gemma_in.fam
+cp relatedness.fam gemma_in.fam
+
+gemma -bfile gemma_in -k gemma_in_rel_background.sXX.txt -lmm 4 -o background
+
+8139694 snps 
+0.05/8139694=6.14273706e-9
+
+cd output
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' background.assoc.txt` ; echo $min
+#1.448240e-12
+
+awk '{if($15 < 6.14273706e-9){print}}' background.assoc.txt > background.assoc_significant.txt
+
+wc -l background.assoc_significant.txt
+#565
+
+grep "1.448240e-12" background.assoc_significant.txt
+17      chr17:6303063   6303063 3       C       T       0.337   1.077848e+00    6.368859e-02    -4.860491e+01   1.000000e+05    1.000000e+05    2.923812e-29    4.880686e-30    1.448240e-12
+
+awk '{print $1,$3,$15}' background.assoc.txt > background.assoc_toplot.txt
+
+cp background.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+
+
+#####now just using gemma_in files
+mkdir raw & cd raw
+awk '{print $1,$2,$3,$4,$5}' ../../../gemma_in.fam > in_start.txt
+paste in_start.txt ../../../background_colour_values.csv > pre_background.fam
+
+cp ../../../gemma_in* .
+rm gemma_in.fam
+
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > gemma_in.fam
+
+gemma -bfile gemma_in -gk 2 -o gemma_in_RAW_background
+
+cp output/* .
+
+gemma -bfile gemma_in -k gemma_in_RAW_background.sXX.txt -lmm 4 -o background_RAW
+
+cd output
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' background_RAW.assoc.txt` ; echo $min
+#2.562178e-12
+
+awk '{if($15 < 6.14273706e-9){print}}' background_RAW.assoc.txt > background_RAW.assoc_significant.txt
+
+wc -l background_RAW.assoc_significant.txt
+#320
+
+grep "2.562178e-12" background_RAW.assoc_significant.txt
+17      chr17:6303063   6303063 3       C       T       0.337   1.069492e+00    6.715354e-02    -4.812701e+01   1.000000e+05    1.000000e+05    1.612734e-27    3.003732e-28    2.562178e-12
+
+awk '{print $1,$3,$15}' background_RAW.assoc.txt > background_RAW.assoc_toplot.txt
+
+cp background_RAW.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+
+#############2. forewing patch
+cd forewing
+awk '{print $1,$2,$3,$4,$5}' ../relatedness/relatedness.fam > relatedness_start.txt
+
+paste relatedness_start.txt ../forewing_band_values.csv > pre_background.fam
+
+cp ../relatedness/relatedness* .
+rm /scratch/rdekayne/gemma/forewing/relatedness.fam 
+
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > /scratch/rdekayne/gemma/forewing/relatedness.fam
+
+gemma -bfile relatedness -gk 2 -o gemma_in_rel_forewing
+
+cp output/* .
+
+cp ../gemma_in* .
+rm gemma_in.fam
+cp relatedness.fam gemma_in.fam
+
+gemma -bfile gemma_in -k gemma_in_rel_forewing.sXX.txt -lmm 4 -o forewing
+
+8139694 snps 
+0.05/8139694=6.14273706e-9
+
+cd output
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' forewing.assoc.txt` ; echo $min
+#3.017708e-13
+
+awk '{if($15 < 6.14273706e-9){print}}' forewing.assoc.txt > forewing.assoc_significant.txt
+
+wc -l forewing.assoc_significant.txt
+#3981
+
+grep "3.017708e-13" forewing.assoc_significant.txt
+17      chr17:14120957  14120957        4       A       G       0.206   -1.039864e+00   5.041917e-02    -1.037279e+01   1.000000e+05    1.000000e+05    2.969811e-35    3.407885e-36    3.017708e-13
+
+awk '{print $1,$3,$15}' forewing.assoc.txt > forewing.assoc_toplot.txt
+
+cp forewing.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+
+#####now just using gemma_in files
+mkdir -p raw && cd raw
+awk '{print $1,$2,$3,$4,$5}' ../../../gemma_in.fam > in_start.txt
+paste in_start.txt ../../../forewing_band_values.csv > pre_background.fam
+
+cp ../../../gemma_in* .
+rm gemma_in.fam
+
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > gemma_in.fam
+
+gemma -bfile gemma_in -gk 2 -o gemma_in_RAW_forewing
+
+cp output/* .
+
+gemma -bfile gemma_in -k gemma_in_RAW_forewing.sXX.txt -lmm 4 -o forewing_RAW
+
+cd output
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' forewing_RAW.assoc.txt` ; echo $min
+#4.479271e-13
+
+awk '{if($15 < 6.14273706e-9){print}}' forewing_RAW.assoc.txt > forewing_RAW.assoc_significant.txt
+
+wc -l forewing_RAW.assoc_significant.txt
+#3465
+
+grep "4.479271e-13" forewing_RAW.assoc_significant.txt
+17      chr17:14120957  14120957        4       A       G       0.206   -1.031699e+00   5.286132e-02    -1.049443e+01   1.000000e+05    1.000000e+05    1.553335e-33    1.984044e-34    4.479271e-13
+
+awk '{print $1,$3,$15}' forewing_RAW.assoc.txt > foreground_RAW.assoc_toplot.txt
+
+cp foreground_RAW.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+
+#########3. white hindwing
+cd white
+awk '{print $1,$2,$3,$4,$5}' ../relatedness/relatedness.fam > relatedness_start.txt
+
+paste relatedness_start.txt ../white_values.csv > pre_background.fam
+
+cp ../relatedness/relatedness* .
+rm /scratch/rdekayne/gemma/white/relatedness.fam 
+
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > /scratch/rdekayne/gemma/white/relatedness.fam
+
+gemma -bfile relatedness -gk 2 -o gemma_in_rel_white
+
+cp output/* .
+
+cp ../gemma_in* .
+rm gemma_in.fam
+cp relatedness.fam gemma_in.fam
+
+gemma -bfile gemma_in -k gemma_in_rel_white.sXX.txt -lmm 4 -o white
+
+8139694 snps 
+0.05/8139694=6.14273706e-9
+
+cd output
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' white.assoc.txt` ; echo $min
+#6.292550e-11
+
+awk '{if($15 < 6.14273706e-9){print}}' white.assoc.txt > white.assoc_significant.txt
+
+wc -l white.assoc_significant.txt
+#349
+
+grep "6.292550e-11" white.assoc_significant.txt
+6       chr6:1891435    1891435 2       G       A       0.069   1.602184e+00    1.332717e-01    -4.101399e+01   1.000000e+05    1.000000e+05    3.461568e-20    1.025351e-20    6.292550e-11
+
+awk '{print $1,$3,$15}' white.assoc.txt > white.assoc_toplot.txt
+
+cp white.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+
+#####now just using gemma_in files
+mkdir -p raw && cd raw
+awk '{print $1,$2,$3,$4,$5}' ../../../gemma_in.fam > in_start.txt
+paste in_start.txt ../../../white_values.csv > pre_background.fam
+
+cp ../../../gemma_in* .
+rm gemma_in.fam
+
+awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > gemma_in.fam
+
+gemma -bfile gemma_in -gk 2 -o gemma_in_RAW_white
+
+cp output/* .
+
+gemma -bfile gemma_in -k gemma_in_RAW_white.sXX.txt -lmm 4 -o white_RAW
+
+cd output
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' white_RAW.assoc.txt` ; echo $min
+#8.380470e-11
+
+awk '{if($15 < 6.14273706e-9){print}}' white_RAW.assoc.txt > white_RAW.assoc_significant.txt
+
+wc -l white_RAW.assoc_significant.txt
+#250
+
+grep "8.380470e-11" white_RAW.assoc_significant.txt
+6       chr6:1891435    1891435 2       G       A       0.069   1.592705e+00    1.354196e-01    -4.115372e+01   1.000000e+05    1.000000e+05    1.136470e-19    3.478717e-20    8.380470e-11
+
+awk '{print $1,$3,$15}' white_RAW.assoc.txt > white_RAW.assoc_toplot.txt
+
+cp white_RAW.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
 
 
 
