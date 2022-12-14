@@ -719,59 +719,19 @@ plink --vcf gemma_input.vcf.gz --double-id --allow-extra-chr --autosome-num 41 -
 ######################1. hindwing colour
 ./run_gemma.sh /scratch/rdekayne/gemma/relatedness /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/background_colour_values.csv /scratch/rdekayne/gemma/background rel_background
 
-#significance threshold:
-#8139694 snps 
-#0.05/=
-
-awk '{if($15 < 6.14273706e-9){print}}' background.assoc.txt > background.assoc_significant.txt
-
-wc -l background.assoc_significant.txt
-#565
-
-grep "1.448240e-12" background.assoc_significant.txt
-17      chr17:6303063   6303063 3       C       T       0.337   1.077848e+00    6.368859e-02    -4.860491e+01   1.000000e+05    1.000000e+05    2.923812e-29    4.880686e-30    1.448240e-12
-
-awk '{print $1,$3,$15}' background.assoc.txt > background.assoc_toplot.txt
-
-cp background.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+awk '{print $1,$3,$15}' ./background/output/rel_background_background_full.assoc.txt > background.assoc_toplot.txt
 
 ######################2. forewing colour
 ./run_gemma.sh /scratch/rdekayne/gemma/relatedness /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/forewing_band_values.csv /scratch/rdekayne/gemma/forewing rel_forewing
 
-#significance threshold:
-#8139694 snps 
-#0.05/=
-
-awk '{if($15 < 6.14273706e-9){print}}' background.assoc.txt > background.assoc_significant.txt
-
-wc -l background.assoc_significant.txt
-#565
-
-grep "1.448240e-12" background.assoc_significant.txt
-17      chr17:6303063   6303063 3       C       T       0.337   1.077848e+00    6.368859e-02    -4.860491e+01   1.000000e+05    1.000000e+05    2.923812e-29    4.880686e-30    1.448240e-12
-
-awk '{print $1,$3,$15}' background.assoc.txt > background.assoc_toplot.txt
-
-cp background.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+awk '{print $1,$3,$15}' ./forewing/output/rel_forewing_background_full.assoc.txt > forewing.assoc_toplot.txt
 
 ######################3. white hindwing
 ./run_gemma.sh /scratch/rdekayne/gemma/relatedness /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/white_values.csv /scratch/rdekayne/gemma/white rel_white
 
-#significance threshold:
-#8139694 snps 
-#0.05/=
+awk '{print $1,$3,$15}' ./white/output/rel_white_background_full.assoc.txt > white.assoc_toplot.txt
 
-awk '{if($15 < 6.14273706e-9){print}}' background.assoc.txt > background.assoc_significant.txt
-
-wc -l background.assoc_significant.txt
-#565
-
-grep "1.448240e-12" background.assoc_significant.txt
-17      chr17:6303063   6303063 3       C       T       0.337   1.077848e+00    6.368859e-02    -4.860491e+01   1.000000e+05    1.000000e+05    2.923812e-29    4.880686e-30    1.448240e-12
-
-awk '{print $1,$3,$15}' background.assoc.txt > background.assoc_toplot.txt
-
-cp background.assoc_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/Wild90/analysis/gemma/
+cp *_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
 
 FAM=/scratch/rdekayne/gemma/gemma_in
 PHENO=/scratch/rdekayne/gemma/background_colour_values.csv
