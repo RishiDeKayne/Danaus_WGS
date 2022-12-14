@@ -16,8 +16,8 @@ cd ${WORK_DIR}
 awk '{print $1,$2,$3,$4,$5}' ${FAM}.fam > in_start.txt
 paste in_start.txt ${PHENO} > pre_background.fam
 
-cp ${REL}* .
-rm gemma_in.fam
+cp ${FAM}.* .
+rm -f gemma_in.fam
 
 awk '{print $1,$2,$3,$4,$5,$7}' ./pre_background.fam > gemma_in.fam
 
