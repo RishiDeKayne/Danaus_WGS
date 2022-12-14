@@ -34,3 +34,9 @@ rm gemma_in.fam
 cp relatedness.fam gemma_in.fam
 
 gemma -bfile gemma_in -k ${OUT_NAME}.sXX.txt -lmm 4 -o ${OUT_NAME}_background_full
+
+echo ${OUT_NAME} > summary.${OUT_NAME}.txt
+grep "analyzed" output/${OUT_NAME}.log.txt >> summary.${OUT_NAME}.txt
+echo 'highest snp' >> summary.${OUT_NAME}.txt
+min=`awk 'BEGIN{a=1000}{if ($15<0+a) a=$15} END{print a}' output/${OUT_NAME}_background_full.assoc.txt` ; echo $min >> summary.${OUT_NAME}.txt
+
