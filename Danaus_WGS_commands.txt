@@ -818,7 +818,7 @@ awk '{print $1,$3,$15}' ./white/output/rel_white_bin_background_full.assoc.txt >
 
 awk '{print $1,$3,$15}' ./background_RAW/output/raw_background_bin.assoc.txt > backgroundRAW.bin.assoc_toplot.txt
 awk '{print $1,$3,$15}' ./forewing_RAW/output/raw_forewing_bin.assoc.txt > forewingRAW.bin.assoc_toplot.txt
-awk '{print $1,$3,$15}' ./white_RAW/output/raw_white.assoc_bin.txt > whiteRAW.bin.assoc_toplot.txt
+awk '{print $1,$3,$15}' ./white_RAW/output/raw_white_bin.assoc.txt > whiteRAW.bin.assoc_toplot.txt
 
 cat */*summary* > all_gemma_bin_summaries.txt
 
