@@ -824,6 +824,94 @@ cat */*summary* > all_gemma_bin_summaries.txt
 
 cp *_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
 
+##RWANDA SAMPLES ONLY
+#get rwanda sample IDs: 
+rwanda_samples.txt
+
+mkdir -p /scratch/rdekayne/gemma/rwanda && cd /scratch/rdekayne/gemma/rwanda
+
+#make relatedness matrix using genome without chr 15
+bcftools view -S rwanda_samples.txt -o ./rwanda_samples_nochr15.b.vcf ../DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf.gz
+
+bgzip rwanda_samples_nochr15.b.vcf
+
+plink --vcf rwanda_samples_nochr15.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out relatedness
+#14575888 variants and 51 samples pass filters and QC.
+
+
+#now produce input for actual GWAS
+bcftools view -S rwanda_samples.txt -o ./rwanda_samples.b.vcf ../gemma_input.vcf.gz
+
+bgzip gemma_input.vcf
+
+sconda PCA
+plink --vcf rwanda_samples.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+#15202036 variants and 51 samples pass filters and QC.
+
+mkdir background
+mkdir white
+mkdir forewing
+mkdir background_RAW
+mkdir white_RAW
+mkdir forewing_RAW
+
+cp ../run_gemma.sh .
+
+grep -f rwanda_samples.txt /scratch/rdekayne/gemma/background_colour_values_sorted.csv | sort -k1 > ./background_colour_values_sorted_rwanda.csv
+grep -f rwanda_samples.txt /scratch/rdekayne/gemma/forewing_band_values_sorted.csv | sort -k1 > ./forewing_band_values_sorted_rwanda.csv
+grep -f rwanda_samples.txt /scratch/rdekayne/gemma/white_values_sorted.csv | sort -k1 > ./white_values_sorted_rwanda.csv
+
+##REGULAR
+######################1. hindwing colour
+./run_gemma.sh /scratch/rdekayne/gemma/rwanda/relatedness /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/background_colour_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/background rel_background_rwanda
+
+######################2. forewing colour
+./run_gemma.sh /scratch/rdekayne/gemma/rwanda/relatedness /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/forewing_band_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/forewing rel_forewing_rwanda
+
+######################3. white hindwing
+./run_gemma.sh /scratch/rdekayne/gemma/rwanda/relatedness /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/white_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/white rel_white_rwanda
+
+
+######################4. background hindwing colour RAW
+./run_gemma_raw.sh /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/background_colour_values_sorted.csv /scratch/rdekayne/gemma/background_RAW raw_background
+
+######################5. forewing colour RAW
+./run_gemma_raw.sh /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/forewing_band_values_sorted.csv /scratch/rdekayne/gemma/forewing_RAW raw_forewing
+
+######################6. white hindwing RAW
+./run_gemma_raw.sh /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/white_values_sorted.csv /scratch/rdekayne/gemma/white_RAW raw_white
+
+
+awk '{print $1,$3,$15}' ./background/output/rel_background_background_full.assoc.txt > background.assoc_toplot.txt
+awk '{print $1,$3,$15}' ./forewing/output/rel_forewing_background_full.assoc.txt > forewing.assoc_toplot.txt
+awk '{print $1,$3,$15}' ./white/output/rel_white_background_full.assoc.txt > white.assoc_toplot.txt
+
+awk '{print $1,$3,$15}' ./background_RAW/output/raw_background.assoc.txt > backgroundRAW.assoc_toplot.txt
+awk '{print $1,$3,$15}' ./forewing_RAW/output/raw_forewing.assoc.txt > forewingRAW.assoc_toplot.txt
+awk '{print $1,$3,$15}' ./white_RAW/output/raw_white.assoc.txt > whiteRAW.assoc_toplot.txt
+
+cat */*summary* > all_gemma_summaries.txt
+
+cp *_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
