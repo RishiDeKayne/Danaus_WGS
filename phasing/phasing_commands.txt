@@ -63,6 +63,12 @@ done
 sconda genomics_general
 parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: all_whatshap_prep.txt
 
+#now tidy output
+rm -f *.location.txt
+
+
+
+
 cat whatshap_run_* > all_whatshap_run_commands_all_indiv_all_scaffolds.txt
 cp all_whatshap_run_commands_all_indiv_all_scaffolds.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/
 
