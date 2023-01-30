@@ -22,13 +22,18 @@ sconda genomics_general
 
 head -n1 scaf.list > test.scaf
 
+cat indiv.list | while read indiv
+do
+echo "${indiv}"
+grep "${indiv}" /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.bam.list > "${indiv}".bam.location.txt
+done
+
 cat test.scaf | while read scaf
 do
 touch whatshap_run_"${scaf}".txt
 cat indiv.list | while read indiv
 do
 echo "${indiv}"
-grep "${indiv}" /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.bam.list > "${indiv}".bam.location.txt
 INDIV_BAM=`cat "${indiv}".bam.location.txt`
 bcftools view -s "${indiv}" -r "${scaf}" -o ./"${indiv}"."${scaf}".vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz 
 bgzip -c ./"${indiv}"."${scaf}".vcf > "${indiv}"."${scaf}".vcf.gz && rm -f "${indiv}"."${scaf}".vcf
