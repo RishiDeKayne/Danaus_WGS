@@ -33,7 +33,7 @@ cd /scratch/rdekayne/whatshap_DC174
 
 cat x00_scaffs.txt | while read scaf
 do
-	touch whatshap_run_"${scaf}".txt
+	touch whatshap_run_$scaf.txt
 	cat indiv.list | while read indiv
 do
 	echo "${indiv}"
@@ -44,7 +44,7 @@ do
 	samtools view -b /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/"${INDIV_BAM}" "${scaf}" > "${INDIV_BAM}"."${scaf}".bam
 	samtools sort "${INDIV_BAM}"."${scaf}".bam > "${INDIV_BAM}"."${scaf}".sorted.bam && samtools index "${INDIV_BAM}"."${scaf}".sorted.bam
 	rm -f "${INDIV_BAM}"."${scaf}".bam
-	echo 'whatshap phase -o ./phased/'"${indiv}"'.'"${scaf}"'.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'.'"${scaf}"'.vcf.gz '"${INDIV_BAM}"'.'"${scaf}"'.sorted.bam --ignore-read-groups --chromosome '"${scaf}"' --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'.'"${scaf}"'.done' >> whatshap_run_'"${scaf}"'.txt
+	echo 'whatshap phase -o ./phased/'"${indiv}"'.'"${scaf}"'.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'.'"${scaf}"'.vcf.gz '"${INDIV_BAM}"'.'"${scaf}"'.sorted.bam --ignore-read-groups --chromosome '"${scaf}"' --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'.'"${scaf}"'.done' >> whatshap_run_$scaf.txt
 done
 done
 
@@ -70,7 +70,6 @@ sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_DC174 \&\& whatshap ph
 
 sconda whatshap
 parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: all_whatshap_run_commands_all_indiv_all_scaffolds.txt
-
 
 
 
