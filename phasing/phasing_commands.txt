@@ -9,7 +9,6 @@ sconda genomics_general
 
 #get an individual list
 bcftools query -l /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz > indiv.list
-head -n1 indiv.list > test.list
 
 #list of bam files is at: /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.bam.list
 
@@ -22,13 +21,14 @@ sconda genomics_general
 
 split -l 4 --numeric-suffixes --additional-suffix="_scaffs.txt" scaf.list
 
+#get bam locations for each indiv
 cat indiv.list | while read indiv
 do
 echo "${indiv}"
 grep "${indiv}" /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.bam.list > "${indiv}".bam.location.txt
 done
 
-#copy the following for each partition: e.g. whatshap00_prep.sh 
+#use the following code for each partition: e.g. whatshap00_prep.sh (can find these in phasing directory)
 cd /scratch/rdekayne/whatshap_DC174
 
 cat x00_scaffs.txt | while read scaf
@@ -48,7 +48,7 @@ do
 done
 done
 
-#copy all to bigshot
+#copy all submission scripts and scaffold lists to bigshot
 ssh bigshot
 cd /scratch/rdekayne/whatshap_DC174
 cp /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/submissions/*.sh .
