@@ -20,7 +20,7 @@ grep -v "contig0" full_scaf.list > scaf.list
 #now run on full data
 sconda genomics_general
 
-head -n1 scaf.list > test.scaf
+split -l 4 --numeric-suffixes --additional-suffix="_scaffs.txt" scaf.list
 
 cat indiv.list | while read indiv
 do
@@ -28,29 +28,48 @@ echo "${indiv}"
 grep "${indiv}" /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.bam.list > "${indiv}".bam.location.txt
 done
 
-cat test.scaf | while read scaf
+#copy the following for each partition: e.g. whatshap00_prep.sh 
+cd /scratch/rdekayne/whatshap_DC174
+
+cat x00_scaffs.txt | while read scaf
 do
-touch whatshap_run_"${scaf}".txt
-cat indiv.list | while read indiv
+	touch whatshap_run_"${scaf}".txt
+	cat indiv.list | while read indiv
 do
-echo "${indiv}"
-INDIV_BAM=`cat "${indiv}".bam.location.txt`
-bcftools view -s "${indiv}" -r "${scaf}" -o ./"${indiv}"."${scaf}".vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz 
-bgzip -c ./"${indiv}"."${scaf}".vcf > "${indiv}"."${scaf}".vcf.gz && rm -f "${indiv}"."${scaf}".vcf
-tabix ./"${indiv}"."${scaf}".vcf.gz
-samtools view -b /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/"${INDIV_BAM}" "${scaf}" > "${INDIV_BAM}"."${scaf}".bam
-samtools sort "${INDIV_BAM}"."${scaf}".bam > "${INDIV_BAM}"."${scaf}".sorted.bam && samtools index "${INDIV_BAM}"."${scaf}".sorted.bam
-rm -f "${INDIV_BAM}"."${scaf}".bam
-echo 'whatshap phase -o ./phased/'"${indiv}"'."${scaf}".phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'."${scaf}".vcf.gz '"${INDIV_BAM}"'."${scaf}".sorted.bam --ignore-read-groups --chromosome "${scaf}" --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'."${scaf}".done' >> whatshap_run_"${scaf}".txt
+	echo "${indiv}"
+	INDIV_BAM=`cat "${indiv}".bam.location.txt`
+	bcftools view -s "${indiv}" -r "${scaf}" -o ./"${indiv}"."${scaf}".vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz 
+	bgzip -c ./"${indiv}"."${scaf}".vcf > "${indiv}"."${scaf}".vcf.gz && rm -f "${indiv}"."${scaf}".vcf
+	tabix ./"${indiv}"."${scaf}".vcf.gz
+	samtools view -b /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/"${INDIV_BAM}" "${scaf}" > "${INDIV_BAM}"."${scaf}".bam
+	samtools sort "${INDIV_BAM}"."${scaf}".bam > "${INDIV_BAM}"."${scaf}".sorted.bam && samtools index "${INDIV_BAM}"."${scaf}".sorted.bam
+	rm -f "${INDIV_BAM}"."${scaf}".bam
+	echo 'whatshap phase -o ./phased/'"${indiv}"'.'"${scaf}"'.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'.'"${scaf}"'.vcf.gz '"${INDIV_BAM}"'.'"${scaf}"'.sorted.bam --ignore-read-groups --chromosome '"${scaf}"' --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'.'"${scaf}"'.done' >> whatshap_run_'"${scaf}"'.txt
 done
 done
 
-cp whatshap_run.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/
+#copy all to bigshot
+ssh bigshot
+cd /scratch/rdekayne/whatshap_DC174
+cp /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/submissions/*.sh .
+cp /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/submissions/*_scaffs.txt .
 
-sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_DC174 \&\& whatshap phase/g' whatshap_run.txt
+touch all_whatshap_prep.txt
+for i in *.sh
+do
+echo 'cd /scratch/rdekayne/whatshap_DC174 && ./'"$i"'' >> all_whatshap_prep.txt
+done
+
+sconda genomics_general
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: all_whatshap_prep.txt
+
+cat whatshap_run_* > all_whatshap_run_commands_all_indiv_all_scaffolds.txt
+cp all_whatshap_run_commands_all_indiv_all_scaffolds.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/
+
+sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_DC174 \&\& whatshap phase/g' all_whatshap_run_commands_all_indiv_all_scaffolds.txt
 
 sconda whatshap
-parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigbird -b yes {}' :::: whatshap_run.txt
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: all_whatshap_run_commands_all_indiv_all_scaffolds.txt
 
 
 
