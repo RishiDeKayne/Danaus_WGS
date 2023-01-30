@@ -2,6 +2,8 @@
 
 #on bigbird
 mkdir -p whatshap_DC174 && cd whatshap_DC174
+mkdir done
+mkdir phased
 
 sconda genomics_general
 
@@ -11,25 +13,39 @@ head -n1 indiv.list > test.list
 
 #list of bam files is at: /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.bam.list
 
+#get contig list
+cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
+grep -v "contig0" full_scaf.list > scaf.list
+
 #now run on full data
 sconda genomics_general
 
-touch whatshap_test_run.txt
-cat test.list | while read indiv
+head -n1 scaf.list > test.scaf
+
+cat test.scaf | while read scaf
+do
+touch whatshap_run_"${scaf}".txt
+cat indiv.list | while read indiv
 do
 echo "${indiv}"
 grep "${indiv}" /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.bam.list > "${indiv}".bam.location.txt
 INDIV_BAM=`cat "${indiv}".bam.location.txt`
-bcftools view -s "${indiv}" -r contig15.1 -o ./"${indiv}".contig15.1.vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz 
-bgzip -c ./"${indiv}".contig15.1.vcf > "${indiv}".contig15.1.vcf.gz && rm -f "${indiv}".contig15.1.vcf
-tabix ./"${indiv}".contig15.1.vcf.gz
-samtools view -b /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/"${INDIV_BAM}" contig15.1 > "${INDIV_BAM}".contig15.1.bam
-samtools sort "${INDIV_BAM}".contig15.1.bam > "${INDIV_BAM}".contig15.1.sorted.bam && samtools index "${INDIV_BAM}".contig15.1.sorted.bam
-rm -f "${INDIV_BAM}".contig15.1.bam
-echo 'whatshap phase -o ./phased/'"${indiv}"'.contig15.1.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'.contig15.1.vcf.gz '"${INDIV_BAM}"'.contig15.1.sorted.bam --ignore-read-groups --chromosome contig15.1 --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'.contig15.1.done' >> whatshap_run.txt
+bcftools view -s "${indiv}" -r "${scaf}" -o ./"${indiv}"."${scaf}".vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz 
+bgzip -c ./"${indiv}"."${scaf}".vcf > "${indiv}"."${scaf}".vcf.gz && rm -f "${indiv}"."${scaf}".vcf
+tabix ./"${indiv}"."${scaf}".vcf.gz
+samtools view -b /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/"${INDIV_BAM}" "${scaf}" > "${INDIV_BAM}"."${scaf}".bam
+samtools sort "${INDIV_BAM}"."${scaf}".bam > "${INDIV_BAM}"."${scaf}".sorted.bam && samtools index "${INDIV_BAM}"."${scaf}".sorted.bam
+rm -f "${INDIV_BAM}"."${scaf}".bam
+echo 'whatshap phase -o ./phased/'"${indiv}"'."${scaf}".phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa ./'"${indiv}"'."${scaf}".vcf.gz '"${INDIV_BAM}"'."${scaf}".sorted.bam --ignore-read-groups --chromosome "${scaf}" --sample='"${indiv}"' && touch ./done/phased.'"${indiv}"'."${scaf}".done' >> whatshap_run_"${scaf}".txt
+done
 done
 
+cp whatshap_run.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/
 
+sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_DC174 \&\& whatshap phase/g' whatshap_run.txt
+
+sconda whatshap
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigbird -b yes {}' :::: whatshap_run.txt
 
 
 
