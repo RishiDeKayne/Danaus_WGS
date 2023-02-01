@@ -66,16 +66,41 @@ parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' ::::
 #now tidy output
 rm -f *.location.txt
 
-
-
-
 cat whatshap_run_* > all_whatshap_run_commands_all_indiv_all_scaffolds.txt
+
 cp all_whatshap_run_commands_all_indiv_all_scaffolds.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/
 
 sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_DC174 \&\& whatshap phase/g' all_whatshap_run_commands_all_indiv_all_scaffolds.txt
 
+cut -d ' ' -f 7 all_whatshap_run_commands_all_indiv_all_scaffolds.txt > unziped.vcf.names.txt
+
+sed -i 's/\.\// \&\& gzip \.\//g' unziped.vcf.names.txt
+
+paste -d'\0' all_whatshap_run_commands_all_indiv_all_scaffolds.txt unziped.vcf.names.txt > full_whatshap_run_and_zip.txt
+
 sconda whatshap
-parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: all_whatshap_run_commands_all_indiv_all_scaffolds.txt
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: full_whatshap_run_and_zip.txt
+
+#get stats:
+touch 01_individual_name.txt
+touch 02_contig_name.txt
+touch 03_block_count.txt
+touch 04_largest_block.txt
+
+for i in *.e*
+do
+echo $i 
+grep "Processing individual" $i | sed 's/---- Processing individual //g' >> 01_individual_name.txt
+grep "contig" $i | sed 's/======== Working on chromosome//g' | sed 's/ //g' | sed "s/'//g" >> 02_contig_name.txt
+grep "No. of phased blocks" $i | sed 's/No. of phased blocks: //g' >> 03_block_count.txt
+grep "Largest block contains" $i | sed 's/Largest block contains //g' >> 04_largest_block.txt
+done 
+
+paste 01_individual_name.txt 02_contig_name.txt 03_block_count.txt 04_largest_block.txt > full_whatshap_stats.txt
+
+
+#now want to merge phased chromosomes
+
 
 
 
