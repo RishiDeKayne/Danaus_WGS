@@ -89,7 +89,7 @@ touch 04_largest_block.txt
 
 for i in *.e*
 do
-echo $i 
+#echo $i 
 grep "Processing individual" $i | sed 's/---- Processing individual //g' >> 01_individual_name.txt
 grep "contig" $i | sed 's/======== Working on chromosome//g' | sed 's/ //g' | sed "s/'//g" >> 02_contig_name.txt
 grep "No. of phased blocks" $i | sed 's/No. of phased blocks: //g' >> 03_block_count.txt
@@ -98,6 +98,12 @@ done
 
 paste 01_individual_name.txt 02_contig_name.txt 03_block_count.txt 04_largest_block.txt > full_whatshap_stats.txt
 
+sed -i 's/\t/ /g' full_whatshap_stats.txt
+sed -i 's/(//g' full_whatshap_stats.txt
+sed -i 's/%//g' full_whatshap_stats.txt
+
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/full_whatshap_stats.txt .
 
 #now want to merge phased chromosomes
 
