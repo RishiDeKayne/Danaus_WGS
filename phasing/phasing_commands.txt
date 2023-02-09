@@ -106,6 +106,28 @@ sed -i 's/%//g' full_whatshap_stats.txt
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/full_whatshap_stats.txt .
 
 #now want to merge phased chromosomes
+cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
+grep -v "contig0" full_scaf.list > scaf.list
+
+ssh bigshot
+cd /scratch/rdekayne/whatshap_DC174/phased 
+
+for i in *.vcf.gz
+do
+gunzip $i | tabix | bgzip
+done
+
+touch merge_phased_chr_vcfs.txt
+cat scaf.list | while read contig
+do
+echo "cd /scratch/rdekayne/whatshap_DC174/phased && gunzip *."${contig}".*.vcf.gz && ls *."${contig}".*.vcf | xargs -n1 bgzip && ls *."${contig}".*.vcf.gz | xargs -n1 tabix && ls ./*."${contig}".*.vcf.gz > ./"${contig}".list && bcftools merge -o ./combine/"${contig}".full.phased.vcf -l ./"${contig}".list &&  cd combine && bgzip ./"${contig}".full.phased.vcf && tabix ./"${contig}".full.phased.vcf.gz" >> merge_phased_chr_vcfs.txt
+done
+
+tail -n1 merge_phased_chr_vcfs.txt > test.txt
+
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: test.txt
+
+
 
 
 
