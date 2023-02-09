@@ -931,13 +931,23 @@ mindepth7_minqual30_AN313
 cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
 grep -v "contig0" full_scaf.list > scaf.list
 
-touch filt_vcf_and_geno.txt
+touch filt_vcf_and_geno_part1.txt
 cat scaf.list | while read contig
 do
-echo "bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz -e 'AN < 313' | bcftools sort -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".done" >> filt_vcf_and_geno.txt
+echo "bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz -e 'AN < 313' | bcftools sort -Oz -o /scratch/rdekayne/geno/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz" >> filt_vcf_and_geno_part1.txt
 done
 
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp 1 -l h=c4 -b yes {}' :::: filt_vcf_and_geno.txt
+head -n1 filt_vcf_and_geno_part1.txt > test.txt
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: test.txt
+
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: filt_vcf_and_geno.txt
+
+
+&& python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".done" >> filt_vcf_and_geno.txt
+done
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: filt_vcf_and_geno.txt
 
 #now calculate pi in a loop
 #genomics.py needs to be here:
