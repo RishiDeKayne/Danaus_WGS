@@ -916,6 +916,38 @@ cat */*summary* > all_gemma_summaries_rwanda.txt
 cp *_toplot_rwanda.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
 
 
+######
+Pi calculations
+######
+
+#to calculate pi genome-wide across country samples we need to have filtered raw vcfs which include invariant sites
+#we will then split these chromosomal vcfs by country
+
+#starting with contig2 as a test
+
+#the filtering we want is:
+mindepth7_minqual30_AN313
+
+echo 'contig2.1' > test.contig
+
+cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
+grep -v "contig0" full_scaf.list > scaf.list
+
+touch filt_vcf_and_geno.txt
+cat test.contig | while read contig
+do
+echo "bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz -e 'AN < 313' | bcftools sort -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".done" > filt_vcf_and_geno.txt
+done
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp 1 -l h=c4 -b yes {}' :::: filt_vcf_and_geno.txt
+
+#now calculate pi in a loop
+#genomics.py needs to be here:
+
+cp ../genomics_general/genomics.py .
+
+python popgenWindows.py -w 100000 -m 5000 -g input.geno.gz -o test.output.csv.gz -f phased -T 1 -p popA OBGHA0010,OBGHA0205,OBGHA0540,OBGHA0542,IG19G105,IG19G114 -p popB SM19SY01,SM19SY02,SM19SY03,SM19SY05,SM19SY06
+
 
 
 
