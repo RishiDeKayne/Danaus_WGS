@@ -928,7 +928,7 @@ cp *_toplot_rwanda.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analys
 #the filtering we want is:
 mindepth7_minqual30_AN313
 
-echo 'contig2.1' > test.contig
+echo 'contig31.1' > test.contig
 
 cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
 grep -v "contig0" full_scaf.list > scaf.list
