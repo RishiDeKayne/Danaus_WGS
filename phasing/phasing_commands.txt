@@ -123,9 +123,10 @@ do
 echo "cd /scratch/rdekayne/whatshap_DC174/phased && gunzip *."${contig}".*.vcf.gz && ls *."${contig}".*.vcf | xargs -n1 bgzip && ls *."${contig}".*.vcf.gz | xargs -n1 tabix && ls ./*."${contig}".*.vcf.gz > ./"${contig}".list && bcftools merge -o ./combine/"${contig}".full.phased.vcf -l ./"${contig}".list &&  cd combine && bgzip ./"${contig}".full.phased.vcf && tabix ./"${contig}".full.phased.vcf.gz" >> merge_phased_chr_vcfs.txt
 done
 
-tail -n1 merge_phased_chr_vcfs.txt > test.txt
+#remove contig 31 since this was run as a test
+grep -v "31" merge_phased_chr_vcfs.txt > merge_phased_chr_vcfs2.txt
 
-parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: test.txt
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 4 -l h=bigshot -b yes {}' :::: merge_phased_chr_vcfs2.txt
 
 
 
