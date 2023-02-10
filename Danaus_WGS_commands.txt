@@ -960,6 +960,9 @@ cp ../genomics_general/genomics.py .
 
 python popgenWindows.py -w 100000 -m 5000 -g input.geno.gz -o test.output.csv.gz -f phased -T 1 -p popA OBGHA0010,OBGHA0205,OBGHA0540,OBGHA0542,IG19G105,IG19G114 -p popB SM19SY01,SM19SY02,SM19SY03,SM19SY05,SM19SY06
 
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o test.output.csv.gz -f phased -T 1 -p popA OBGHA0010,OBGHA0205,OBGHA0540,OBGHA0542,IG19G105,IG19G114 -p popB SM19SY01,SM19SY02,SM19SY03,SM19SY05,SM19SY06
+
+contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz
 
 /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/contig31.1.done
 
