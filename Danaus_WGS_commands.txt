@@ -947,7 +947,7 @@ parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 3 -l h=bigbang -b yes {}' ::::
 touch filt_vcf_and_geno_part2.txt
 cat scaf.list | while read contig
 do
-echo "cd /scratch/rdekayne/geno python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i ./"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o ./"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".done" >> filt_vcf_and_geno_part2.txt
+echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i ./"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o ./"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".done" >> filt_vcf_and_geno_part2.txt
 done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 3 -l h=bigbang -b yes {}' :::: filt_vcf_and_geno_part2.txt
