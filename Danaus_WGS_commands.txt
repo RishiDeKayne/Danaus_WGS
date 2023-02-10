@@ -952,19 +952,28 @@ done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 3 -l h=bigbang -b yes {}' :::: filt_vcf_and_geno_part2.txt
 
+#now for analysis
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi
+
+#now move popsfile made with 'make_popsfile.R' to here
+
 
 #now calculate pi in a loop
 #genomics.py needs to be here:
 
 cp ../genomics_general/genomics.py .
 
-python popgenWindows.py -w 100000 -m 5000 -g input.geno.gz -o test.output.csv.gz -f phased -T 1 -p popA OBGHA0010,OBGHA0205,OBGHA0540,OBGHA0542,IG19G105,IG19G114 -p popB SM19SY01,SM19SY02,SM19SY03,SM19SY05,SM19SY06
+cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
+grep -v "contig0" full_scaf.list > scaf.list
 
-python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o test.output.csv.gz -f phased -T 1 -p popA OBGHA0010,OBGHA0205,OBGHA0540,OBGHA0542,IG19G105,IG19G114 -p popB SM19SY01,SM19SY02,SM19SY03,SM19SY05,SM19SY06
+touch calculate_pi.txt
+cat scaf.list | while read contig
+do
+echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g "${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o "${contig}".div.output.csv.gz -f phased -T 1 --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile.txt && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/"${contig}".pi.done" >> calculate_pi.txt
+done
 
-contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz
-
-/data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/contig31.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/contig31.1.done
+parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: calculate_pi.txt
 
 
 
