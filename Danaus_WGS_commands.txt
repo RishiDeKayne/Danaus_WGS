@@ -970,12 +970,10 @@ grep -v "contig0" full_scaf.list > scaf.list
 touch calculate_pi.txt
 cat scaf.list | while read contig
 do
-echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g "${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o "${contig}".div.output.csv.gz -f phased -T 1 --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile.txt && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/"${contig}".pi.done" >> calculate_pi.txt
+echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g "${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o "${contig}".div.output.csv.gz -f phased -T 1 -p Kenya -p RSA -p StHelena -p Nigeria -p Ghana -p Spain -p Tunisia -p Italy -p Rwanda --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile.txt && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/"${contig}".pi.done" >> calculate_pi.txt
 done
 
 parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: calculate_pi.txt
-
-
 
 
 
