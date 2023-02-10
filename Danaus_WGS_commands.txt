@@ -975,8 +975,11 @@ done
 
 parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: calculate_pi.txt
 
+cp *.div.output.csv.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output
 
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output/*.csv.gz .
 
+#then run:
 
 
 
