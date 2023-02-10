@@ -146,7 +146,7 @@ sconda shapeit4_new
 touch run_shapeit4.txt
 cat scaf.list | while read contig
 do
-echo "shapeit4 --input /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs/"${contig}".full.phased.vcf.gz --region "${contig}" --thread 4 --log /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/"${contig}".phased.log --output /scratch/rdekayne/whatshap_DC174/shapeit_output/"${contig}".double.phased.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/done_files/"${contig}".shapeit.done" >> run_shapeit4.txt
+echo "shapeit4 --input /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs/"${contig}".full.phased.vcf.gz --region "${contig}" --thread 4 --use-PS 0.0001 --log /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/"${contig}".phased.log --output /scratch/rdekayne/whatshap_DC174/shapeit_output/"${contig}".double.phased.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/done_files/"${contig}".shapeit.done" >> run_shapeit4.txt
 done
 
 parallel -j 1 'qsub -cwd -N shapeit -V -pe smp 4 -l h=c1 -b yes {}' :::: run_shapeit4.txt
