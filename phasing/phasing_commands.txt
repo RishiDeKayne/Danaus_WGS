@@ -128,6 +128,29 @@ grep -v "31" merge_phased_chr_vcfs.txt > merge_phased_chr_vcfs2.txt
 
 parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 4 -l h=bigshot -b yes {}' :::: merge_phased_chr_vcfs2.txt
 
+cp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
+cp *.tbi /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
+
+#now phasing with shapeit4
+
+#on c1
+mkdir -p /scratch/rdekayne/whatshap_DC174/shapeit_output
+
+conda create -n shapeit4_new
+sconda shapeit4_new
+conda install -c conda-forge parallel
+conda install shapeit4
+
+sconda shapeit4_new
+
+touch run_shapeit4.txt
+cat scaf.list | while read contig
+do
+echo "shapeit4 --input /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs/"${contig}".full.phased.vcf.gz --region "${contig}" --thread 4 --log /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/"${contig}".phased.log --output /scratch/rdekayne/whatshap_DC174/shapeit_output/"${contig}".double.phased.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/done_files/"${contig}".shapeit.done" >> run_shapeit4.txt
+done
+
+parallel -j 1 'qsub -cwd -N shapeit -V -pe smp 4 -l h=c1 -b yes {}' :::: run_shapeit4.txt
+
 
 
 
