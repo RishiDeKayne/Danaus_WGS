@@ -151,7 +151,7 @@ done
 
 parallel -j 1 'qsub -cwd -N shapeit -V -pe smp 4 -l h=c1 -b yes {}' :::: run_shapeit4.txt
 
-
+scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs
 
 
 
