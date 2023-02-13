@@ -166,6 +166,15 @@ scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shap
 
 
 
+
+
+
+
+#IGNORE PAST HERE
+
+
+
+
 #now for phasing
 samtools view -b /data/martin/genomics/analyses/Danaus_mapping/Wild90_realigned/bams/realigned.SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam contig15.1 > test.bam
 
