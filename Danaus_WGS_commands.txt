@@ -223,6 +223,19 @@ awk '{if($5 >= 0.2){print}}' missing_AN313.imiss > missing_AN313_rejected_indivs
 #now do genotyping of chr1/congig1.1 with genotyping that is aware of ploidy i.e. females are haploid and males diploid
 #after repeat all concat steps
 
+#get sample list from other vcfs 
+bcftools query -l contig0.17.realigned.raw.vcf.gz
+
+#then run DC174_get_sample_ploidy.R and move output to /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping
+#copy bam.list from biggar to bigshot
+
+sed -i 's/\/scratch\/rdekayne\/gatk\//\/data\/martin\/genomics\/analyses\/Danaus_mapping\/DC174\/realigned\/realigned_bams\//g' bam.list
+
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping
+touch contig1.1_hap_geno.txt
+echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/genotyping/bam.list -r contig1.1 | bcftools call -m -f GQ --samples-file sample.ploidy.txt -O v | bgzip > /scratch/rdekayne/genotyping/contig1.1.hap.realigned.raw.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/contig1.1.hap.realigned.raw.vcf.gz.done" > contig1.1_hap_geno.txt
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigshot -b yes {}' :::: contig1.1_hap_geno.txt
 
 ########
 #2. PCAs
