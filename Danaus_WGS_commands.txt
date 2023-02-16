@@ -251,7 +251,10 @@ bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
 
 bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | wc -l
 
+vcftools --gzvcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz --missing-indv --out missing_AN313
 
+#if more than 20% missing
+awk '{if($5 >= 0.2){print}}' missing_AN313.imiss > missing_AN313_rejected_indivs.txt
 
 
 ########
