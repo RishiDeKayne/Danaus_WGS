@@ -232,9 +232,10 @@ bcftools filter -Oz ./contig1.1.hap.realigned.raw.vcf.gz -e 'FORMAT/DP < 7 | FOR
 
 #see difference with correctly using ploidy in sites retained after filtering
 bcftools view -H /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz | wc -l
-#
+#16586941
 
 bcftools view -H /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz | wc -l
+#16549410
 
 
 
