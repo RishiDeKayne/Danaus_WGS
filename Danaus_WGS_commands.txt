@@ -181,19 +181,6 @@ done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: make.filt.chroms.txt
 
-##skip for now
-#then make a list
-#ls *.vcf.gz > filt_vcf.list
-
-#cd /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos
-##now convert these to .geno format
-#touch make.chr.genos.txt
-#cat /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_vcfs/filt_vcf.list | while read line
-#do
-#echo "python /data/martin/genomics/analyses/Danaus_popgen/Wild90/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_vcfs/"${line}" --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".minQual30.mindp7.maxdp50.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/Wild90/filt_chr_genos/"${line}".done" >> make.chr.genos.txt
-#done
-
-#parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigbang -b yes {}' :::: make.chr.genos.txt
 
 ssh biggar
 sconda genomics_general
@@ -236,6 +223,21 @@ touch contig1.1_hap_geno.txt
 echo "bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/genotyping/bam.list -r contig1.1 | bcftools call -m -f GQ --samples-file sample.ploidy.txt -O v | bgzip > /scratch/rdekayne/genotyping/contig1.1.hap.realigned.raw.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/contig1.1.hap.realigned.raw.vcf.gz.done" > contig1.1_hap_geno.txt
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigshot -b yes {}' :::: contig1.1_hap_geno.txt
+
+ssh bigshot
+scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/
+
+
+bcftools filter -Oz ./contig1.1.hap.realigned.raw.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz
+
+#see difference with correctly using ploidy in sites retained after filtering
+bcftools view -H /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz | wc -l
+#
+
+bcftools view -H /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz | wc -l
+
+
+
 
 ########
 #2. PCAs
