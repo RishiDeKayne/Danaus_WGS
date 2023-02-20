@@ -246,28 +246,27 @@ bcftools filter -Oz ./DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30.
 
 #and generate concatenated file for GWAS/pi estimates with correctly phased chr1
 echo "./DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz" > phased_concat.txt
-echo "./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_mac4_AN313.vcf.gz" >> phased_concat.txt
+echo "./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_mac4_AN224.vcf.gz" >> phased_concat.txt
 
-bcftools concat -Ou -f phased_concat.txt | bcftools sort -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz.vcf.gz
+bcftools concat -Ou -f phased_concat.txt | bcftools sort -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.vcf.gz
 
 #move these to merged vcf folder:
 mv DC174_allchroms* /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
 
-
-
-vcftools --gzvcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz --missing-indv --out missing_AN313
+####
+vcftools --gzvcf DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.vcf.gz --missing-indv --out missing_AN313_AN224
 
 #if more than 20% missing
-awk '{if($5 >= 0.2){print}}' missing_AN313.imiss > missing_AN313_rejected_indivs.txt
+awk '{if($5 >= 0.2){print}}' missing_AN313_AN224.imiss > missing_AN313_AN224_bad_indivs.txt
 
 
-########
-#2. PCAs
-########
+#generate the vcfs we need for further analyses
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
 
-mkdir -p /scratch/rdekayne/PCAs && cd /scratch/rdekayne/PCAs
+zcat DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.vcf.gz | bgzip -c > DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz && tabix DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz
 
-zcat ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | bgzip -c > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz && tabix ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz
+zcat DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | bgzip -c > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz && tabix DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz
+
 
 #remove small contigs
 grep "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > small_scafs.txt
@@ -275,21 +274,33 @@ grep "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.
 awk '{print $1, $2}' small_scafs.txt | sed 's/ /\t0\t/g' > small_scafs_remove.txt
 
 cd ../genotyping
-bcftools view DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz -T ^small_scafs_remove.txt -Oz > DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz
+bcftools view DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz -T ^small_scafs_remove.txt -Oz > DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
 
-#############
-#1. full genome excluding chr 15
+bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz -T ^small_scafs_remove.txt -Oz > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz
 
+
+######### full genome no chr15
 grep "contig15.1" /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > chr15_info.txt
 
 awk '{print $1, $2}' chr15_info.txt | sed 's/ /\t0\t/g' > chr15_info_remove.txt
 
 #filter out chr15
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
+bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
 
-#make filtered PCAs
+######### just chr15
+bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
+
+
+########
+#2. PCAs
+########
+
+#############
+#1. full genome excluding chr 15
+
+#make PCAs
 sconda PCA
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 1_all
+./make_pca.sh DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 1_all
 
 #6778071 variants and 174 people pass filters and QC.
 #14575888 variants and 174 people pass filters and QC.
@@ -297,10 +308,7 @@ sconda PCA
 #############
 #2. all chr15
 
-#only keep chr15
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz
-
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz 2_chr15
+./make_pca.sh DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 2_chr15
 
 #201439 variants and 174 people pass filters and QC.
 #626148 variants and 174 people pass filters and QC.
