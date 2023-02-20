@@ -230,40 +230,29 @@ scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/
 
 bcftools filter -Oz ./contig1.1.hap.realigned.raw.vcf.gz -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz
 
-#see difference with correctly using ploidy in sites retained after filtering
-bcftools view -H /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz | wc -l
-#16586941
+#for chr 1 we want to filter with 10% missing data too but this time we need to calculate based on some haploid indivs:
+#in total there are 249 alleles meaning 224 = 90% - leave mac the same to account for sequencing error
+bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 224' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_mac4_AN313.vcf.gz
 
-bcftools view -H /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz | wc -l
-#16549410
-
-#on bigshot - need to filter hap chromosome differently 
+#on bigshot  
 ls /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/*.gz > vcf_to_merge_with_chr1_hap.txt
-grep -v "contig1.1.re" vcf_to_merge_with_chr1_hap.txt > vcf_to_merge_with_chr1_hap_run.txt
+grep -v "contig1.1" vcf_to_merge_with_chr1_hap.txt > vcf_to_merge_without_chr1_hap_run.txt
 
-#now filter chromosome vcfs
-touch make.filt.chroms.txt
-cat /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/vcf.list | while read line
-do
-echo "bcftools filter -Oz /scratch/rdekayne/genotyping/"${line}" -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/"${line}"_filt_mindepth7_minqual30.vcf.gz" >> make.filt.chroms.txt
-done
-
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: make.filt.chroms.txt
-
-bcftools concat -Ou -f vcf_to_merge_with_chr1_hap_run.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30.vcf.gz
+#generate concatenated file for PCAs with no chr 1
+bcftools concat -Ou -f vcf_to_merge_without_chr1_hap_run.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30.vcf.gz
 
 #max 10% missing filter for SNPs
-bcftools filter -Oz ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 313' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz
+bcftools filter -Oz ./DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30.vcf.gz -e 'INFO/MAC < 4 | AN < 313' | bcftools view -m2 -M2 -v snps | bcftools sort -Oz -o ./DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz
 
-bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz | wc -l
-##
+#and generate concatenated file for GWAS/pi estimates with correctly phased chr1
+echo "./DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz" > phased_concat.txt
+echo "./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_mac4_AN313.vcf.gz" >> phased_concat.txt
 
-bcftools view -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | wc -l
+bcftools concat -Ou -f phased_concat.txt | bcftools sort -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz.vcf.gz
 
+#move these to merged vcf folder:
+mv DC174_allchroms* /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
 
-bcftools view -r contig1.1 -H DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | wc -l
-
-bcftools view -r contig1.1 -H DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | wc -l
 
 
 vcftools --gzvcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz --missing-indv --out missing_AN313
