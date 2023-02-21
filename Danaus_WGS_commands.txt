@@ -287,7 +287,7 @@ awk '{print $1, $2}' chr15_info.txt | sed 's/ /\t0\t/g' > chr15_info_remove.txt
 bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
 
 ######### just chr15
-bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz
+bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz
 
 ######### chr15 no SVs
 cp /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/Dchry2.2_region_coordinates.tsv .
@@ -307,25 +307,25 @@ paste -d '\t' chr_start.txt end.txt > targets.txt
 wc -l targets.txt
 #28 targets.txt
 
-bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T ^targets.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_nosvs.b.vcf.gz
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T ^targets.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_nosvs.b.vcf.gz
 
 ######### chr15 REGION 1
 echo "contig15.1 4035981 6220875" > region1.txt
 sed -i 's/ /\t/g' region1.txt
 
-bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region1.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.b.vcf.gz
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region1.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.b.vcf.gz
 
 ######### chr15 REGION 2
 echo "contig15.1 6251636 7829094" > region2.txt
 sed -i 's/ /\t/g' region2.txt
 
-bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region2.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region2.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz
 
 ######### chr15 REGION 4
 echo "contig15.1 14803486 15299732" > region4.txt
 sed -i 's/ /\t/g' region4.txt
 
-bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz  -T region4.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz  -T region4.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
 
 ######### chr15 REGION 3
 awk -F' ' '{if ($4=="3") print $0}' Dchry2.2_region_coordinates_simple.bed > region3.bed
@@ -337,11 +337,19 @@ awk '{print $3}' region3.bed | tail -n +2 > region3_end.txt
 paste -d '\t' region3_chr.txt region3_start.txt > region3_chr_start.txt
 paste -d '\t' region3_chr_start.txt region3_end.txt > region3_targets.txt 
 
-bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region3_targets.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region3.b.vcf.gz
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region3_targets.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region3.b.vcf.gz
 
 ######### chr15 REGION 1.1
+echo "contig15.1 4035981 5322257" > region1.1.txt
+sed -i 's/ /\t/g' region1.1.txt
 
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region1.1.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1.b.vcf.gz
 
+######### chr15 REGION 1.2
+echo "contig15.1 5323805 6220875" > region1.2.txt
+sed -i 's/ /\t/g' region1.2.txt
+
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region1.2.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2.b.vcf.gz
 
 ########
 #2. PCAs
@@ -352,15 +360,15 @@ bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcont
 
 #make PCAs
 sconda PCA
-./make_pca.sh DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 1_all
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 1_all
 
-#6778071 variants and 174 people pass filters and QC.
-#14575888 variants and 174 people pass filters and QC.
+#6766785 variants and 174 people pass filters and QC.
+#14548985 variants and 174 people pass filters and QC.
 
 #############
 #2. all chr15
 
-./make_pca.sh DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz 2_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz 2_chr15
 
 #201439 variants and 174 people pass filters and QC.
 #626148 variants and 174 people pass filters and QC.
@@ -368,7 +376,7 @@ sconda PCA
 #############
 #3. chr15 no SVs 
 
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_nosvs.b.vcf.gz 3_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_nosvs.b.vcf.gz 3_chr15
 
 #180965 variants and 174 people pass filters and QC.
 #506250 variants and 174 people pass filters and QC.
@@ -376,7 +384,7 @@ sconda PCA
 #############
 #4. chr15 region 1 - contig15.1	4035981	6220875
 
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region1.b.vcf.gz 4_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.b.vcf.gz 4_chr15
 
 #18982 variants and 174 people pass filters and QC.
 #88966 variants and 174 people pass filters and QC.
@@ -384,7 +392,7 @@ sconda PCA
 #############
 #5. chr15 region 2 - contig15.1 6251636-7829094
 
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region2.b.vcf.gz 5_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz 5_chr15
 
 #9454 variants and 174 people pass filters and QC.
 #56662 variants and 174 people pass filters and QC.
@@ -392,7 +400,7 @@ sconda PCA
 #############
 #6. chr15 region 4 - contig15.1 14803486-15299732
 
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region4.b.vcf.gz 6_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh  DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz 6_chr15
 
 #3980 variants and 174 people pass filters and QC.
 #28375 variants and 174 people pass filters and QC.
@@ -400,7 +408,7 @@ sconda PCA
 #############
 #7. chr15 region 3
 
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region3.b.vcf.gz 7_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region3.b.vcf.gz 7_chr15
 
 #7015 variants and 174 people pass filters and QC.
 #34518 variants and 174 people pass filters and QC.
@@ -408,12 +416,7 @@ sconda PCA
 #############
 #8. chr15 region 1.1 - contig15.1	4035981	5322257
 
-echo "contig15.1 4035981 5322257" > region1.1.txt
-sed -i 's/ /\t/g' region1.1.txt
-
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz -T region1.1.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region1.1.b.vcf.gz
-
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region1.1.b.vcf.gz 8_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1.b.vcf.gz 8_chr15
 
 #13922 variants and 174 people pass filters and QC.
 #56408 variants and 174 people pass filters and QC.
@@ -421,19 +424,21 @@ bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosma
 #############
 #9. chr15 region 1.2 - contig15.1	5323805	6220875
 
-echo "contig15.1 5323805 6220875" > region1.2.txt
-sed -i 's/ /\t/g' region1.2.txt
-
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz -T region1.2.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region1.2.b.vcf.gz
-
-./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region1.2.b.vcf.gz 9_chr15
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh  DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2.b.vcf.gz 9_chr15
 
 #5061 variants and 174 people pass filters and QC.
 #32553 variants and 174 people pass filters and QC.
 
 #now move everything
-mv * /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
-cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA 
+mv *.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
+mv *.list /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
+mv *.tbi /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
+
+mv *_chr15_*filt* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
+mv *_all_* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
+mv *.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
+mv *.bed /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
+
 
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/DC174/PCAs/
 
@@ -537,165 +542,11 @@ cat */*summary* > all_gemma_summaries.txt
 
 cp *_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
 
-##BINARY PHENOTYPES
-mkdir -p /scratch/rdekayne/gemma/binary && cd /scratch/rdekayne/gemma/binary
+#####plink GWAS:
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --assoc perm --allow-no-sex --missing-genotype N --threads 30
 
-mkdir background
-mkdir white
-mkdir forewing
-mkdir background_RAW
-mkdir white_RAW
-mkdir forewing_RAW
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 30
 
-cp ../gemma_in.* .
-cp ../relatedness.* .
-cp ../*.sh .
-
-cd /scratch/rdekayne/gemma/binary
-
-#background pheno
-#previously background was: light = 1, intermediate = 2, dark = 3
-#now we want: light = 1, intermediate or dark = 2
-cut -f1 ../background_colour_values_sorted.csv > indivs_1.csv
-cut -f2 ../background_colour_values_sorted.csv | sed 's/3/2/g' > background_colour_values_sorted_BINARY_pheno.csv
-paste indivs_1.csv background_colour_values_sorted_BINARY_pheno.csv > background_colour_values_sorted_BINARY.csv
-
-#forewing pheno
-#previously was: absent = 1, partial = 2, present = 3
-#now we want: absent = 1, partial and present = 2
-cut -f1 ../forewing_band_values_sorted.csv > indivs_2.csv
-cut -f2 ../forewing_band_values_sorted.csv | sed 's/3/2/g' > forewing_band_values_sorted_BINARY_pheno.csv
-paste indivs_2.csv forewing_band_values_sorted_BINARY_pheno.csv > forewing_band_values_sorted_BINARY.csv
-
-#white pheno
-#previously was: absent = 1, partial = 2, present = 3
-#now we want: absent = 1, partial and present = 2
-cut -f1 ../white_values_sorted.csv > indivs_3.csv
-cut -f2 ../white_values_sorted.csv | sed 's/3/2/g' > white_values_sorted_BINARY_pheno.csv
-paste indivs_3.csv white_values_sorted_BINARY_pheno.csv > white_values_sorted_BINARY.csv
-
-######################1. hindwing colour binary
-./run_gemma.sh /scratch/rdekayne/gemma/binary/relatedness /scratch/rdekayne/gemma/binary/gemma_in /scratch/rdekayne/gemma/binary/background_colour_values_sorted_BINARY.csv /scratch/rdekayne/gemma/binary/background rel_background_bin
-
-######################2. forewing colour binary
-./run_gemma.sh /scratch/rdekayne/gemma/binary/relatedness /scratch/rdekayne/gemma/binary/gemma_in /scratch/rdekayne/gemma/binary/forewing_band_values_sorted_BINARY.csv /scratch/rdekayne/gemma/binary/forewing rel_forewing_bin
-
-######################3. white hindwing binary
-./run_gemma.sh /scratch/rdekayne/gemma/binary/relatedness /scratch/rdekayne/gemma/binary/gemma_in /scratch/rdekayne/gemma/binary/white_values_sorted_BINARY.csv /scratch/rdekayne/gemma/binary/white rel_white_bin
-
-
-######################4. background hindwing colour RAW binary
-./run_gemma_raw.sh /scratch/rdekayne/gemma/binary/gemma_in /scratch/rdekayne/gemma/binary/background_colour_values_sorted_BINARY.csv /scratch/rdekayne/gemma/binary/background_RAW raw_background_bin
-
-######################5. forewing colour RAW binary
-./run_gemma_raw.sh /scratch/rdekayne/gemma/binary/gemma_in /scratch/rdekayne/gemma/binary/forewing_band_values_sorted_BINARY.csv /scratch/rdekayne/gemma/binary/forewing_RAW raw_forewing_bin
-
-######################6. white hindwing RAW binary
-./run_gemma_raw.sh /scratch/rdekayne/gemma/binary/gemma_in /scratch/rdekayne/gemma/binary/white_values_sorted_BINARY.csv /scratch/rdekayne/gemma/binary/white_RAW raw_white_bin
-
-
-awk '{print $1,$3,$15}' ./background/output/rel_background_bin_background_full.assoc.txt > background.bin.assoc_toplot.txt
-awk '{print $1,$3,$15}' ./forewing/output/rel_forewing_bin_background_full.assoc.txt > forewing.bin.assoc_toplot.txt
-awk '{print $1,$3,$15}' ./white/output/rel_white_bin_background_full.assoc.txt > white.bin.assoc_toplot.txt
-
-awk '{print $1,$3,$15}' ./background_RAW/output/raw_background_bin.assoc.txt > backgroundRAW.bin.assoc_toplot.txt
-awk '{print $1,$3,$15}' ./forewing_RAW/output/raw_forewing_bin.assoc.txt > forewingRAW.bin.assoc_toplot.txt
-awk '{print $1,$3,$15}' ./white_RAW/output/raw_white_bin.assoc.txt > whiteRAW.bin.assoc_toplot.txt
-
-cat */*summary* > all_gemma_bin_summaries.txt
-
-cp *_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
-
-##RWANDA SAMPLES ONLY
-#get rwanda sample IDs: 
-rwanda_samples.txt
-
-mkdir -p /scratch/rdekayne/gemma/rwanda && cd /scratch/rdekayne/gemma/rwanda
-
-grep -f rwanda_samples.txt /scratch/rdekayne/gemma/background_colour_values_sorted.csv | sort -k1 > ./background_colour_values_sorted_rwanda.csv
-grep -f rwanda_samples.txt /scratch/rdekayne/gemma/forewing_band_values_sorted.csv | sort -k1 > ./forewing_band_values_sorted_rwanda.csv
-grep -f rwanda_samples.txt /scratch/rdekayne/gemma/white_values_sorted.csv | sort -k1 > ./white_values_sorted_rwanda.csv
-
-cat background_colour_values_sorted_rwanda.csv | cut -f1 > samples_ordered.txt
-
-#make relatedness matrix using genome without chr 15
-bcftools view -S samples_ordered.txt -o ./rwanda_samples_nochr15.b.vcf ../DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf.gz
-
-bgzip rwanda_samples_nochr15.b.vcf
-
-#check there is variation at these snps
-VCF_IN=rwanda_samples_nochr15.b.vcf.gz
-VCF_OUT=rwanda_samples_nochr15_mac1.b.vcf.gz
-# set filters
-vcftools --gzvcf $VCF_IN \
---min-alleles 2 --max-alleles 2 \
---mac 1 \
---recode --stdout | gzip -c > \
-$VCF_OUT
-
-plink --vcf rwanda_samples_nochr15_mac1.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out relatedness
-#12944278 variants and 51 samples pass filters and QC.
-
-
-#now produce input for actual GWAS
-bcftools view -S samples_ordered.txt -o ./rwanda_samples.b.vcf ../gemma_input.vcf.gz
-
-bgzip rwanda_samples.b.vcf
-
-VCF_IN=rwanda_samples.b.vcf.gz
-VCF_OUT=rwanda_samples_mac1.b.vcf.gz
-# set filters
-vcftools --gzvcf $VCF_IN \
---min-alleles 2 --max-alleles 2 \
---mac 1 \
---recode --stdout | gzip -c > \
-$VCF_OUT
-
-sconda PCA
-plink --vcf rwanda_samples_mac1.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
-#13504176 variants and 51 samples pass filters and QC.
-
-mkdir background
-mkdir white
-mkdir forewing
-mkdir background_RAW
-mkdir white_RAW
-mkdir forewing_RAW
-
-cp ../run_gemma.sh .
-
-##REGULAR
-######################1. hindwing colour
-./run_gemma.sh /scratch/rdekayne/gemma/rwanda/relatedness /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/background_colour_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/background rel_background_rwanda
-
-######################2. forewing colour
-./run_gemma.sh /scratch/rdekayne/gemma/rwanda/relatedness /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/forewing_band_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/forewing rel_forewing_rwanda
-
-######################3. white hindwing
-./run_gemma.sh /scratch/rdekayne/gemma/rwanda/relatedness /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/white_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/white rel_white_rwanda
-
-
-######################4. background hindwing colour RAW
-./run_gemma_raw.sh /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/background_colour_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/background_RAW raw_background_rwanda
-
-######################5. forewing colour RAW
-./run_gemma_raw.sh /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/forewing_band_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/forewing_RAW raw_forewing_rwanda
-
-######################6. white hindwing RAW
-./run_gemma_raw.sh /scratch/rdekayne/gemma/rwanda/gemma_in /scratch/rdekayne/gemma/rwanda/white_values_sorted_rwanda.csv /scratch/rdekayne/gemma/rwanda/white_RAW raw_white_rwanda
-
-
-awk '{print $1,$3,$15}' ./background/output/rel_background_rwanda_background_full.assoc.txt > background.assoc_toplot_rwanda.txt
-awk '{print $1,$3,$15}' ./forewing/output/rel_forewing_rwanda_background_full.assoc.txt > forewing.assoc_toplot_rwanda.txt
-awk '{print $1,$3,$15}' ./white/output/rel_white_rwanda_background_full.assoc.txt > white.assoc_toplot_rwanda.txt
-
-awk '{print $1,$3,$15}' ./background_RAW/output/raw_background_rwanda.assoc.txt > backgroundRAW.assoc_toplot_rwanda.txt
-awk '{print $1,$3,$15}' ./forewing_RAW/output/raw_forewing_rwanda.assoc.txt > forewingRAW.assoc_toplot_rwanda.txt
-awk '{print $1,$3,$15}' ./white_RAW/output/raw_white_rwanda.assoc.txt > whiteRAW.assoc_toplot_rwanda.txt
-
-cat */*summary* > all_gemma_summaries_rwanda.txt
-
-cp *_toplot_rwanda.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
 
 
 ########
