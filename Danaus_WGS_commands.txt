@@ -254,31 +254,30 @@ bcftools concat -Ou -f phased_concat.txt | bcftools sort -Oz -o ./DC174_allchrom
 mv DC174_allchroms* /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
 
 ####
-vcftools --gzvcf DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.vcf.gz --missing-indv --out missing_AN313_AN224
+#vcftools --gzvcf DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.vcf.gz --missing-indv --out missing_AN313_AN224
 
 #if more than 20% missing
-awk '{if($5 >= 0.2){print}}' missing_AN313_AN224.imiss > missing_AN313_AN224_bad_indivs.txt
+#awk '{if($5 >= 0.2){print}}' missing_AN313_AN224.imiss > missing_AN313_AN224_bad_indivs.txt
 
 
 #generate the vcfs we need for further analyses
 cd /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs
 
-zcat DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.vcf.gz | bgzip -c > DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz && tabix DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz
+zcat /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.vcf.gz | bgzip -c > DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz && tabix DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz
 
-zcat DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | bgzip -c > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz && tabix DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz
-
+zcat /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.vcf.gz | bgzip -c > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz && tabix DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz
 
 #remove small contigs
 grep "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > small_scafs.txt
 
 awk '{print $1, $2}' small_scafs.txt | sed 's/ /\t0\t/g' > small_scafs_remove.txt
 
-cd ../genotyping
 bcftools view DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224.b.vcf.gz -T ^small_scafs_remove.txt -Oz > DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
 
 bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313.b.vcf.gz -T ^small_scafs_remove.txt -Oz > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz
 
 
+#########now filter on the file with NO chr1
 ######### full genome no chr15
 grep "contig15.1" /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > chr15_info.txt
 
@@ -288,7 +287,60 @@ awk '{print $1, $2}' chr15_info.txt | sed 's/ /\t0\t/g' > chr15_info_remove.txt
 bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T ^chr15_info_remove.txt -Oz > DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
 
 ######### just chr15
-bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
+bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz
+
+######### chr15 no SVs
+cp /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/Dchry2.2_region_coordinates.tsv .
+sed -i 's/chr15/contig15.1/g' Dchry2.2_region_coordinates.tsv
+
+#now want to just keep columns 1,5,6,8
+
+awk '{print $1,$5,$6,$8}' Dchry2.2_region_coordinates.tsv | tail -n +2 > Dchry2.2_region_coordinates_simple.bed
+
+awk '{print $1}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > chr.txt
+awk '{print $2}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > start.txt
+awk '{print $3}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > end.txt
+
+paste -d '\t' chr.txt start.txt > chr_start.txt
+paste -d '\t' chr_start.txt end.txt > targets.txt 
+
+wc -l targets.txt
+#28 targets.txt
+
+bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T ^targets.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_nosvs.b.vcf.gz
+
+######### chr15 REGION 1
+echo "contig15.1 4035981 6220875" > region1.txt
+sed -i 's/ /\t/g' region1.txt
+
+bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region1.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.b.vcf.gz
+
+######### chr15 REGION 2
+echo "contig15.1 6251636 7829094" > region2.txt
+sed -i 's/ /\t/g' region2.txt
+
+bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region2.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz
+
+######### chr15 REGION 4
+echo "contig15.1 14803486 15299732" > region4.txt
+sed -i 's/ /\t/g' region4.txt
+
+bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz  -T region4.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
+
+######### chr15 REGION 3
+awk -F' ' '{if ($4=="3") print $0}' Dchry2.2_region_coordinates_simple.bed > region3.bed
+
+awk '{print $1}' region3.bed | tail -n +2 > region3_chr.txt
+awk '{print $2}' region3.bed | tail -n +2 > region3_start.txt
+awk '{print $3}' region3.bed | tail -n +2 > region3_end.txt
+
+paste -d '\t' region3_chr.txt region3_start.txt > region3_chr_start.txt
+paste -d '\t' region3_chr_start.txt region3_end.txt > region3_targets.txt 
+
+bcftools view DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -T region3_targets.txt -Oz > DC174_CHR15_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region3.b.vcf.gz
+
+######### chr15 REGION 1.1
+
 
 
 ########
@@ -316,25 +368,6 @@ sconda PCA
 #############
 #3. chr15 no SVs 
 
-cp /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/Dchry2.2_region_coordinates.tsv .
-sed -i 's/chr15/contig15.1/g' Dchry2.2_region_coordinates.tsv
-
-#now want to just keep columns 1,5,6,8
-
-awk '{print $1,$5,$6,$8}' Dchry2.2_region_coordinates.tsv | tail -n +2 > Dchry2.2_region_coordinates_simple.bed
-
-awk '{print $1}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > chr.txt
-awk '{print $2}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > start.txt
-awk '{print $3}' Dchry2.2_region_coordinates_simple.bed | tail -n +2 > end.txt
-
-paste -d '\t' chr.txt start.txt > chr_start.txt
-paste -d '\t' chr_start.txt end.txt > targets.txt 
-
-wc -l targets.txt
-#28 targets.txt
-
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz -T ^targets.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_nosvs.b.vcf.gz
-
 ./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_nosvs.b.vcf.gz 3_chr15
 
 #180965 variants and 174 people pass filters and QC.
@@ -342,11 +375,6 @@ bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosma
 
 #############
 #4. chr15 region 1 - contig15.1	4035981	6220875
-
-echo "contig15.1 4035981 6220875" > region1.txt
-sed -i 's/ /\t/g' region1.txt
-
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz -T region1.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region1.b.vcf.gz
 
 ./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region1.b.vcf.gz 4_chr15
 
@@ -356,11 +384,6 @@ bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosma
 #############
 #5. chr15 region 2 - contig15.1 6251636-7829094
 
-echo "contig15.1 6251636 7829094" > region2.txt
-sed -i 's/ /\t/g' region2.txt
-
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz -T region2.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region2.b.vcf.gz
-
 ./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region2.b.vcf.gz 5_chr15
 
 #9454 variants and 174 people pass filters and QC.
@@ -369,11 +392,6 @@ bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosma
 #############
 #6. chr15 region 4 - contig15.1 14803486-15299732
 
-echo "contig15.1 14803486 15299732" > region4.txt
-sed -i 's/ /\t/g' region4.txt
-
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz  -T region4.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region4.b.vcf.gz
-
 ./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region4.b.vcf.gz 6_chr15
 
 #3980 variants and 174 people pass filters and QC.
@@ -381,17 +399,6 @@ bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosma
 
 #############
 #7. chr15 region 3
-
-awk -F' ' '{if ($4=="3") print $0}' Dchry2.2_region_coordinates_simple.bed > region3.bed
-
-awk '{print $1}' region3.bed | tail -n +2 > region3_chr.txt
-awk '{print $2}' region3.bed | tail -n +2 > region3_start.txt
-awk '{print $3}' region3.bed | tail -n +2 > region3_end.txt
-
-paste -d '\t' region3_chr.txt region3_start.txt > region3_chr_start.txt
-paste -d '\t' region3_chr_start.txt region3_end.txt > region3_targets.txt 
-
-bcftools view ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15.b.vcf.gz -T region3_targets.txt -Oz > ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region3.b.vcf.gz
 
 ./make_pca.sh ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_CHR15_region3.b.vcf.gz 7_chr15
 
