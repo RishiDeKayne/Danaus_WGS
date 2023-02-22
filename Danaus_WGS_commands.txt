@@ -443,109 +443,107 @@ mv *.bed /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/DC174/PCAs/
 
 ########
-#3. Gemma - GWAS
+#3. GWAS
 ########
-
-#install GEMMA
-conda create -n gemma
-sconda gemma
-conda install -c bioconda gemma
-conda install -c conda-forge parallel
-
-#./gemma -bfile [prefix] -gk [num] -o [prefix]
-
-#-gk [num] - relatedness matrix to estimate, “-gk 1” calculates the centered relatedness matrix while “-gk 2” calculates the standardized relatedness matrix
-#-bfile [prefix] - specifies PLINK binary ped file prefix
-#-o [prefix] - specifies output file prefix
-
-#need to make PLINK ped file first
-
-#now we want file for relatedness matrix: ssh biggar 
-mkdir -p /scratch/rdekayne/gemma && cd /scratch/rdekayne/gemma
 
 #prepare inputs 
 
 mkdir background
 mkdir white
 mkdir forewing
-mkdir background_RAW
-mkdir white_RAW
-mkdir forewing_RAW
+
+mkdir background/output
+mkdir forewing/output
+mkdir white/output
 
 #run DC174_make_gemma_input.R
-#move output *csv to /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma
+#move output *csv to /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas 
 #sort by first column so that indivs are ordered correctly in pheno files:
-sort -k1 background_colour_values.csv > background_colour_values_sorted.csv
-sort -k1 forewing_band_values.csv > forewing_band_values_sorted.csv
-sort -k1 white_values.csv > white_values_sorted.csv
-
+sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/background_colour_values.csv > background_colour_values_sorted.csv
+sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/forewing_band_values.csv > forewing_band_values_sorted.csv
+sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/white_values.csv > white_values_sorted.csv
 
 #two samples are missing phenotypes: SM16K641 and MB18111
 
-#no phenotypes for one indiv so drop it
+#no phenotypes for two indivs so drop them
 echo "SM16K641" > exclude_indivs.txt
 echo "MB18111" >> exclude_indivs.txt
 
-#make relatedness matrix using genome without chr 15
-bcftools view -S ^exclude_indivs.txt -o ./DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed.b.vcf.gz
+#produce input for GWASv (on bigshot) /scratch/rdekayne/gemma_DC174
+bcftools annotate --rename-chrs /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/rename_file.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz | bgzip > /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_renamed.b.vcf.gz
 
-bgzip DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf
-
-plink --vcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed_excluded.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out relatedness
-#14575888 variants and 172 samples pass filters and QC.
-
-
-#now produce input for actual GWAS
-cd /scratch/rdekayne/PCAs
-bcftools annotate --rename-chrs rename_file.txt ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz | bgzip > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz
-
-cd /scratch/rdekayne/gemma
-cp ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz .
-bcftools view -S ^./exclude_indivs.txt -o ./gemma_input.vcf DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_renamed.b.vcf.gz
-
-bgzip gemma_input.vcf
+bcftools view -S ^./exclude_indivs.txt -Oz -o ./gemma_input.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_renamed.b.vcf.gz
 
 sconda PCA
 plink --vcf gemma_input.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
-#15202036 variants and 172 samples pass filters and QC.
+#15465717 variants and 172 samples pass filters and QC.
 
-##REGULAR
-######################1. hindwing colour
-./run_gemma.sh /scratch/rdekayne/gemma/relatedness /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/background_colour_values_sorted.csv /scratch/rdekayne/gemma/background rel_background
-
-######################2. forewing colour
-./run_gemma.sh /scratch/rdekayne/gemma/relatedness /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/forewing_band_values_sorted.csv /scratch/rdekayne/gemma/forewing rel_forewing
-
-######################3. white hindwing
-./run_gemma.sh /scratch/rdekayne/gemma/relatedness /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/white_values_sorted.csv /scratch/rdekayne/gemma/white rel_white
-
-
+sconda gemma
 ######################4. background hindwing colour RAW
-./run_gemma_raw.sh /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/background_colour_values_sorted.csv /scratch/rdekayne/gemma/background_RAW raw_background
+./run_gemma_raw.sh /scratch/rdekayne/gemma_DC174/gemma_in /scratch/rdekayne/gemma_DC174/background_colour_values_sorted.csv /scratch/rdekayne/gemma_DC174/background background
+
+### number of analyzed SNPs         = 10962529
 
 ######################5. forewing colour RAW
-./run_gemma_raw.sh /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/forewing_band_values_sorted.csv /scratch/rdekayne/gemma/forewing_RAW raw_forewing
+./run_gemma_raw.sh /scratch/rdekayne/gemma_DC174/gemma_in /scratch/rdekayne/gemma_DC174/forewing_band_values_sorted.csv /scratch/rdekayne/gemma_DC174/forewing forewing
 
 ######################6. white hindwing RAW
-./run_gemma_raw.sh /scratch/rdekayne/gemma/gemma_in /scratch/rdekayne/gemma/white_values_sorted.csv /scratch/rdekayne/gemma/white_RAW raw_white
+./run_gemma_raw.sh /scratch/rdekayne/gemma_DC174/gemma_in /scratch/rdekayne/gemma_DC174/white_values_sorted.csv /scratch/rdekayne/gemma_DC174/white white
 
 
 awk '{print $1,$3,$15}' ./background/output/rel_background_background_full.assoc.txt > background.assoc_toplot.txt
 awk '{print $1,$3,$15}' ./forewing/output/rel_forewing_background_full.assoc.txt > forewing.assoc_toplot.txt
 awk '{print $1,$3,$15}' ./white/output/rel_white_background_full.assoc.txt > white.assoc_toplot.txt
 
-awk '{print $1,$3,$15}' ./background_RAW/output/raw_background.assoc.txt > backgroundRAW.assoc_toplot.txt
-awk '{print $1,$3,$15}' ./forewing_RAW/output/raw_forewing.assoc.txt > forewingRAW.assoc_toplot.txt
-awk '{print $1,$3,$15}' ./white_RAW/output/raw_white.assoc.txt > whiteRAW.assoc_toplot.txt
-
 cat */*summary* > all_gemma_summaries.txt
 
 cp *_toplot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gemma/
 
 #####plink GWAS:
-plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --assoc perm --allow-no-sex --missing-genotype N --threads 30
+cd /scratch/rdekayne/gemma_DC174/background
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --assoc perm --allow-no-sex --missing-genotype N --threads 50
+#15465717 variants and 172 samples pass filters and QC.
+mv plink* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background
 
-plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 30
+cd /scratch/rdekayne/gemma_DC174/forewing
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --assoc perm --allow-no-sex --missing-genotype N --threads 50
+#15465717 variants and 172 samples pass filters and QC.
+mv plink* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing
+
+cd /scratch/rdekayne/gemma_DC174/white
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --assoc perm --allow-no-sex --missing-genotype N --threads 50
+#15465717 variants and 172 samples pass filters and QC.
+mv plink* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white
+
+awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot.txt
+awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot.txt
+awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot.txt
+
+#process background
+paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot_emp.txt
+
+awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot_emp_total.txt
+
+#process forewing
+paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot_emp.txt
+
+awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot_emp_total.txt
+
+#process white
+paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot_emp.txt
+
+awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot_emp_total.txt
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/*/*_emp_total.txt .
+
+cd /scratch/rdekayne/gemma_DC174/background
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
+
+cd /scratch/rdekayne/gemma_DC174/forewing
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
+
+cd /scratch/rdekayne/gemma_DC174/forewing
+plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
 
 
 
