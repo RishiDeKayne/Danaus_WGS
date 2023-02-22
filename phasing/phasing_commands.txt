@@ -154,6 +154,20 @@ parallel -j 1 'qsub -cwd -N shapeit -V -pe smp 4 -l h=c1 -b yes {}' :::: run_sha
 scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs
 
 
+#####now for sex chromosome:contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_mac4_AN224.vcf.gz
+
+cat indiv.list | while read indiv
+do
+	echo "${indiv}"
+	INDIV_BAM=`cat "${indiv}".bam.location.txt`
+	bcftools view -s "${indiv}" -r contig1.1 -o ./"${indiv}".contig1.1.hap.vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_mac4_AN224.vcf.gz 
+	bgzip -c ./"${indiv}".contig1.1.hap.vcf > "${indiv}".contig1.1.hap.vcf.gz && rm -f "${indiv}".contig1.1.hap.vcf
+	tabix ./"${indiv}".contig1.1.hap.vcf.gz
+	samtools view -b /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/"${INDIV_BAM}" contig1.1 > "${INDIV_BAM}".contig1.1.bam
+	samtools sort "${INDIV_BAM}".contig1.1.bam > "${INDIV_BAM}".contig1.1.hap.sorted.bam && samtools index "${INDIV_BAM}".contig1.1.hap.sorted.bam
+	rm -f "${INDIV_BAM}".contig1.1.bam
+	echo 'whatshap phase -o ./phased/'"${indiv}"'.contig1.1.hap.phased.vcf --reference=/data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa '"${indiv}"'.contig1.1.hap.vcf.gz '"${INDIV_BAM}"'.contig1.1.hap.sorted.bam --ignore-read-groups --chromosome contig1.1 --sample='"${indiv}"' && touch phased.'"${indiv}"'.contig1.1.hap.done' >> whatshap_run_contig1.1.hap.txt
+done
 
 
 
