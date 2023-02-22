@@ -156,6 +156,7 @@ scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shap
 
 #####now for sex chromosome:contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_mac4_AN224.vcf.gz
 
+touch whatshap_run_contig1.1.hap.txt
 cat indiv.list | while read indiv
 do
 	echo "${indiv}"
@@ -170,6 +171,21 @@ do
 done
 
 
+#now tidy output
+rm -f *.location.txt
+
+cp whatshap_run_contig1.1.hap.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/whatshap_run_contig1.1.hap.txt
+
+sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_DC174 \&\& whatshap phase/g' whatshap_run_contig1.1.hap.txt
+
+cut -d ' ' -f 7 whatshap_run_contig1.1.hap.txt > unziped.vcf.names.contig1.1.hap.txt
+
+sed -i 's/\.\// \&\& gzip \.\//g' unziped.vcf.names.contig1.1.hap.txt
+
+paste -d'\0' whatshap_run_contig1.1.hap.txt unziped.vcf.names.contig1.1.hap.txt > full_whatshap_run_and_zip_contig1.1.hap.txt
+
+sconda whatshap
+parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: full_whatshap_run_and_zip_contig1.1.hap.txt
 
 
 
