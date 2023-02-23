@@ -174,8 +174,9 @@ done
 #now tidy output
 rm -f *.location.txt
 
-cp whatshap_run_contig1.1.hap.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/whatshap_run_contig1.1.hap.txt
+cp whatshap_run_contig1.1.hap.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/
 
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_vcfs/
 sed -i 's/whatshap phase/cd \/scratch\/rdekayne\/whatshap_DC174 \&\& whatshap phase/g' whatshap_run_contig1.1.hap.txt
 
 cut -d ' ' -f 7 whatshap_run_contig1.1.hap.txt > unziped.vcf.names.contig1.1.hap.txt
