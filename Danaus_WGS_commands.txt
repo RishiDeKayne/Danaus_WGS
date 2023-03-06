@@ -440,7 +440,22 @@ mv *.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
 mv *.bed /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/
 
 
-scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/DC174/PCAs/
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/*.eigen* /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/DC174/PCAs_full/
+
+#want to only use sub-saharan africa samples for chr 15
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA
+
+#get list of samples to exclude
+bcftools view -S ^./exclude_sub_saharan_indivs.txt -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/chr15_incude_sub_saharan_indivs.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz
+
+bcftools query -l /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz | wc -l
+bcftools query -l /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/chr15_incude_sub_saharan_indivs.vcf.gz  | wc -l
+
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/chr15_incude_sub_saharan_indivs.vcf.gz 10_chr15_sub
+#198057 variants and 146 people pass filters and QC.
+#626148 variants and 146 people pass filters and QC.
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/10*.eigen* .
 
 ########
 #3. GWAS
