@@ -112,11 +112,6 @@ grep -v "contig0" full_scaf.list > scaf.list
 ssh bigshot
 cd /scratch/rdekayne/whatshap_DC174/phased 
 
-for i in *.vcf.gz
-do
-gunzip $i | tabix | bgzip
-done
-
 touch merge_phased_chr_vcfs.txt
 cat scaf.list | while read contig
 do
@@ -188,7 +183,48 @@ paste -d'\0' whatshap_run_contig1.1.hap.txt unziped.vcf.names.contig1.1.hap.txt 
 sconda whatshap
 parallel -j 1 'qsub -cwd -N whatshap -V -pe smp64 1 -l h=bigshot -b yes {}' :::: full_whatshap_run_and_zip_contig1.1.hap.txt
 
+#some did not phase since they are haploid - now we want to merge chr1.hap samples
+#if the indiv was successfully phased then use phased sample, if not use the unphased vcf
+#phased samples are in /scratch/rdekayne/whatshap_DC174/phased , unphased in /scratch/rdekayne/whatshap_DC174/ 
 
+ssh bigshot
+cd /scratch/rdekayne/whatshap_DC174/phased 
+
+mkdir chr1hap
+
+mv *.hap.phased.vcf.gz chr1hap
+
+cd chr1hap
+
+#first deal with phased chromosomes
+gunzip *.contig1.1.*.vcf.gz && ls *.contig1.1.*.vcf | xargs -n1 bgzip && ls *.contig1.1.*.vcf.gz | xargs -n1 tabix && ls ./*.contig1.1.*.vcf.gz > ./contig1.1.list
+
+#then copy unphased into chr1hap folder
+ls /scratch/rdekayne/whatshap_DC174/phased/*.hap*.vcf > contig1.1.hap.unphased.indiv.list
+
+#now replace names using sed to get: /scratch/rdekayne/whatshap_DC174/phased/AB19401.contig1.1.hap.phased.vcf into /scratch/rdekayne/whatshap_DC174/AB19401.contig1.1.hap.vcf.gz
+
+sed -i 's/phased\///g' contig1.1.hap.unphased.indiv.list
+sed -i 's/hap.phased.vcf/hap.vcf.gz/g' contig1.1.hap.unphased.indiv.list
+
+#total list of individuals to merge is therefore contig1.1.list + contig1.1.hap.unphased.indiv.list
+cat contig1.1.list contig1.1.hap.unphased.indiv.list > total.contig1.1.hap.list
+
+bcftools merge -o /scratch/rdekayne/whatshap_DC174/phased/combine/contig1.1.hap.full.phased.vcf -l total.contig1.1.hap.list
+cd /scratch/rdekayne/whatshap_DC174/phased/combine && bgzip contig1.1.hap.full.phased.vcf && tabix contig1.1.hap.full.phased.vcf.gz
+
+cp contig1.1.hap.full.phased.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
+cp contig1.1.hap.full.phased.vcf.gz.tbi /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
+
+#on c1
+mkdir -p /scratch/rdekayne/whatshap_DC174/shapeit_output
+
+sconda shapeit4_new
+
+shapeit4 --input /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs/contig1.1.hap.full.phased.vcf.gz --region contig1.1 --thread 4 --use-PS 0.0001 --log /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/contig1.1.hap.phased.log --output /scratch/rdekayne/whatshap_DC174/shapeit_output/contig1.1.hap.double.phased.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/done_files/contig1.1.hap.shapeit.done
+done
+
+scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs
 
 
 
