@@ -602,9 +602,7 @@ parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 3 -l h=bigbang -b yes {}' ::::
 
 bcftools filter -Oz /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30.vcf.gz -e 'AN < 224' | bcftools sort -Oz -o /scratch/rdekayne/geno/contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.vcf.gz
 
-python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i ./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o ./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.geno.gz
-
-#--ploidy ploidy_file
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i ./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 --ploidyFile /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/sample.ploidy.txt -o ./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.geno.gz
 
 #now for analysis
 mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi
