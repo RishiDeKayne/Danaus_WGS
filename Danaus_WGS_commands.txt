@@ -643,13 +643,30 @@ parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::
 
 python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g ../contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.geno.gz -o contig1.1.hap.div.regions.output.csv.gz -f phased -T 1 --ploidyFile /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/sample.ploidy.txt -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile_region.txt
 
-
-
-
 cp *.div.regions.output.csv.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output
 
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output/*.csv.gz .
 
+
+
+########
+#5. h12 stats
+########
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos
+
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i ../phased_chr_vcfs/shapeit_chr_vcfs/contig15.1.double.phased.vcf.gz -o ./contig15.1.double.phased.geno.gz
+
+cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
+grep -v "contig0" full_scaf.list > scaf.list
+
+touch make_phased_genos.txt
+cat scaf.list | while read contig
+do
+echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i ./"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=7 max=50 -o ./"${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_genos/"${contig}".done" >> filt_vcf_and_geno_part2.txt
+done
+
+python popgenWindows.py -g input.phased.geno.gz -f phased -w 200 --windType sites --analysis hapStats --hapDist 0.01 --threads 4 > output.hapStats.csv
 
 
 
