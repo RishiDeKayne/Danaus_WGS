@@ -658,7 +658,7 @@ cd /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos
 
 python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i ../phased_chr_vcfs/shapeit_chr_vcfs/contig15.1.double.phased.vcf.gz -o ./contig15.1.double.phased.geno.gz
 
-python ./genomics_general/popgenWindows.py -g contig15.1.double.phased.geno.gz -f phased -w 200 --windType sites --analysis hapStats --hapDist 0.01 > test.output.hapStats.csv
+python ./genomics_general/popgenWindows.py -g contig15.1.double.phased.geno.gz -f phased -w 200 --windType sites --analysis hapStats --hapDist 0.01 --threads 4 -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile_region.txt > test.output.hapStats.csv
 
 
 cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
