@@ -627,7 +627,24 @@ done
 
 parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: calculate_pi.txt
 
-cp *.div.output.csv.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.geno.gz -o contig1.1.hap.div.output.csv.gz -f phased -T 1 --ploidyFile /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/sample.ploidy.txt -p Kenya -p RSA -p StHelena -p Nigeria -p Ghana -p Spain -p Tunisia -p Italy -p Philippines -p Rwanda --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile.txt
+
+####now colour by cluster:
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/
+
+tail -n +2 scaf.list > scaf.mod.list
+touch calculate_pi_regions.txt
+cat scaf.mod.list | while read contig
+do
+echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g "${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o "${contig}".div.regions.output.csv.gz -f phased -T 1 -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile_region.txt && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/"${contig}".pi.regions.done" >> calculate_pi_regions.txt
+done
+
+parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: calculate_pi_regions.txt
+
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g ../contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.geno.gz -o contig1.1.hap.div.regions.output.csv.gz -f phased -T 1 -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile_region.txt
+
+
+cp *.div.regions.output.csv.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output
 
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output/*.csv.gz .
 
