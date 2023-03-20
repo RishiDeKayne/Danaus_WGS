@@ -653,7 +653,13 @@ cp *.double.phased.geno.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/ph
 cp *.csv /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/h12
 
 
+touch h12_500.txt
+cat scaf.mod.list | while read contig
+do
+echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos/genomics_general/popgenWindows.py -g "${contig}".double.phased.geno.gz -f phased -w 500 --windType sites --analysis hapStats --hapDist 0.01 --threads 4 -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile_region.txt > "${contig}".output.500.hapStats.csv" >> h12_500.txt
+done
 
+parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: h12_500.txt
 
 
 
