@@ -634,15 +634,23 @@ cd /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos
 cut -f1 /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai > full_scaf.list
 grep -v "contig0" full_scaf.list > scaf.list
 
+tail -n +2 scaf.list > scaf.mod.list
+
 touch make_phased_genos.txt
-cat scaf.list | while read contig
+cat scaf.mod.list | while read contig
 do
 echo "cd /scratch/rdekayne/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/"${contig}".double.phased.vcf.gz -o "${contig}".double.phased.geno.gz && python /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos/genomics_general/popgenWindows.py -g "${contig}".double.phased.geno.gz -f phased -w 200 --windType sites --analysis hapStats --hapDist 0.01 --threads 4 -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile_region.txt > "${contig}".output.hapStats.csv" >> make_phased_genos.txt
 done
 
 parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: make_phased_genos.txt
 
-mv *.csv /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/h12
+ssh bigbang
+cd /scratch/rdekayne/geno
+
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/VCF_processing/parseVCF.py -i /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/contig1.1.hap.double.phased.vcf.gz -o contig1.1.hap.double.phased.geno.gz && python /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos/genomics_general/popgenWindows.py -g contig1.1.hap.double.phased.geno.gz -f phased -w 200 --windType sites --analysis hapStats --hapDist 0.01 --threads 4  --ploidyFile /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/sample.ploidy.txt -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/popsfile_region.txt
+
+cp *.double.phased.geno.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_genos
+cp *.csv /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/h12
 
 
 
