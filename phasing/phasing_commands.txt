@@ -204,38 +204,48 @@ ls /scratch/rdekayne/whatshap_DC174/phased/*.hap*.vcf > contig1.1.hap.unphased.i
 
 #now replace names using sed to get: /scratch/rdekayne/whatshap_DC174/phased/AB19401.contig1.1.hap.phased.vcf into /scratch/rdekayne/whatshap_DC174/AB19401.contig1.1.hap.vcf.gz
 
-sed -i 's/phased\///g' contig1.1.hap.unphased.indiv.list
+sed -i 's/phased\///g' contig1.1.list
 sed -i 's/hap.phased.vcf/hap.vcf.gz/g' contig1.1.hap.unphased.indiv.list
 
+#will use contig1.1.list for shapeit and then merge with other samples afterwards
+
 #total list of individuals to merge is therefore contig1.1.list + contig1.1.hap.unphased.indiv.list
-cat contig1.1.list contig1.1.hap.unphased.indiv.list > total.contig1.1.hap.list
+#cat contig1.1.list contig1.1.hap.unphased.indiv.list > total.contig1.1.hap.list
 
-bcftools merge -o /scratch/rdekayne/whatshap_DC174/phased/combine/contig1.1.hap.full.phased.vcf -l total.contig1.1.hap.list
-cd /scratch/rdekayne/whatshap_DC174/phased/combine && bgzip contig1.1.hap.full.phased.vcf && tabix contig1.1.hap.full.phased.vcf.gz
+bcftools merge -o /scratch/rdekayne/whatshap_DC174/phased/combine/contig1.1.hap.ONLYPHASED.phased.vcf -l contig1.1.list
+bcftools merge -o /scratch/rdekayne/whatshap_DC174/phased/combine/contig1.1.hap.ONLYUNPHASED.phased.vcf -l contig1.1.hap.unphased.indiv.list
 
-cp contig1.1.hap.full.phased.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
-cp contig1.1.hap.full.phased.vcf.gz.tbi /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
+cd /scratch/rdekayne/whatshap_DC174/phased/combine && bgzip contig1.1.hap.ONLYPHASED.phased.vcf && tabix contig1.1.hap.ONLYPHASED.phased.vcf.gz
+bgzip contig1.1.hap.ONLYUNPHASED.phased.vcf && tabix contig1.1.hap.ONLYUNPHASED.phased.vcf.gz
 
-#reorder samples in this vcf based on another file
-bcftools query -l contig1.1.full.phased.vcf.gz > samples_sorted.txt
-mv contig1.1.hap.full.phased.vcf.gz contig1.1.hap.full.phased.unsorted.vcf.gz 
-rm contig1.1.hap.full.phased.vcf.gz.tbi
-bcftools view -S samples_sorted.txt contig1.1.hap.full.phased.unsorted.vcf.gz > contig1.1.hap.full.phased.vcf
-bgzip contig1.1.hap.full.phased.vcf && tabix contig1.1.hap.full.phased.vcf.gz
-rm -f contig1.1.hap.full.phased.unsorted.vcf.gz 
+cp contig1.1.hap.ONLYPHASED.phased.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
+cp contig1.1.hap.ONLYUNPHASED.phased.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
 
+cp contig1.1.hap.ONLY*.tbi /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs
 
 ssh c1
 cd /scratch/rdekayne/whatshap_DC174/shapeit_output
 
 sconda shapeit4_new
 
-shapeit4 --input /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs/contig1.1.hap.full.phased.vcf.gz --region contig1.1 --thread 4 --use-PS 0.0001 --log /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/contig1.1.hap.phased.log --output /scratch/rdekayne/whatshap_DC174/shapeit_output/contig1.1.hap.double.phased.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/done_files/contig1.1.hap.shapeit.done
+shapeit4 --input /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs/contig1.1.hap.ONLYPHASED.phased.vcf.gz --region contig1.1 --thread 4 --use-PS 0.0001 --log /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs/contig1.1.hap.ONLYPHASED.phased.log --output /scratch/rdekayne/whatshap_DC174/shapeit_output/contig1.1.hap.ONLYPHASED.double.phased.vcf.gz && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/done_files/contig1.1.hap.ONLYPHASED.shapeit.done
 
+#add other individuals phased with whatshap
+touch combine_phased_and_unphased.list
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/whatshap_chr_vcfs/contig1.1.hap.ONLYUNPHASED.phased.vcf.gz" >> combine_phased_and_unphased.list
+echo "./contig1.1.hap.ONLYPHASED.double.phased.vcf.gz" >> combine_phased_and_unphased.list
+tabix contig1.1.hap.ONLYPHASED.double.phased.vcf.gz
+
+bcftools merge -o ./contig1.1.hap.FULL.unsorted.double.phased.vcf -l combine_phased_and_unphased.list
+bgzip contig1.1.hap.FULL.unsorted.double.phased.vcf && tabix contig1.1.hap.FULL.unsorted.double.phased.vcf.gz
+
+#reorder samples in phased vcf based on another file
+bcftools query -l contig10.1.double.phased.vcf.gz > samples_sorted.txt
+
+bcftools view -S samples_sorted.txt contig1.1.hap.FULL.unsorted.double.phased.vcf.gz > contig1.1.hap.double.phased.vcf
+bgzip contig1.1.hap.double.phased.vcf && tabix contig1.1.hap.double.phased.vcf.gz
 
 scp contig1.1.hap.double.phased.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/phased_chr_vcfs/shapeit_chr_vcfs
-
-
 
 
 
