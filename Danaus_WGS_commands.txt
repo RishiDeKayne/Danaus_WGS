@@ -694,6 +694,26 @@ done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: geno_melan.txt
 
+ls *.gz > /data/martin/genomics/analyses/Danaus_mapping/DC174/Dmelanippus/vcf.list
+
+touch make.filt.chroms.txt
+cat /data/martin/genomics/analyses/Danaus_mapping/DC174/Dmelanippus/vcf.list | while read line
+do
+echo "cd /scratch/rdekayne/melanippus && bcftools filter -Oz ./"${line}" -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o ./"${line}"_filt_mindepth7_minqual30.vcf.gz" >> make.filt.chroms.txt
+done
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: make.filt.chroms.txt
+
+#merge into a single file:
+ls *_filt_mindepth7_minqual30.vcf.gz > melan_vcf_to_merge.txt
+
+bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_allchroms_output_filt_mindepth7_minqual30.vcf.gz
+
+
+
+
+
+
 
 
 
@@ -716,15 +736,6 @@ echo "bcftools filter -Oz /scratch/rdekayne/genotyping/"${line}" -e 'FORMAT/DP <
 done
 
 parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: make.filt.chroms.txt
-
-
-ssh biggar
-sconda genomics_general
-
-#merge into a single file:
-ls /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/*.gz > vcf_to_merge.txt
-
-bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
 
 
