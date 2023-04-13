@@ -661,8 +661,70 @@ done
 
 parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: h12_500.txt
 
+################################################################################
+#       D. melanippus genotyping
+################################################################################
+########Simon requested re-mapping/genotyping
+#/data/martin/genomics/analyses/Danaus_mapping/RG28754._.2016.Dchry2.2.bwa.default.rmdup.bam
+#in /data/martin/genomics/analyses/Danaus_mapping/DC174/Dmelanippus
+
+ssh biggar
+cd /scratch/rdekayne/melanippus
+
+#indel re-alignment:
+sconda gatk
+# executible is: /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
+
+java -jar /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/RG28754._.2016.Dchry2.2.bwa.default.rmdup.bam -o ./realigner.intervals.RG28754._.2016.Dchry2.2.bwa.default.rmdup.bam.intervals && touch melanippus.done
+
+cp *.intervals /data/martin/genomics/analyses/Danaus_mapping/DC174/Dmelanippus
+
+java -Xmx8G -jar /data/martin/genomics/analyses/Danaus_mapping/DC174/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T IndelRealigner -R /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -I /data/martin/genomics/analyses/Danaus_mapping/RG28754._.2016.Dchry2.2.bwa.default.rmdup.bam -targetIntervals ./realigner.intervals.RG28754._.2016.Dchry2.2.bwa.default.rmdup.bam.intervals -o ./realigned.RG28754._.2016.Dchry2.2.bwa.default.rmdup.bam && touch realigned.melanippus.done
+
+ls *.bam > bam.list
+cp bam.list /data/martin/genomics/analyses/Danaus_mapping/DC174/Dmelanippus
+
+sconda genomics_general
+
+touch geno_melan.txt
+cat /data/martin/genomics/analyses/Danaus_mapping/DC174/coverage_raw/scaf.list | while read line
+do
+echo "cd /scratch/rdekayne/melanippus && bcftools mpileup -O u -d 250 --skip-indels -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa --annotate FORMAT/DP --bam-list /scratch/rdekayne/melanippus/bam.list -r "${line}" | bcftools call -m -f GQ -O v | bgzip > /scratch/rdekayne/melanippus/"${line}".realigned.raw.vcf.gz && touch /data/martin/genomics/analyses/Danaus_mapping/DC174/Dmelanippus/"${line}".realigned.raw.vcf.gz.done" >> geno_melan.txt
+done
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: geno_melan.txt
 
 
+
+
+#now move zipped vcfs back to 
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs
+scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/
+
+#now make a file listing these vcfs 
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/
+ls *.gz > vcf.list
+
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs
+
+#now filter chromosome vcfs
+touch make.filt.chroms.txt
+cat /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/vcf.list | while read line
+do
+echo "bcftools filter -Oz /scratch/rdekayne/genotyping/"${line}" -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/"${line}"_filt_mindepth7_minqual30.vcf.gz" >> make.filt.chroms.txt
+done
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: make.filt.chroms.txt
+
+
+ssh biggar
+sconda genomics_general
+
+#merge into a single file:
+ls /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/*.gz > vcf_to_merge.txt
+
+bcftools concat -Ou -f vcf_to_merge.txt | bcftools sort -Oz -o /scratch/rdekayne/genotyping/DC174_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
 
 
