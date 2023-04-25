@@ -714,28 +714,17 @@ bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_a
 
 
 
+########
+#6. gIMble
+########
+#want to run gIMble on focal indivs, 5 for each morph
+#orientis = "SM17S01","SM21BE01","SM21TS05","SM21TS33","SM21TS36"
+#klugii = "SM15W72","SM15W74","SM19T002","SM19T003","SM19T008"
+#chrysippus = "SM16N01","IG19G105","IG19G114","OBGHA0540","OBGHA0542"
 
+#subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
 
-
-#now move zipped vcfs back to 
-mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs
-scp *.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/
-
-#now make a file listing these vcfs 
-cd /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/
-ls *.gz > vcf.list
-
-mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs
-cd /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs
-
-#now filter chromosome vcfs
-touch make.filt.chroms.txt
-cat /data/martin/genomics/analyses/Danaus_popgen/DC174/raw_chr_vcfs/vcf.list | while read line
-do
-echo "bcftools filter -Oz /scratch/rdekayne/genotyping/"${line}" -e 'FORMAT/DP < 7 | FORMAT/GQ < 30' --set-GTs . -O u | bcftools filter -e 'AN < 2' | bcftools sort -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/filt_chr_vcfs/"${line}"_filt_mindepth7_minqual30.vcf.gz" >> make.filt.chroms.txt
-done
-
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=biggar -b yes {}' :::: make.filt.chroms.txt
+~/software/gIMble/gIMble preprocess -f brenthis_ino.SP_BI_364.v2_0.sequences.fasta -v brenthis_ino_daphne_30062022.vs.brenthis_ino.SP_BI_364.v2_0.sequences.vcf.gz -b brenthis_ino_daphne.vs.brenthis_ino.SP_BI_364.v2_0.sequences.bams -g 2 -q 10 -m 8 -M 3 -t 20 -o 6_gIMble/brenthis_ino_daphne -k
 
 
 
