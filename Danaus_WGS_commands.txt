@@ -717,13 +717,18 @@ bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_a
 ########
 #6. gIMble
 ########
-#want to run gIMble on focal indivs, 5 for each morph
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
+
+#want to run gIMble on focal indivs, 5 for each morph - put in gimble.indiv.list
 #orientis = "SM17S01","SM21BE01","SM21TS05","SM21TS33","SM21TS36"
 #klugii = "SM15W72","SM15W74","SM19T002","SM19T003","SM19T008"
 #chrysippus = "SM16N01","IG19G105","IG19G114","OBGHA0540","OBGHA0542"
 
-#subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
 
+#subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
+#using /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
+
+ssh 
 ~/software/gIMble/gIMble preprocess -f brenthis_ino.SP_BI_364.v2_0.sequences.fasta -v brenthis_ino_daphne_30062022.vs.brenthis_ino.SP_BI_364.v2_0.sequences.vcf.gz -b brenthis_ino_daphne.vs.brenthis_ino.SP_BI_364.v2_0.sequences.bams -g 2 -q 10 -m 8 -M 3 -t 20 -o 6_gIMble/brenthis_ino_daphne -k
 
 
