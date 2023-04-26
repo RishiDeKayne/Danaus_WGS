@@ -728,7 +728,13 @@ cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
 #subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
 #using /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
 
-ssh 
+ssh bigbird
+mkdir -p /scratch/rdekayne/gimble && cd /scratch/rdekayne/gimble
+sconda genomics_general
+bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble.indiv.list -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
+
+
+ 
 ~/software/gIMble/gIMble preprocess -f brenthis_ino.SP_BI_364.v2_0.sequences.fasta -v brenthis_ino_daphne_30062022.vs.brenthis_ino.SP_BI_364.v2_0.sequences.vcf.gz -b brenthis_ino_daphne.vs.brenthis_ino.SP_BI_364.v2_0.sequences.bams -g 2 -q 10 -m 8 -M 3 -t 20 -o 6_gIMble/brenthis_ino_daphne -k
 
 
