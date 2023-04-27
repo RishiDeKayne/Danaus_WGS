@@ -790,10 +790,12 @@ ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_ba
 ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bam realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bam
 ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bai realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bai
 
-touch gimble.run
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /scratch/rdekayne/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz -b /scratch/rdekayne/gimble/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble/reference_indivs_gimble/ " > gimble.run
+bcftools reheader --samples /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz
 
-parallel -j 1 'qsub -cwd -N gimble -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
+touch gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /scratch/rdekayne/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals_renamed.b.vcf.gz -b /scratch/rdekayne/gimble/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble/reference_indivs_gimble/ " > gimble.run
+
+parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigyin -b yes {}' :::: gimble.run
 
 
 
