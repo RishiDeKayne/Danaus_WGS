@@ -719,11 +719,16 @@ bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_a
 ########
 cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
 
+git clone https://github.com/DRL/gimble.git
+conda create -n gimble python=3.7.12 bedtools bcftools samtools vcflib mosdepth pysam numpy docopt tqdm pandas tabulate zarr scikit-allel parallel matplotlib msprime demes dask numcodecs python-newick nlopt -c conda-forge -c bioconda -y
+sconda gimble
+sconda /ceph/software/conda_envs/gimble
+gimble/gimble --help
+
 #want to run gIMble on focal indivs, 5 for each morph - put in gimble.indiv.list
 #orientis = "SM17S01","SM21BE01","SM21TS05","SM21TS33","SM21TS36"
 #klugii = "SM15W72","SM15W74","SM19T002","SM19T003","SM19T008"
 #chrysippus = "SM16N01","IG19G105","IG19G114","OBGHA0540","OBGHA0542"
-
 
 #subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
 #using /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
@@ -733,9 +738,66 @@ mkdir -p /scratch/rdekayne/gimble && cd /scratch/rdekayne/gimble
 sconda genomics_general
 bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble.indiv.list -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
 
+gimble/gimble preprocess -h
+
+mkdir -p /scratch/rdekayne/gimble/bams && cd /scratch/rdekayne/gimble/bams
+
+#make symlinks for bam files in bam directory
+##ln -s source_file myfile
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bam realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bai realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bam realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bai realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bam realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bai realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bam realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bai realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bam realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bai realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bam realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bai realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bam realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bai realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bam realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bai realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bam realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bai realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bam realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bai realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bai
+
+touch gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /scratch/rdekayne/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz -b /scratch/rdekayne/gimble/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble/reference_indivs_gimble/ " > gimble.run
+
+parallel -j 1 'qsub -cwd -N gimble -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
+
+
 
  
-~/software/gIMble/gIMble preprocess -f brenthis_ino.SP_BI_364.v2_0.sequences.fasta -v brenthis_ino_daphne_30062022.vs.brenthis_ino.SP_BI_364.v2_0.sequences.vcf.gz -b brenthis_ino_daphne.vs.brenthis_ino.SP_BI_364.v2_0.sequences.bams -g 2 -q 10 -m 8 -M 3 -t 20 -o 6_gIMble/brenthis_ino_daphne -k
 
 
 
