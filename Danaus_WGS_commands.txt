@@ -800,6 +800,14 @@ echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/
 
 parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
 
+#region 2: chr15:6251636-7829094 (for now not filtering out genic sites
+
+touch reg2.parse.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.bed -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.samples.csv -o reg2" > reg2.parse.gimble.run
+parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' :::: reg2.parse.gimble.run
+
+
+
 
 
  
