@@ -720,8 +720,15 @@ bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_a
 cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
 
 git clone https://github.com/DRL/gimble.git
-conda create -n gimble python=3.7.12 bedtools bcftools samtools vcflib mosdepth pysam numpy docopt tqdm pandas tabulate zarr scikit-allel parallel matplotlib msprime demes dask numcodecs python-newick nlopt -c conda-forge -c bioconda -y
-sconda gimble
+
+conda create -n gimble_rishi python=3.7.12 bedtools bcftools samtools vcflib mosdepth=0.3.2 pysam numpy docopt tqdm pandas tabulate zarr scikit-allel parallel matplotlib msprime demes dask numcodecs python-newick nlopt -c conda-forge -c bioconda -y
+
+conda activate gimble_rishi
+
+pip install agemo
+
+5. Rock'n'roll ...
+[================
 sconda /ceph/software/conda_envs/gimble
 gimble/gimble --help
 
@@ -800,14 +807,29 @@ echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/
 
 parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
 
-#region 2: chr15:6251636-7829094 (for now not filtering out genic sites
+#region 2: chr15:6251636-7829094 (for now not filtering out genic sites)
 
 touch reg2.parse.gimble.run
 echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.bed -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.samples.csv -o reg2" > reg2.parse.gimble.run
 parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' :::: reg2.parse.gimble.run
 
+touch reg2.parse.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.bed -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s /scratch/rdekayne/gimble/reference_indivs_gimble/test1.samples.csv -z kluori" > reg2.parse.gimble.run
+parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' :::: reg2.parse.gimble.run
 
+#./gimble parse -v gimble.vcf.gz -b gimble.intergenic.bed -g gimble.genomefile -s gimble.samples.csv -o analysis
 
+touch reg2.blocks.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble blocks -z kluori.z -l 64" > reg2.blocks.gimble.run
+parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' :::: reg2.blocks.gimble.run
+
+#./gimble blocks -z analysis.z -l 64
+
+touch reg2.windows.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble windows -z kluori.z -w 500 -s 100" > reg2.windows.gimble.run
+parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' :::: reg2.windows.gimble.run
+
+#./gimble windows -z analysis.z -w 500 -s 100 -z analysis.z
 
 
  
