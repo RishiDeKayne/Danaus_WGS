@@ -840,6 +840,83 @@ wc -l *.intergenic*
 #   14588 gimble.intergenic.inv4.bed
 #  128509 total
 
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs
+
+#different sample files for different comparisons
+
+#kluori.samples.csv
+SM15W72,klu
+SM15W74,klu
+SM17S01,ori
+SM19T002,klu
+SM19T003,klu
+SM19T008,klu
+SM21BE01,ori
+SM21TS05,ori
+SM21TS33,ori
+SM21TS36,ori
+
+#chrori.samples.csv
+IG19G105,chr
+IG19G114,chr
+OBGHA0540,chr
+OBGHA0542,chr
+SM16N01,chr
+SM17S01,ori
+SM21BE01,ori
+SM21TS05,ori
+SM21TS33,ori
+SM21TS36,ori
+
+#chrklu.samples.csv
+IG19G105,chr
+IG19G114,chr
+OBGHA0540,chr
+OBGHA0542,chr
+SM15W72,klu
+SM15W74,klu
+SM16N01,chr
+SM19T002,klu
+SM19T003,klu
+SM19T008,klu
+
+ls *.csv > samples.txt
+sed 's/.samples.csv//g' samples.txt > sample_names.txt
+ls *.bed > bed_files.txt
+
+######PARSE
+touch parse.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/${bed} -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: parse.gimble.run
+
+######BLOCKS
+touch blocks.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble blocks -z -z ${sample}_${bed}_store -l 64" > blocks.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: blocks.gimble.run
+
+
+######WINDOWS
+
+######INFO
+
+######TALLY
+
+######OPTIMIZE
 
 
 
@@ -848,10 +925,6 @@ wc -l *.intergenic*
 
 
 #region 2: chr15:6251636-7829094 (for now not filtering out genic sites)
-
-touch reg2.parse.gimble.run
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.bed -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.samples.csv -o reg2" > reg2.parse.gimble.run
-parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' :::: reg2.parse.gimble.run
 
 touch reg2.parse.gimble.run
 echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.bed -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s /scratch/rdekayne/gimble/reference_indivs_gimble/test1.samples.csv -z kluori" > reg2.parse.gimble.run
