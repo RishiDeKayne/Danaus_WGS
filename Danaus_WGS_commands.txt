@@ -807,6 +807,46 @@ echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/
 
 parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
 
+#want to make a bed file for each inversion that excludes annotations within them
+mkdir -p /scratch/rdekayne/gimble/reference_indivs_gimble/bedfiles
+cd /scratch/rdekayne/gimble/reference_indivs_gimble/bedfiles
+
+echo 'contig15.1  4035981 5322257' > inv1.1.bed
+echo 'contig15.1  5323805 6220875' > inv1.2.bed
+echo 'contig15.1  6251636 7829094' > inv2.bed
+echo 'contig15.1  14803486  15299732' > inv4.bed
+
+bedtools intersect -a ../ref_run.bed -b inv1.1.bed > gimble.inv1.1.bed
+bedtools intersect -a ../ref_run.bed -b inv1.2.bed > gimble.inv1.2.bed
+bedtools intersect -a ../ref_run.bed -b inv2.bed > gimble.inv2.bed
+bedtools intersect -a ../ref_run.bed -b inv4.bed > gimble.inv4.bed
+
+wc -l gimble.inv*
+#   59177 gimble.inv1.1.bed
+#   43214 gimble.inv1.2.bed
+#   70208 gimble.inv2.bed
+#   18317 gimble.inv4.bed
+#  190916 total
+
+bedtools subtract -a gimble.inv1.1.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.1.bed
+bedtools subtract -a gimble.inv1.2.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.2.bed
+bedtools subtract -a gimble.inv2.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv2.bed
+bedtools subtract -a gimble.inv4.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv4.bed
+
+wc -l *.intergenic*
+#   35986 gimble.intergenic.inv1.1.bed
+#   30108 gimble.intergenic.inv1.2.bed
+#   47827 gimble.intergenic.inv2.bed
+#   14588 gimble.intergenic.inv4.bed
+#  128509 total
+
+
+
+
+
+
+
+
 #region 2: chr15:6251636-7829094 (for now not filtering out genic sites)
 
 touch reg2.parse.gimble.run
