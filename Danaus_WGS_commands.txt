@@ -1009,13 +1009,13 @@ parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b 
 
 
 #####QUERY output
-/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrori.samples.csv_gimble.intergenic.inv1.1.bed_store.z -l optimize/blocks_kmax2/DIV
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv1.1.bed_store.z -l optimize/blocks_kmax2/DIV
 
-/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrori.samples.csv_gimble.intergenic.inv1.2.bed_store.z -l optimize/blocks_kmax2/DIV
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv1.2.bed_store.z -l optimize/blocks_kmax2/DIV
 
-/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrori.samples.csv_gimble.intergenic.inv2.bed_store.z -l optimize/blocks_kmax2/DIV
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv2.bed_store.z -l optimize/blocks_kmax2/DIV
 
-/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrori.samples.csv_gimble.intergenic.inv4.bed_store.z -l optimize/blocks_kmax2/DIV
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv4.bed_store.z -l optimize/blocks_kmax2/DIV
 
 
 
