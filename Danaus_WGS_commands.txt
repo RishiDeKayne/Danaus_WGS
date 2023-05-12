@@ -963,7 +963,27 @@ parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b 
 
 grep "COMPLETED" *.o*
 
+touch optimize.MIG_AB.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -M=1e-10,2.21E-06 -m MIG_AB -l MIG_AB -f" >> optimize.MIG_AB.gimble.run
+done
+done
 
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.MIG_AB.gimble.run
+
+touch optimize.MIG_BA.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 M=1e-10,2.21E-06 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.MIG_BA.gimble.run
 
 
 
