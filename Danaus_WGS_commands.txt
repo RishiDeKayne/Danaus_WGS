@@ -903,22 +903,65 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble blocks -z -z ${sample}_${bed}_store -l 64" > blocks.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble blocks -z ${sample}_${bed}_store.z -l 64" >> blocks.gimble.run
 done
 done
 
-parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: blocks.gimble.run
+parallel -j 1 'qsub -cwd -N gimble_blocks -V -pe smp64 20 -l h=bigbird -b yes {}' :::: blocks.gimble.run
 
 
 ######WINDOWS
+touch windows.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble windows -z ${sample}_${bed}_store.z -w 500 -s 100" >> windows.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_windows -V -pe smp64 20 -l h=bigbird -b yes {}' :::: windows.gimble.run
+
 
 ######INFO
+touch info.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble info -z ${sample}_${bed}_store.z" >> info.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_info -V -pe smp64 20 -l h=bigbird -b yes {}' :::: info.gimble.run
+
 
 ######TALLY
+touch tally.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble tally -z ${sample}_${bed}_store.z -k 2,2,2,2 -l blocks_kmax2 -t blocks" >> tally.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_tally -V -pe smp64 20 -l h=bigbird -b yes {}' :::: tally.gimble.run
 
 ######OPTIMIZE
 
+touch optimize.div.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -C=100_000,5_000_000 -T=0,5_000_000 -m DIV -l DIV -f" >> optimize.div.gimble.run
+done
+done
 
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.div.gimble.run
+
+grep "COMPLETED" *.o*
 
 
 
