@@ -979,16 +979,61 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 M=1e-10,2.21E-06 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -M=1e-10,2.21E-06 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
 done
 done
 
 parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.MIG_BA.gimble.run
 
+touch optimize.IM_AB.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -C=100_000,5_000_000 -T=0,7_000_000 -M=0,2.21E-06 -m IM_AB -l IM_AB -f" >> optimize.IM_AB.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.IM_AB.gimble.run
+
+touch optimize.IM_BA.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -C=100_000,5_000_000 -T=0,7_000_000 -M=0,2.21E-06 -m IM_BA -l IM_BA-f" >> optimize.IM_BA.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.IM_BA.gimble.run
 
 
-#region 2: chr15:6251636-7829094 (for now not filtering out genic sites)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
+
+####example/test commands
 touch reg2.parse.gimble.run
 echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.bed -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s /scratch/rdekayne/gimble/reference_indivs_gimble/test1.samples.csv -z kluori" > reg2.parse.gimble.run
 parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' :::: reg2.parse.gimble.run
@@ -1031,20 +1076,6 @@ parallel -j 1 'qsub -cwd -N gimble_run2 -V -pe smp64 20 -l h=bigbird -b yes {}' 
 >>> /gIMble/gimble optimize -z heliconius.v1.z -d tally/blocks -r A -u 2.9e-9 -g CRS2 -p 1 -s midpoint -i 10000 -A=100_000,3_000_000 -B=100_000,3_000_000 -M=1e-10,2.21E-06 -m MIG_BA -l MIG_BA
 >>> ~/gIMble/gimble optimize -z heliconius.v1.z -d tally/blocks -r A -u 2.9e-9 -g CRS2 -p 1 -s midpoint -i 10000 -A=100_000,3_000_000 -B=100_000,3_000_000 -C=100_000,3_000_000 -T=0,5_000_000 -M=0,2.21E-06 -m IM_AB -l IM_AB
 >>> ~/gIMble/gimble optimize -z heliconius.v1.z -d tally/blocks -r A -u 2.9e-9 -g CRS2 -p 1 -s midpoint -i 10000 -A=100_000,3_000_000 -B=100_000,3_000_000 -C=100_000,3_000_000 -T=0,5_000_000 -M=0,2.21E-06 -m IM_BA -l IM_BA
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
