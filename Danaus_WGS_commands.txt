@@ -955,7 +955,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -C=100_000,5_000_000 -T=0,5_000_000 -m DIV -l DIV -f" >> optimize.div.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -C=50_000,6_000_000 -T=0,6_000_000 -m DIV -l DIV -f" >> optimize.div.gimble.run
 done
 done
 
@@ -968,7 +968,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -M=1e-10,2.21E-06 -m MIG_AB -l MIG_AB -f" >> optimize.MIG_AB.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -M=1e-15,2.21E-05 -m MIG_AB -l MIG_AB -f" >> optimize.MIG_AB.gimble.run
 done
 done
 
@@ -979,7 +979,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -M=1e-10,2.21E-06 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -M=1e-15,2.21E-05 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
 done
 done
 
@@ -990,7 +990,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -C=100_000,5_000_000 -T=0,7_000_000 -M=0,2.21E-06 -m IM_AB -l IM_AB -f" >> optimize.IM_AB.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -C=50_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-05 -m IM_AB -l IM_AB -f" >> optimize.IM_AB.gimble.run
 done
 done
 
@@ -1001,7 +1001,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=100_000,5_000_000 -B=100_000,5_000_000 -C=100_000,5_000_000 -T=0,7_000_000 -M=0,2.21E-06 -m IM_BA -l IM_BA -f" >> optimize.IM_BA.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -C=50_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-05 -m IM_BA -l IM_BA -f" >> optimize.IM_BA.gimble.run
 done
 done
 
