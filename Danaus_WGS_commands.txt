@@ -727,11 +727,6 @@ conda activate gimble_rishi
 
 pip install agemo
 
-5. Rock'n'roll ...
-[================
-sconda /ceph/software/conda_envs/gimble
-gimble/gimble --help
-
 #want to run gIMble on focal indivs, 5 for each morph - put in gimble.indiv.list
 #orientis = "SM17S01","SM21BE01","SM21TS05","SM21TS33","SM21TS36"
 #klugii = "SM15W72","SM15W74","SM19T002","SM19T003","SM19T008"
@@ -955,7 +950,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -C=50_000,6_000_000 -T=0,6_000_000 -m DIV -l DIV -f" >> optimize.div.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=10_000,6_000_000 -B=10_000,6_000_000 -C=10_000,6_000_000 -T=0,6_000_000 -m DIV -l DIV -f" >> optimize.div.gimble.run
 done
 done
 
@@ -968,7 +963,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -M=1e-15,2.21E-05 -m MIG_AB -l MIG_AB -f" >> optimize.MIG_AB.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=10_000,6_000_000 -B=10_000,6_000_000 -M=1e-20,2.21E-05 -m MIG_AB -l MIG_AB -f" >> optimize.MIG_AB.gimble.run
 done
 done
 
@@ -979,7 +974,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -M=1e-15,2.21E-05 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=10_000,6_000_000 -B=10_000,6_000_000 -M=1e-20,2.21E-05 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
 done
 done
 
@@ -990,7 +985,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -C=50_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-05 -m IM_AB -l IM_AB -f" >> optimize.IM_AB.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=10_000,6_000_000 -B=10_000,6_000_000 -C=10_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-05 -m IM_AB -l IM_AB -f" >> optimize.IM_AB.gimble.run
 done
 done
 
@@ -1001,7 +996,7 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=50_000,6_000_000 -B=50_000,6_000_000 -C=50_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-05 -m IM_BA -l IM_BA -f" >> optimize.IM_BA.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=10_000,6_000_000 -B=10_000,6_000_000 -C=10_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-05 -m IM_BA -l IM_BA -f" >> optimize.IM_BA.gimble.run
 done
 done
 
