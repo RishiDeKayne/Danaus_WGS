@@ -711,10 +711,6 @@ ls *_filt_mindepth7_minqual30.vcf.gz > melan_vcf_to_merge.txt
 bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_allchroms_output_filt_mindepth7_minqual30.vcf.gz
 
 
-
-
-
-
 ########
 #6. gIMble
 ########
@@ -1048,6 +1044,7 @@ bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output
 
 bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz | bgzip > ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4_renamed.b.vcf.gz
 
+#######################
 cd chr15_1.1
 sconda PCA
 
@@ -1068,6 +1065,65 @@ parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::
 #get error
 grep "CV error" *.o*
 
+#######################
+cd ../chr15_1.2
+
+VCF_FILE=DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2_renamed.b.vcf.gz
+plink --vcf ../../../combined_vcfs/$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_in_chr15_1.2
+
+#32553 variants and 174 samples pass filters and QC.
+
+touch admixture_run_chr1.2.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_1.2/admix_in_chr15_1.2.bed ${K} | tee /scratch/rdekayne/DC174_PCA/log${K}_admix_in_chr15_1.2.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_1.2/log${K}_admix_in_chr15_1.2.out.done" >> admixture_run_chr1.2.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run_chr1.2.txt
+
+#get error
+grep "CV error" *.o*
+
+#######################
+cd ../chr15_2
+
+VCF_FILE=DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2_renamed.b.vcf.gz
+plink --vcf ../../../combined_vcfs/$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_in_chr15_2
+
+#56662 variants and 174 samples pass filters and QC.
+
+touch admixture_run_chr2.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_2/admix_in_chr15_2.bed ${K} | tee /scratch/rdekayne/DC174_PCA/log${K}_admix_in_chr15_2.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_2/log${K}_admix_in_chr15_2.out.done" >> admixture_run_chr2.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run_chr2.txt
+
+#get error
+grep "CV error" *.o*
+
+#######################
+cd ../chr15_4
+
+VCF_FILE=DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4_renamed.b.vcf.gz
+plink --vcf ../../../combined_vcfs/$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_in_chr15_4
+
+#28375 variants and 174 samples pass filters and QC.
+
+touch admixture_run_chr4.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_4/admix_in_chr15_4.bed ${K} | tee /scratch/rdekayne/DC174_PCA/log${K}_admix_in_chr15_4.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_4/log${K}_admix_in_chr15_4.out.done" >> admixture_run_chr4.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run_chr4.txt
+
+#get error
+grep "CV error" *.o*
 
 
 
