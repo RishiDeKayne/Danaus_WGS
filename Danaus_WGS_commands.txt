@@ -1014,9 +1014,55 @@ done
 parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.MIG_BA.gimble.run
 
 
+########
+#7. admixture
+########
 
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture
+mkdir chr15_1.1
+mkdir chr15_1.2
+mkdir chr15_2
+kdir chr15_4
 
+conda create -n admixture
+sconda admixture
+conda install -c bioconda admixture
 
+sconda PCA
+
+grep -v "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa.fai | cut -f1 > all_scafs_info.txt
+
+awk '{print $0 "\t" NR }' all_scafs_info.txt | sed 's/\t/\tchr/g' > rename_file.txt
+
+bcftools annotate --rename-chrs rename_file.txt ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz | bgzip > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed.b.vcf.gz
+
+VCF_FILE=DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed.b.vcf.gz
+plink --vcf ../genotyping/$VCF_FILE --double-id --allow-extra-chr --autosome-num 41 \
+--set-missing-var-ids @:# \
+--indep-pairwise 50 10 0.1 --out admix_in
+
+#Pruning complete.  7797817 of 14575888 variants removed.
+
+# prune and create pca
+plink --vcf ../genotyping/$VCF_FILE --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# \
+--extract admix_in.prune.in \
+--make-bed --pca --out admix_in
+
+#6778071 variants and 174 samples pass filters and QC.
+
+cp admix_in* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/
+
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture
+touch admixture_run.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/admix_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/log${K}_admix_in.out.done" >> admixture_run.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run.txt
+
+#get error
+grep "CV error" *.o*
 
 
 
