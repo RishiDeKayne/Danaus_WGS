@@ -8,7 +8,8 @@ qstat -f -u "*"
 #3. Gemma GWAS
 #4. genome-wide stats e.g. pi
 #5. h12
-
+#6. gIMble
+#7. admixture
 
 ########
 #1. GENOTYPING
@@ -1024,6 +1025,11 @@ mkdir chr15_1.2
 mkdir chr15_2
 kdir chr15_4
 
+#1.1 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1.b.vcf.gz
+#1.2 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2.b.vcf.gz
+#2 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz
+#4 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
+
 conda create -n admixture
 sconda admixture
 conda install -c bioconda admixture
@@ -1034,32 +1040,30 @@ grep -v "contig0." /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.
 
 awk '{print $0 "\t" NR }' all_scafs_info.txt | sed 's/\t/\tchr/g' > rename_file.txt
 
-bcftools annotate --rename-chrs rename_file.txt ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz | bgzip > ../genotyping/DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed.b.vcf.gz
+bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1.b.vcf.gz | bgzip > ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1_renamed.b.vcf.gz
 
-VCF_FILE=DC174_allchroms_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15_renamed.b.vcf.gz
-plink --vcf ../genotyping/$VCF_FILE --double-id --allow-extra-chr --autosome-num 41 \
---set-missing-var-ids @:# \
---indep-pairwise 50 10 0.1 --out admix_in
+bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2.b.vcf.gz | bgzip > ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2_renamed.b.vcf.gz
 
-#Pruning complete.  7797817 of 14575888 variants removed.
+bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz | bgzip > ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2_renamed.b.vcf.gz
 
-# prune and create pca
-plink --vcf ../genotyping/$VCF_FILE --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# \
---extract admix_in.prune.in \
---make-bed --pca --out admix_in
+bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz | bgzip > ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4_renamed.b.vcf.gz
 
-#6778071 variants and 174 samples pass filters and QC.
+cd chr15_1.1
+sconda PCA
 
-cp admix_in* /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/
+VCF_FILE=DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1_renamed.b.vcf.gz
+plink --vcf ../../../combined_vcfs/$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_in_chr15_1.1
 
-cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture
-touch admixture_run.txt
+#56408 variants and 174 samples pass filters and QC.
+
+touch admixture_run_chr1.1.txt
 for K in {2..12}
 do 
-echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/admix_in.bed ${K} | tee /scratch/rdekayne/PCAs/log${K}_admix_in.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/log${K}_admix_in.out.done" >> admixture_run.txt
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_1.1/admix_in_chr15_1.1.bed ${K} | tee /scratch/rdekayne/DC174_PCA/log${K}_admix_in_chr15_1.1.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_1.1/log${K}_admix_in_chr15_1.1.out.done" >> admixture_run_chr1.1.txt
 done
 
-parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run.txt
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run_chr1.1.txt
 
 #get error
 grep "CV error" *.o*
