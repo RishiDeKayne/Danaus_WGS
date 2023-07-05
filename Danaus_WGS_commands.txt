@@ -1125,7 +1125,9 @@ parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::
 #get error
 grep "CV error" *.o*
 
-
+#download
+scp rdekayne@qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/*/*.Q .
+scp rdekayne@qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_1.1/admix_in_chr15_1.1.fam .
 
 
 
