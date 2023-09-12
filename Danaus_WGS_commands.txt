@@ -464,6 +464,8 @@ bcftools view -S ^./exclude_sub_saharan_indivs.txt -Oz -o /data/martin/genomics/
 
 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/all_genome_nochr15_incude_sub_saharan_indivs.vcf.gz 11_nochr15_sub
 
+#14548985 variants and 146 people pass filters and QC.
+#6611769 variants and 146 people pass filters and QC.
 
 ########
 #3. GWAS
