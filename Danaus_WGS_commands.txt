@@ -459,6 +459,12 @@ bcftools query -l /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vc
 
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/10*.eigen* .
 
+#now want to only use sub-saharan africa samples for the rest of the genome i.e. excluding chr15
+bcftools view -S ^./exclude_sub_saharan_indivs.txt -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/all_genome_nochr15_incude_sub_saharan_indivs.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_nochr15.b.vcf.gz
+
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/all_genome_nochr15_incude_sub_saharan_indivs.vcf.gz 11_nochr15_sub
+
+
 ########
 #3. GWAS
 ########
