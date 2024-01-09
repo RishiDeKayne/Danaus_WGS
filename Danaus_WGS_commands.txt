@@ -1027,12 +1027,28 @@ cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture
 mkdir chr15_1.1
 mkdir chr15_1.2
 mkdir chr15_2
-kdir chr15_4
+mkdir chr15_4
+mkdir chr15_onlySVs
 
 #1.1 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1.b.vcf.gz
 #1.2 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2.b.vcf.gz
 #2 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz
 #4 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
+#onlySVs - need to make
+
+#region_vcfs_to_merge.txt
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1.b.vcf.gz
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2.b.vcf.gz
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
+
+sconda genomics_general
+echo 'bcftools concat -Ou -f region_vcfs_to_merge.txt | bcftools sort -Oz -o ./combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_1.1_1.2_2_4.vcf.gz' > merge_regions.run
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: merge_regions.run
+
+
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_nosvs.b.vcf.gz
 
 conda create -n admixture
 sconda admixture
@@ -1137,7 +1153,8 @@ grep "CV error" *.o*
 scp rdekayne@qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/*/*.Q .
 scp rdekayne@qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_1.1/admix_in_chr15_1.1.fam .
 
-
+#######################
+cd ../chr15_onlySVs
 
 
 
