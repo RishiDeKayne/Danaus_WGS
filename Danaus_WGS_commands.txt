@@ -570,6 +570,7 @@ plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-
 cd /scratch/rdekayne/gemma_DC174/forewing
 plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
 
+#repeat this using only NYA, NRB, MPL = 88 hybrid individuals
 
 
 ########
@@ -1169,6 +1170,24 @@ parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::
 
 #get error
 grep "CV error" *.o*
+
+##
+admixture.o249465:CV error (K=2): 0.24417
+admixture.o249466:CV error (K=3): 0.19517
+admixture.o249467:CV error (K=4): 0.18068
+admixture.o249468:CV error (K=5): 0.16924
+admixture.o249469:CV error (K=6): 0.16244
+admixture.o249470:CV error (K=7): 0.16756
+admixture.o249471:CV error (K=8): 0.16557
+admixture.o249472:CV error (K=9): 0.16193
+admixture.o249473:CV error (K=10): 0.16216
+admixture.o249474:CV error (K=11): 0.16540
+admixture.o249475:CV error (K=12): 0.17455
+
+#download
+scp rdekayne@qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_onlySVs/*.Q .
+scp rdekayne@qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_onlySVs/*.fam .
+
 
 ########
 #8. Updated_popgen_stats
