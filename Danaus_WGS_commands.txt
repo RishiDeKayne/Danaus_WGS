@@ -1036,20 +1036,6 @@ mkdir chr15_onlySVs
 #4 ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
 #onlySVs - need to make
 
-#region_vcfs_to_merge.txt
-/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1.b.vcf.gz
-/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2.b.vcf.gz
-/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz
-/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz
-
-sconda genomics_general
-echo 'bcftools concat -Ou -f region_vcfs_to_merge.txt | bcftools sort -Oz -o ./combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_1.1_1.2_2_4.vcf.gz' > merge_regions.run
-
-parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: merge_regions.run
-
-
-/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/make_pca.sh DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_nosvs.b.vcf.gz
-
 conda create -n admixture
 sconda admixture
 conda install -c bioconda admixture
@@ -1067,6 +1053,17 @@ bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output
 bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2.b.vcf.gz | bgzip > ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2_renamed.b.vcf.gz
 
 bcftools annotate --rename-chrs rename_file.txt ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4.b.vcf.gz | bgzip > ../../combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4_renamed.b.vcf.gz
+
+#region_vcfs_to_merge.txt
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.1_renamed.b.vcf.gz
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region1.2_renamed.b.vcf.gz
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region2_renamed.b.vcf.gz
+/data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_region4_renamed.b.vcf.gz
+
+sconda genomics_general
+echo 'bcftools concat -Ou -f region_vcfs_to_merge.txt | bcftools sort -Oz -o ./DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_1.1_1.2_2_4_renamed.vcf.gz' > merge_regions.run
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: merge_regions.run
 
 #######################
 cd chr15_1.1
@@ -1156,6 +1153,22 @@ scp rdekayne@qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis
 #######################
 cd ../chr15_onlySVs
 
+VCF_FILE=DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_1.1_1.2_2_4_renamed.vcf.gz
+plink --vcf ../../../combined_vcfs/$VCF_FILE --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_in_chr15_onlySVs
+
+#173998 variants and 174 samples pass filters and QC.
+
+touch admixture_run_chr15_onlysvs.txt
+for K in {2..12}
+do 
+echo "admixture --cv=20 -j8 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_onlySVs/admix_in_chr15_onlySVs.bed ${K} | tee /scratch/rdekayne/DC174_PCA/log${K}_admix_in_chr15_onlySVs.out && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/admixture/chr15_onlySVs/log${K}_admix_in_chr15_onlySVs.out.done" >> admixture_run_chr15_onlysvs.txt
+done
+
+parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: admixture_run_chr15_onlysvs.txt
+
+#get error
+grep "CV error" *.o*
 
 
 
