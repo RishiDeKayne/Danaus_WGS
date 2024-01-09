@@ -1170,6 +1170,15 @@ parallel -j 1 'qsub -cwd -N admixture -V -pe smp64 1 -l h=bigfoot -b yes {}' :::
 #get error
 grep "CV error" *.o*
 
+########
+#8. Updated_popgen_stats
+########
+Core population groups:
+klugii = WAT : SM15W61,SM15W66,SM15W69,SM15W72,SM15W74,SM18W01
+orientis = TSW : SM21TS03,SM21TS05,SM21TS16,SM21TS33,SM21TS34,SM21TS35,SM21TS36
+chrysippus = NGA : SM16N01,SM16N04,SM16N05,SM16N06,SM16N20,SM16N37
+karamu: SM21SP06,SM21SP09
+recomb: SM19SY01 (SCY), RV12N317 (TUN)
 
 
 
