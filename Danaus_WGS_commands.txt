@@ -634,6 +634,19 @@ cp *.div.regions.output.csv.gz /data/martin/genomics/analyses/Danaus_popgen/DC17
 scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/output/*.csv.gz .
 
 
+###now with locales i.e. using popsfile2.txt 
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun
+
+touch calculate_pi_regions_new.txt
+cat ../scaf.mod.list | while read contig
+do
+echo "cd /data/martin/genomics/analyses/Danaus_popgen/DC174/geno/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g "${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/"${contig}".div.regions.output.csv.gz -f phased -T 1 -p crossed -p med -p orientis -p chrysippus -p klugii -p hybrid --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/popsfiles.txt && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/"${contig}".pi.regions.done" >> calculate_pi_regions.txt
+done
+
+parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigbang -b yes {}' :::: calculate_pi_regions.txt
+
+
+
 
 ########
 #5. h12 stats
