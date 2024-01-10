@@ -1218,6 +1218,19 @@ orientis = TSW : SM21TS03,SM21TS05,SM21TS16,SM21TS33,SM21TS34,SM21TS35,SM21TS36
 chrysippus = NGA : SM16N01,SM16N04,SM16N05,SM16N06,SM16N20,SM16N37
 karamu: SM21SP06,SM21SP09
 recomb: SM19SY01 (SCY), RV12N317 (TUN)
+hybrids: NYA, NRB, MPL
+
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids
+
+#want hybrid populations
+grep "NYA" /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/popsfile2_regions.txt > NYA.txt
+grep "NRB" /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/popsfile2_regions.txt > NRB.txt
+grep "MPL" /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/popsfile2_regions.txt > MPL.txt
+
+cat NYA.txt NRB.txt MPL.txt | cut -f 1 > hybrid_indivs.txt
+
+wc -l hybrid_indivs.txt
+#88
 
 
 
