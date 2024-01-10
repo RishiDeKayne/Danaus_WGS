@@ -1232,6 +1232,15 @@ cat NYA.txt NRB.txt MPL.txt | cut -f 1 > hybrid_indivs.txt
 wc -l hybrid_indivs.txt
 #88
 
+sconda genomics_general
+echo 'bcftools view -S ./hybrid_indivs.txt -Oz -o ./gemma_input_88hybrids.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_renamed.b.vcf.gz' > run_vcf_hybrid_filt.run
+
+parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: run_vcf_hybrid_filt.run
+
+
+sconda PCA
+plink --vcf gemma_input.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+
 
 
 
