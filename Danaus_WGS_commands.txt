@@ -570,7 +570,7 @@ plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-
 cd /scratch/rdekayne/gemma_DC174/forewing
 plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
 
-#repeat this using only NYA, NRB, MPL = 88 hybrid individuals
+#repeat this using only NYA, NRB, MPL = 88 hybrid individuals (below)
 
 
 ########
@@ -1239,10 +1239,21 @@ parallel -j 1 'qsub -cwd -N bcftools -V -pe smp64 1 -l h=bigfoot -b yes {}' ::::
 
 
 sconda PCA
-plink --vcf gemma_input.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+plink --vcf gemma_input_88hybrids.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in_hybrids
+#15465717 variants and 88 samples pass filters and QC.
+
+mkdir background
+mkdir white
+mkdir forewing
+
+#copy .fam files from bigshot
+ssh bigshot
+cd /scratch/rdekayne/gemma_DC174
 
 
-
+cp background/gemma_in.fam /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/background/gemma_in_hybrids.fam
+cp forewing/gemma_in.fam /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/forewing/gemma_in_hybrids.fam
+cp white/gemma_in.fam /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/white/gemma_in_hybrids.fam
 
 
 
