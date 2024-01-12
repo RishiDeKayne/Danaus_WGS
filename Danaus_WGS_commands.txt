@@ -1250,10 +1250,16 @@ mkdir forewing
 ssh bigshot
 cd /scratch/rdekayne/gemma_DC174
 
-
 cp background/gemma_in.fam /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/background/gemma_in_hybrids.fam
 cp forewing/gemma_in.fam /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/forewing/gemma_in_hybrids.fam
 cp white/gemma_in.fam /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/white/gemma_in_hybrids.fam
+
+cd background
+cp ../gemma_in_hybrids.b* .
+cp ../gemma_in_hybrids.e* .
+
+plink --bfile gemma_in_hybrids --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
+
 
 
 
