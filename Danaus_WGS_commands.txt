@@ -1250,12 +1250,12 @@ mkdir white/output
 #run DC174_make_gemma_input.R
 #move output *csv to /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas 
 #sort by first column so that indivs are ordered correctly in pheno files:
-sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/background_colour_values.csv > background_colour_values_sorted.csv
-sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/forewing_band_values.csv > forewing_band_values_sorted.csv
-sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/white_values.csv > white_values_sorted.csv
+sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/background_colour_values_hybrid.csv > background_colour_values_sorted.csv
+sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/forewing_band_values_hybrid.csv > forewing_band_values_sorted.csv
+sort -k1 /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/white_values_hybrid.csv > white_values_sorted.csv
 
 sconda PCA
-plink --vcf gemma_input.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
+plink --vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_renamed.b.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
 #15465717 variants and 172 samples pass filters and QC.
 
 sconda gemma
