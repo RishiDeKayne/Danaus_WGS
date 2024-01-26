@@ -743,7 +743,7 @@ bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_a
 ########
 #6. gIMble
 ########
-cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set
 
 git clone https://github.com/DRL/gimble.git
 
@@ -753,10 +753,10 @@ conda activate gimble_rishi
 
 pip install agemo
 
-#want to run gIMble on focal indivs, 5 for each morph - put in gimble.indiv.list
-#orientis = "SM17S01","SM21BE01","SM21TS05","SM21TS33","SM21TS36"
-#klugii = "SM15W72","SM15W74","SM19T002","SM19T003","SM19T008"
-#chrysippus = "SM16N01","IG19G105","IG19G114","OBGHA0540","OBGHA0542"
+#want to run gIMble on focal indivs, 6 for each morph - put in gimble.indiv.list
+#klugii = WAT : "SM15W61", "SM15W66", "SM15W69", "SM15W72", "SM15W74", "SM18W01"
+#orientis = TSW : "SM21TS03", "SM21TS05", "SM21TS16", "SM21TS33", "SM21TS34", "SM21TS35", "SM21TS36"
+#chrysippus = NGA : "SM16N01", "SM16N04", "SM16N05", "SM16N06", "SM16N20", "SM16N37"
 
 #subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
 #using /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
@@ -764,7 +764,7 @@ pip install agemo
 ssh bigbird
 mkdir -p /scratch/rdekayne/gimble && cd /scratch/rdekayne/gimble
 sconda genomics_general
-bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble.indiv.list -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
+bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/gimble.indiv.list -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
 
 gimble/gimble preprocess -h
 
@@ -1694,5 +1694,304 @@ admixture.o112862:CV error (K=9): 0.27706
 admixture.o112863:CV error (K=10): 0.28213
 admixture.o112864:CV error (K=11): 0.29393
 admixture.o112865:CV error (K=12): 0.30239
+
+########
+#6. gIMble
+########
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
+
+git clone https://github.com/DRL/gimble.git
+
+conda create -n gimble_rishi python=3.7.12 bedtools bcftools samtools vcflib mosdepth=0.3.2 pysam numpy docopt tqdm pandas tabulate zarr scikit-allel parallel matplotlib msprime demes dask numcodecs python-newick nlopt -c conda-forge -c bioconda -y
+
+conda activate gimble_rishi
+
+pip install agemo
+
+#want to run gIMble on focal indivs, 5 for each morph - put in gimble.indiv.list
+#orientis = "SM17S01","SM21BE01","SM21TS05","SM21TS33","SM21TS36"
+#klugii = "SM15W72","SM15W74","SM19T002","SM19T003","SM19T008"
+#chrysippus = "SM16N01","IG19G105","IG19G114","OBGHA0540","OBGHA0542"
+
+#subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
+#using /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
+
+ssh bigbird
+mkdir -p /scratch/rdekayne/gimble && cd /scratch/rdekayne/gimble
+sconda genomics_general
+bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble.indiv.list -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
+
+gimble/gimble preprocess -h
+
+mkdir -p /scratch/rdekayne/gimble/bams && cd /scratch/rdekayne/gimble/bams
+
+#make symlinks for bam files in bam directory
+##ln -s source_file myfile
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bam realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bai realigned.SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bam realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bai realigned.SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bam realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bai realigned.SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bam realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bai realigned.SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bam realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bai realigned.SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bam realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bai realigned.SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bam realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bai realigned.SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bai realigned.IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bam realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bai realigned.IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bam realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bai realigned.OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bam realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bai realigned.OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bai
+
+bcftools reheader --samples /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz
+
+cp DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
+
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
+touch gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run " > gimble.run
+
+parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
+
+#want to make a bed file for each inversion that excludes annotations within them
+mkdir -p /scratch/rdekayne/gimble/reference_indivs_gimble/bedfiles
+cd /scratch/rdekayne/gimble/reference_indivs_gimble/bedfiles
+
+echo 'contig15.1  4035981 5322257' > inv1.1.bed
+echo 'contig15.1  5323805 6220875' > inv1.2.bed
+echo 'contig15.1  6251636 7829094' > inv2.bed
+echo 'contig15.1  14803486  15299732' > inv4.bed
+
+bedtools intersect -a ../ref_run.bed -b inv1.1.bed > gimble.inv1.1.bed
+bedtools intersect -a ../ref_run.bed -b inv1.2.bed > gimble.inv1.2.bed
+bedtools intersect -a ../ref_run.bed -b inv2.bed > gimble.inv2.bed
+bedtools intersect -a ../ref_run.bed -b inv4.bed > gimble.inv4.bed
+
+wc -l gimble.inv*
+#   59177 gimble.inv1.1.bed
+#   43214 gimble.inv1.2.bed
+#   70208 gimble.inv2.bed
+#   18317 gimble.inv4.bed
+#  190916 total
+
+bedtools subtract -a gimble.inv1.1.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.1.bed
+bedtools subtract -a gimble.inv1.2.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.2.bed
+bedtools subtract -a gimble.inv2.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv2.bed
+bedtools subtract -a gimble.inv4.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv4.bed
+
+wc -l *.intergenic*
+#   35986 gimble.intergenic.inv1.1.bed
+#   30108 gimble.intergenic.inv1.2.bed
+#   47827 gimble.intergenic.inv2.bed
+#   14588 gimble.intergenic.inv4.bed
+#  128509 total
+
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs
+
+#different sample files for different comparisons
+
+#kluori.samples.csv
+SM15W72,klu
+SM15W74,klu
+SM17S01,ori
+SM19T002,klu
+SM19T003,klu
+SM19T008,klu
+SM21BE01,ori
+SM21TS05,ori
+SM21TS33,ori
+SM21TS36,ori
+
+#chrori.samples.csv
+IG19G105,chr
+IG19G114,chr
+OBGHA0540,chr
+OBGHA0542,chr
+SM16N01,chr
+SM17S01,ori
+SM21BE01,ori
+SM21TS05,ori
+SM21TS33,ori
+SM21TS36,ori
+
+#chrklu.samples.csv
+IG19G105,chr
+IG19G114,chr
+OBGHA0540,chr
+OBGHA0542,chr
+SM15W72,klu
+SM15W74,klu
+SM16N01,chr
+SM19T002,klu
+SM19T003,klu
+SM19T008,klu
+
+ls *.csv > samples.txt
+sed 's/.samples.csv//g' samples.txt > sample_names.txt
+ls *.bed > bed_files.txt
+
+######PARSE
+touch parse.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/${bed} -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: parse.gimble.run
+
+######BLOCKS
+touch blocks.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble blocks -z ${sample}_${bed}_store.z -l 64" >> blocks.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_blocks -V -pe smp64 20 -l h=bigbird -b yes {}' :::: blocks.gimble.run
+
+
+######WINDOWS
+touch windows.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble windows -z ${sample}_${bed}_store.z -w 500 -s 100" >> windows.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_windows -V -pe smp64 20 -l h=bigbird -b yes {}' :::: windows.gimble.run
+
+
+######INFO
+touch info.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble info -z ${sample}_${bed}_store.z" >> info.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_info -V -pe smp64 20 -l h=bigbird -b yes {}' :::: info.gimble.run
+
+
+######TALLY
+touch tally.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble tally -z ${sample}_${bed}_store.z -k 2,2,2,2 -l blocks_kmax2 -t blocks" >> tally.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_tally -V -pe smp64 20 -l h=bigbird -b yes {}' :::: tally.gimble.run
+
+######OPTIMIZE
+
+touch optimize.div.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=20_000,6_000_000 -B=20_000,6_000_000 -C=20_000,6_000_000 -T=0,6_000_000 -m DIV -l DIV -f" >> optimize.div.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.div.gimble.run
+
+grep "COMPLETED" *.o*
+
+touch optimize.IM_AB.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=20_000,6_000_000 -B=20_000,6_000_000 -C=20_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-04 -m IM_AB -l IM_AB -f" >> optimize.IM_AB.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.IM_AB.gimble.run
+
+touch optimize.IM_BA.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=20_000,6_000_000 -B=20_000,6_000_000 -C=20_000,6_000_000 -T=0,7_000_000 -M=0,2.21E-04 -m IM_BA -l IM_BA -f" >> optimize.IM_BA.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.IM_BA.gimble.run
+
+
+#####QUERY output
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv1.1.bed_store.z -l optimize/blocks_kmax2/DIV
+
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv1.2.bed_store.z -l optimize/blocks_kmax2/DIV
+
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv2.bed_store.z -l optimize/blocks_kmax2/DIV
+
+/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble query -z /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/chrklu.samples.csv_gimble.intergenic.inv4.bed_store.z -l optimize/blocks_kmax2/DIV
+
+
+touch optimize.MIG_AB.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=10_000,6_000_000 -B=10_000,6_000_000 -M=1e-20,2.21E-05 -m MIG_AB -l MIG_AB -f" >> optimize.MIG_AB.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.MIG_AB.gimble.run
+
+touch optimize.MIG_BA.gimble.run
+cat samples.txt | while read sample
+do
+cat bed_files.txt | while read bed
+do
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble optimize -z ${sample}_${bed}_store.z -d tally/blocks_kmax2 -r A -u 2e-9 -g CRS2 -p 1 -s midpoint -i 20000 -A=10_000,6_000_000 -B=10_000,6_000_000 -M=1e-20,2.21E-05 -m MIG_BA -l MIG_BA -f" >> optimize.MIG_BA.gimble.run
+done
+done
+
+parallel -j 1 'qsub -cwd -N gimble_div_optimize -V -pe smp64 20 -l h=bigbird -b yes {}' :::: optimize.MIG_BA.gimble.run
 
 
