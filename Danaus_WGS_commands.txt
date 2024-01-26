@@ -849,13 +849,16 @@ echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/
 parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
 
 #want to make a bed file for each inversion that excludes annotations within them
-mkdir -p /scratch/rdekayne/gimble/reference_indivs_gimble/bedfiles
-cd /scratch/rdekayne/gimble/reference_indivs_gimble/bedfiles
+mkdir -p /scratch/rdekayne/gimble2/reference_indivs_gimble2/bedfiles
+cd /scratch/rdekayne/gimble2/reference_indivs_gimble2/bedfiles
 
 echo 'contig15.1  4035981 5322257' > inv1.1.bed
 echo 'contig15.1  5323805 6220875' > inv1.2.bed
 echo 'contig15.1  6251636 7829094' > inv2.bed
 echo 'contig15.1  14803486  15299732' > inv4.bed
+
+
+
 
 bedtools intersect -a ../ref_run.bed -b inv1.1.bed > gimble.inv1.1.bed
 bedtools intersect -a ../ref_run.bed -b inv1.2.bed > gimble.inv1.2.bed
