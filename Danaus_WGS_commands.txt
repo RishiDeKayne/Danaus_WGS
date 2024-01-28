@@ -844,7 +844,7 @@ cp DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosm
 
 cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/
 touch gimble.run
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2_renamed.b.vcf.gz  -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble2/reference_indivs_gimble2/ref_run " > gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2.b.vcf.gz  -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble2/reference_indivs_gimble2/ref_run " > gimble.run
 
 parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
 
@@ -857,20 +857,17 @@ echo 'contig15.1  5323805 6220875' > inv1.2.bed
 echo 'contig15.1  6251636 7829094' > inv2.bed
 echo 'contig15.1  14803486  15299732' > inv4.bed
 
-
-
-
 bedtools intersect -a ../ref_run.bed -b inv1.1.bed > gimble.inv1.1.bed
 bedtools intersect -a ../ref_run.bed -b inv1.2.bed > gimble.inv1.2.bed
 bedtools intersect -a ../ref_run.bed -b inv2.bed > gimble.inv2.bed
 bedtools intersect -a ../ref_run.bed -b inv4.bed > gimble.inv4.bed
 
 wc -l gimble.inv*
-#   59177 gimble.inv1.1.bed
-#   43214 gimble.inv1.2.bed
-#   70208 gimble.inv2.bed
-#   18317 gimble.inv4.bed
-#  190916 total
+#   74850 gimble.inv1.1.bed
+#   52397 gimble.inv1.2.bed
+#   84266 gimble.inv2.bed
+#   22732 gimble.inv4.bed
+#  234245 total
 
 bedtools subtract -a gimble.inv1.1.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.1.bed
 bedtools subtract -a gimble.inv1.2.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.2.bed
@@ -878,52 +875,60 @@ bedtools subtract -a gimble.inv2.bed -b /data/martin/genomics/analyses/Danaus_ge
 bedtools subtract -a gimble.inv4.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv4.bed
 
 wc -l *.intergenic*
-#   35986 gimble.intergenic.inv1.1.bed
-#   30108 gimble.intergenic.inv1.2.bed
-#   47827 gimble.intergenic.inv2.bed
-#   14588 gimble.intergenic.inv4.bed
-#  128509 total
+#   45726 gimble.intergenic.inv1.1.bed
+#   36714 gimble.intergenic.inv1.2.bed
+#   57182 gimble.intergenic.inv2.bed
+#   18346 gimble.intergenic.inv4.bed
+#  157968 total
 
-mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs
-cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs
+cp gimble.intergenic.*.bed /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs/
 
 #different sample files for different comparisons
 
 #kluori.samples.csv
+SM15W61,klu
+SM15W66,klu
+SM15W69,klu
 SM15W72,klu
 SM15W74,klu
-SM17S01,ori
-SM19T002,klu
-SM19T003,klu
-SM19T008,klu
-SM21BE01,ori
+SM18W01,klu
+SM21TS03,ori
 SM21TS05,ori
+SM21TS16,ori
 SM21TS33,ori
+SM21TS34,ori
+SM21TS35,ori
 SM21TS36,ori
 
 #chrori.samples.csv
-IG19G105,chr
-IG19G114,chr
-OBGHA0540,chr
-OBGHA0542,chr
 SM16N01,chr
-SM17S01,ori
-SM21BE01,ori
+SM16N04,chr
+SM16N05,chr
+SM16N06,chr
+SM16N20,chr
+SM16N37,chr
+SM21TS03,ori
 SM21TS05,ori
+SM21TS16,ori
 SM21TS33,ori
+SM21TS34,ori
+SM21TS35,ori
 SM21TS36,ori
 
 #chrklu.samples.csv
-IG19G105,chr
-IG19G114,chr
-OBGHA0540,chr
-OBGHA0542,chr
+SM16N01,chr
+SM16N04,chr
+SM16N05,chr
+SM16N06,chr
+SM16N20,chr
+SM16N37,chr
+SM15W61,klu
+SM15W66,klu
+SM15W69,klu
 SM15W72,klu
 SM15W74,klu
-SM16N01,chr
-SM19T002,klu
-SM19T003,klu
-SM19T008,klu
+SM18W01,klu
 
 ls *.csv > samples.txt
 sed 's/.samples.csv//g' samples.txt > sample_names.txt
@@ -935,11 +940,15 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/invs/${bed} -g /scratch/rdekayne/gimble/reference_indivs_gimble/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble2/reference_indivs_gimble2/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs/${bed} -g /scratch/rdekayne/gimble2/reference_indivs_gimble2/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
 done
 done
 
 parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: parse.gimble.run
+
+
+
+
 
 ######BLOCKS
 touch blocks.gimble.run
