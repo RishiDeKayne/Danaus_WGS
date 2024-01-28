@@ -946,10 +946,6 @@ done
 
 parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: parse.gimble.run
 
-
-
-
-
 ######BLOCKS
 touch blocks.gimble.run
 cat samples.txt | while read sample
