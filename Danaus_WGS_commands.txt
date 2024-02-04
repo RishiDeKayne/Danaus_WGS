@@ -652,6 +652,30 @@ done
 
 parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: calculate_pi_regions_new.txt
 
+/data/martin/genomics/analyses/Danaus_popgen/DC174/geno
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 100000 -m 5000 -g ./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.geno.gz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/contig1.1.hap.div.regions.output.csv.gz -f phased -T 4 --ploidyFile /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/sample.ploidy.txt -p WAT -p TSW -p NGA -p karamu -p recomb --writeFailedWindows --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/popsfile2_regions.txt
+
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/output
+cp *.div.regions.output.csv.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/output
+mv *.div* output/
+
+mkdir -p 50kb && cd 50kb
+
+touch calculate_pi_regions_new50.txt
+cat ../../scaf.mod.list | while read contig
+do
+echo "cd /data/martin/genomics/analyses/Danaus_popgen/DC174/geno && python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 50000 -m 5000 -g "${contig}".realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN313.geno.gz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/50kb/"${contig}".div.regions.output.csv.gz -f phased -T 1 -p WAT -p TSW -p NGA -p karamu -p recomb --writeFailedWindows --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/popsfile2_regions.txt && touch /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/"${contig}".pi.regions.done" >> calculate_pi_regions_new50.txt
+done
+
+parallel -j 1 'qsub -cwd -N diversity -V -pe smp64 1 -l h=bigfoot -b yes {}' :::: calculate_pi_regions_new50.txt
+
+cd /data/martin/genomics/analyses/Danaus_popgen/DC174/geno
+python /data/martin/genomics/analyses/Danaus_popgen/DC174/genomics_general/popgenWindows.py -w 50000 -m 5000 -g ./contig1.1.hap.realigned.raw.vcf.gz_filt_mindepth7_minqual30_AN224.geno.gz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/50kb/contig1.1.hap.div.regions.output.csv.gz -f phased -T 4 --ploidyFile /data/martin/genomics/analyses/Danaus_popgen/DC174/genotyping/sample.ploidy.txt -p WAT -p TSW -p NGA -p karamu -p recomb --writeFailedWindows --popsFile /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/popsfile2_regions.txt
+
+mkdir /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/50kb/output
+mv *.div* output/
+
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/pi/newrun/output/*.csv.gz .
 
 
 
