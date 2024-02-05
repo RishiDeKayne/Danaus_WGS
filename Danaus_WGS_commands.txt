@@ -1416,39 +1416,35 @@ cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/whit
 plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --assoc perm --allow-no-sex --missing-genotype N --threads 50
 #15465717 variants and 172 samples pass filters and QC.
 
-awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot.txt
-awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot.txt
-awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot.txt
+awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/background/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/background_plot.txt
+awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/forewing/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/forewing_plot.txt
+awk '{print $1,$3,$9}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/white/plink.qassoc > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/white_plot.txt
 
 #process background
-paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot_emp.txt
+paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/background_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/background/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/background_plot_emp.txt
 
-awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/background/background_plot_emp_total.txt
+awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/background_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/background_plot_emp_total.txt
 
 #process forewing
-paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot_emp.txt
+paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/forewing_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/forewing/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/forewing_plot_emp.txt
 
-awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/forewing/forewing_plot_emp_total.txt
+awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/forewing_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/forewing_plot_emp_total.txt
 
 #process white
-paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot_emp.txt
+paste /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/white_plot.txt /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/white/plink.qassoc.perm > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/white_plot_emp.txt
 
-awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/white/white_plot_emp_total.txt
+awk '{print $1,$2,$3,$6}' /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/white_plot_emp.txt > /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/white_plot_emp_total.txt
 
-scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/plink_assoc/*/*_emp_total.txt .
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/plink_assoc/*_emp_total.txt .
 
-cd /scratch/rdekayne/gemma_DC174/background
-plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
+#cd /scratch/rdekayne/gemma_DC174/background
+#plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
 
-cd /scratch/rdekayne/gemma_DC174/forewing
-plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
+#cd /scratch/rdekayne/gemma_DC174/forewing
+#plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
 
-cd /scratch/rdekayne/gemma_DC174/forewing
-plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
-
-#repeat this using only NYA, NRB, MPL = 88 hybrid individuals (below)
-
-
+#cd /scratch/rdekayne/gemma_DC174/forewing
+#plink --bfile gemma_in --allow-extra-chr --autosome-num 41 --model perm --allow-no-sex --missing-genotype N --threads 50
 
 
 
