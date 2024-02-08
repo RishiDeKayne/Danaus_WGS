@@ -1385,9 +1385,9 @@ sconda PCA
 plink --vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gwas/hybrids/gemma_input_87hybrids.vcf.gz --double-id --allow-extra-chr --autosome-num 41 --set-missing-var-ids @:# --make-bed --pca --out gemma_in
 #15465717 variants and 87 samples pass filters and QC.
 
-sort -k1 gemma_in.fam > gemma_in2.fam
-rm gemma_in.fam
-mv gemma_in2.fam gemma_in.fam
+awk 'FNR == NR { lineno[$1] = NR; next} {print lineno[$1], $0;}' gemma_in.fam background_colour_values_sorted.csv | sort -k 1,1n | cut -d' ' -f2- > background_correct_sort.csv
+awk 'FNR == NR { lineno[$1] = NR; next} {print lineno[$1], $0;}' gemma_in.fam forewing_band_values_sorted.csv | sort -k 1,1n | cut -d' ' -f2- > forewing_correct_sort.csv
+awk 'FNR == NR { lineno[$1] = NR; next} {print lineno[$1], $0;}' gemma_in.fam white_values_sorted.csv | sort -k 1,1n | cut -d' ' -f2- > white_correct_sort.csv
 
 sconda gemma
 ######################4. background hindwing colour RAW
