@@ -767,7 +767,7 @@ bcftools concat -Ou -f melan_vcf_to_merge.txt | bcftools sort -Oz -o ./RG28754_a
 ########
 #6. gIMble
 ########
-mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set
 
 git clone https://github.com/DRL/gimble.git
 
@@ -781,18 +781,25 @@ pip install agemo
 #klugii = WAT : "SM15W61", "SM15W66", "SM15W69", "SM15W72", "SM15W74", "SM18W01"
 #orientis = TSW : "SM21TS03", "SM21TS05", "SM21TS16", "SM21TS33", "SM21TS34", "SM21TS35", "SM21TS36"
 #chrysippus = NGA : "SM16N01", "SM16N04", "SM16N05", "SM16N06", "SM16N20", "SM16N37"
+#Karamu = KARA : "SM21SP06", "SM21SP09"
+
+cp ../ 2ndindiv_set/gimble.indiv.list .
+#add karamu individuals
 
 #subset overall vcf and then may symlinks to the realigned.bam files for each of these indivs
 #using /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
 
-ssh bigbird
-mkdir -p /scratch/rdekayne/gimble2 && cd /scratch/rdekayne/gimble2
 sconda genomics_general
-bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/gimble.indiv.list -Oz -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz
+echo "bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/gimble.indiv.list -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs.b.vcf.gz" > filt.vcf.run.txt
 
-bcftools reheader --samples /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals.b.vcf.gz
+parallel -j 1 'qsub -cwd -N gimble_filt -V -pe smp64 4 -l h=bigwig -b yes {}' :::: filt.vcf.run.txt
 
-cp DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble
+echo "bcftools reheader --samples /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3.b.vcf.gz" > reheader.vcf.run.txt
+
+parallel -j 1 'qsub -cwd -N gimble_filt -V -pe smp64 4 -l h=bigyin -b yes {}' :::: reheader.vcf.run.txt
+
+
+cp DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/
 
 mkdir -p /scratch/rdekayne/gimble2/bams && cd /scratch/rdekayne/gimble2/bams
 
@@ -858,6 +865,13 @@ ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_ba
 
 ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM18W01.HGWY7DSXX.190809.Dchry2.2.bwa.default.rmdup.bam
 ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM18W01.HGWY7DSXX.190809.Dchry2.2.bwa.default.rmdup.bai
+
+##karamu
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21SP06.304.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21SP06.304.220202.Dchry2.2.bwa.default.rmdup.bai
+
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21SP09.307.220202.Dchry2.2.bwa.default.rmdup.bam
+ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21SP09.307.220202.Dchry2.2.bwa.default.rmdup.bai
 
 #make reheader file with short name and long name
 bcftools reheader --samples ./reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2_renamed.b.vcf.gz ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2.b.vcf.gz
