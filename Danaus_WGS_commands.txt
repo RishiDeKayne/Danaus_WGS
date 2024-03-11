@@ -794,14 +794,14 @@ echo "bcftools view -S /data/martin/genomics/analyses/Danaus_popgen/DC174/analys
 
 parallel -j 1 'qsub -cwd -N gimble_filt -V -pe smp64 4 -l h=bigwig -b yes {}' :::: filt.vcf.run.txt
 
-echo "bcftools reheader --samples /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3.b.vcf.gz" > reheader.vcf.run.txt
+#make reheader file with short name and long name
+echo "bcftools reheader --samples /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3.b.vcf.gz" > reheader.vcf.run.txt
 
-parallel -j 1 'qsub -cwd -N gimble_filt -V -pe smp64 4 -l h=bigyin -b yes {}' :::: reheader.vcf.run.txt
+parallel -j 1 'qsub -cwd -N gimble_filt -V -pe smp64 4 -l h=bigwig -b yes {}' :::: reheader.vcf.run.txt
 
-
-cp DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/
-
-mkdir -p /scratch/rdekayne/gimble2/bams && cd /scratch/rdekayne/gimble2/bams
+ssh bigwig
+mkdir -p /scratch/rdekayne/gimble3/
+mkdir -p /scratch/rdekayne/gimble3/bams && cd /scratch/rdekayne/gimble3/bams
 
 #make symlinks for bam files in bam directory
 ##ln -s source_file myfile
@@ -873,18 +873,11 @@ ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_ba
 ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21SP09.307.220202.Dchry2.2.bwa.default.rmdup.bam
 ln -s /data/martin/genomics/analyses/Danaus_mapping/DC174/realigned/realigned_bams/realigned.SM21SP09.307.220202.Dchry2.2.bwa.default.rmdup.bai
 
-#make reheader file with short name and long name
-bcftools reheader --samples ./reheader.txt -o ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2_renamed.b.vcf.gz ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2.b.vcf.gz
 
-cp DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2_renamed.b.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/
-
-../gimble/gimble preprocess -h
-
-cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/
 touch gimble.run
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals2.b.vcf.gz  -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble2/reference_indivs_gimble2/ref_run " > gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble preprocess -f /data/martin/genomics/analyses/Danaus_genome/Dchry2/Dchry2.2.fa -v /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3.b.vcf.gz  -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/bams/ -g 2 -q 20 -m 8 -M 2 -t 20 -o /scratch/rdekayne/gimble3/ref_run " > gimble.run
 
-parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigbird -b yes {}' :::: gimble.run
+parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigwig -b yes {}' :::: gimble.run
 
 #want to make a bed file for each inversion that excludes annotations within them
 mkdir -p /scratch/rdekayne/gimble2/reference_indivs_gimble2/bedfiles
