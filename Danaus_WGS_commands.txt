@@ -880,25 +880,24 @@ echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/
 parallel -j 1 'qsub -cwd -N gimble_run -V -pe smp64 20 -l h=bigwig -b yes {}' :::: gimble.run
 
 #want to make a bed file for each inversion that excludes annotations within them
-mkdir -p /scratch/rdekayne/gimble2/reference_indivs_gimble2/bedfiles
-cd /scratch/rdekayne/gimble2/reference_indivs_gimble2/bedfiles
+mkdir -p /scratch/rdekayne/gimble3/reference_indivs_gimble3/bedfiles && cd /scratch/rdekayne/gimble3/reference_indivs_gimble3/bedfiles
 
-echo 'contig15.1  4035981 5322257' > inv1.1.bed
-echo 'contig15.1  5323805 6220875' > inv1.2.bed
+echo 'contig15.1  4035981  5322257' > inv1.1.bed
+echo 'contig15.1  5323805  6220875' > inv1.2.bed
 echo 'contig15.1  6251636 7829094' > inv2.bed
 echo 'contig15.1  14803486  15299732' > inv4.bed
 
-bedtools intersect -a ../ref_run.bed -b inv1.1.bed > gimble.inv1.1.bed
-bedtools intersect -a ../ref_run.bed -b inv1.2.bed > gimble.inv1.2.bed
-bedtools intersect -a ../ref_run.bed -b inv2.bed > gimble.inv2.bed
-bedtools intersect -a ../ref_run.bed -b inv4.bed > gimble.inv4.bed
+bedtools intersect -a ../../ref_run.bed -b inv1.1.bed > gimble.inv1.1.bed
+bedtools intersect -a ../../ref_run.bed -b inv1.2.bed > gimble.inv1.2.bed
+bedtools intersect -a ../../ref_run.bed -b inv2.bed > gimble.inv2.bed
+bedtools intersect -a ../../ref_run.bed -b inv4.bed > gimble.inv4.bed
 
 wc -l gimble.inv*
-#   74850 gimble.inv1.1.bed
-#   52397 gimble.inv1.2.bed
-#   84266 gimble.inv2.bed
-#   22732 gimble.inv4.bed
-#  234245 total
+#   80361 gimble.inv1.1.bed
+#   57217 gimble.inv1.2.bed
+#   94876 gimble.inv2.bed
+#   24238 gimble.inv4.bed
+#  256692 total
 
 bedtools subtract -a gimble.inv1.1.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.1.bed
 bedtools subtract -a gimble.inv1.2.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv1.2.bed
@@ -906,15 +905,37 @@ bedtools subtract -a gimble.inv2.bed -b /data/martin/genomics/analyses/Danaus_ge
 bedtools subtract -a gimble.inv4.bed -b /data/martin/genomics/analyses/Danaus_genome/Dchry2/braker_annotation_RDK_Dchry2_2/Dchry2.2.fa.masked_annotation_a001.sequences.tidy.gff3.bed > gimble.intergenic.inv4.bed
 
 wc -l *.intergenic*
-#   45726 gimble.intergenic.inv1.1.bed
-#   36714 gimble.intergenic.inv1.2.bed
-#   57182 gimble.intergenic.inv2.bed
-#   18346 gimble.intergenic.inv4.bed
-#  157968 total
+#   49100 gimble.intergenic.inv1.1.bed
+#   40147 gimble.intergenic.inv1.2.bed
+#   64910 gimble.intergenic.inv2.bed
+#   19560 gimble.intergenic.inv4.bed
+#  173717 total
 
-mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs && cd /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs
-cp gimble.intergenic.*.bed /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs/
-
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/invs
+cp gimble.intergenic.*.bed /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/invs/
+bcftools query -l ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3.b.vcf.gz
+#
+SM15W61
+SM15W66
+SM15W69
+SM15W72
+SM15W74
+SM18W01
+SM21TS03
+SM21TS05
+SM21TS16
+SM21TS33
+SM21TS34
+SM21TS35
+SM21TS36
+SM16N01
+SM16N04
+SM16N05
+SM16N06
+SM16N20
+SM16N37
+SM21SP06
+SM21SP09
 #different sample files for different comparisons
 
 #kluori.samples.csv
