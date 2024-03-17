@@ -1035,11 +1035,11 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble3/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/invs/${bed} -g /scratch/rdekayne/gimble3/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/invs/${bed} -g /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
 done
 done
 
-parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigwig -b yes {}' :::: parse.gimble.run
+parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: parse.gimble.run
 
 ######BLOCKS
 touch blocks.gimble.run
