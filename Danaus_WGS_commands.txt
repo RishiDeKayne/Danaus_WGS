@@ -914,13 +914,14 @@ wc -l *.intergenic*
 mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/invs
 cp gimble.intergenic.*.bed /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/invs/
 bcftools query -l ./DC174_allchroms_chr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_AN224_nosmallcontigs_reference_individuals3.b.vcf.gz
-#
+#klu
 SM15W61
 SM15W66
 SM15W69
 SM15W72
 SM15W74
 SM18W01
+#ori
 SM21TS03
 SM21TS05
 SM21TS16
@@ -928,12 +929,14 @@ SM21TS33
 SM21TS34
 SM21TS35
 SM21TS36
+#chr
 SM16N01
 SM16N04
 SM16N05
 SM16N06
 SM16N20
 SM16N37
+#kar
 SM21SP06
 SM21SP09
 #different sample files for different comparisons
@@ -982,6 +985,46 @@ SM15W72,klu
 SM15W74,klu
 SM18W01,klu
 
+#karklu.samples.csv
+SM21SP06,kar
+SM21SP09,kar
+SM15W61,klu
+SM15W66,klu
+SM15W69,klu
+SM15W72,klu
+SM15W74,klu
+SM18W01,klu
+
+#karori.samples.csv
+SM21SP06,kar
+SM21SP09,kar
+SM21TS03,ori
+SM21TS05,ori
+SM21TS16,ori
+SM21TS33,ori
+SM21TS34,ori
+SM21TS35,ori
+SM21TS36,ori
+
+#karchr.samples.csv
+SM21SP06,kar
+SM21SP09,kar
+SM16N01,chr
+SM16N04,chr
+SM16N05,chr
+SM16N06,chr
+SM16N20,chr
+SM16N37,chr
+
+wc -l *.samples.csv
+# 12 chrklu.samples.csv
+# 13 chrori.samples.csv
+#  8 karchr.samples.csv
+#  8 karklu.samples.csv
+#  9 karori.samples.csv
+# 13 kluori.samples.csv
+# 63 total
+
 ls *.csv > samples.txt
 sed 's/.samples.csv//g' samples.txt > sample_names.txt
 ls *.bed > bed_files.txt
@@ -992,11 +1035,11 @@ cat samples.txt | while read sample
 do
 cat bed_files.txt | while read bed
 do
-echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble2/reference_indivs_gimble2/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/2ndindiv_set/invs/${bed} -g /scratch/rdekayne/gimble2/reference_indivs_gimble2/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
+echo "/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/gimble/gimble parse -v /scratch/rdekayne/gimble3/ref_run.vcf.gz -b /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/gimble/3rdindiv_set/invs/${bed} -g /scratch/rdekayne/gimble3/ref_run.genomefile -s ${sample} -z ${sample}_${bed}_store" >> parse.gimble.run
 done
 done
 
-parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigbird -b yes {}' :::: parse.gimble.run
+parallel -j 1 'qsub -cwd -N gimble_parse -V -pe smp64 20 -l h=bigwig -b yes {}' :::: parse.gimble.run
 
 ######BLOCKS
 touch blocks.gimble.run
