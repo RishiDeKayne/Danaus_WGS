@@ -467,6 +467,19 @@ bcftools view -S ^./exclude_sub_saharan_indivs.txt -Oz -o /data/martin/genomics/
 #14548985 variants and 146 people pass filters and QC.
 #6611769 variants and 146 people pass filters and QC.
 
+#sub saharan individuals for SVs only:
+mkdir -p /data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/SVs_only
+sconda genomics_general
+bcftools view -S ^../exclude_sub_saharan_indivs.txt -Oz -o /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_1.1_1.2_2_4_renamed_sub_saharan.vcf.gz /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_1.1_1.2_2_4_renamed.vcf.gz
+
+sconda plink
+plink --vcf /data/martin/genomics/analyses/Danaus_popgen/DC174/combined_vcfs/DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15_1.1_1.2_2_4_renamed_sub_saharan.vcf.gz --double-id --allow-extra-chr --autosome-num 17 --set-missing-var-ids @:# \
+--make-bed --pca --out admix_in_chr15_onlySVs_sahara
+#173998 variants and 146 samples pass filters and QC.
+
+#and move output to: /Users/rishide-kayne/Dropbox/RishiMac2/Danaus/DC174/PCAs_final/SVs_only/
+scp qmaster:/data/martin/genomics/analyses/Danaus_popgen/DC174/analysis/PCA/SVs_only/*.eigen* .
+
 ########
 #3. GWAS
 ########
