@@ -28,3 +28,7 @@ And various processing scripts including:
 [`DC174_get_ploidy.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_get_ploidy.R)  
 [`DC174_phase_statistics.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_phase_statistics.R)  
 [`DC174_supp_table_background.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_supp_table_background.R)  
+
+<br />  
+
+Finally, the gIMble full model output can be found in [`placeholder`]
