@@ -1,0 +1,175 @@
+indiv,region_narrow,name,sex,country,colour,region,notes,lat,long,hindwingWhite,forewingBand,backgroundColour,bam
+SM15W61,WAT,Denis,M,Kenya,tomato,tomato,N/A,-3.33,40.02,absent,absent,light,SM15W61.DSW44971.170724.Dchry2.2.bwa.default.rmdup.bam
+SM15W66,WAT,Seamus,M,Kenya,tomato,tomato,N/A,-3.33,40.02,absent,absent,light,SM15W66.DSW44966.170724.Dchry2.2.bwa.default.rmdup.bam
+SM15W69,WAT,Anthony,M,Kenya,tomato,tomato,N/A,-3.33,40.02,absent,absent,light,SM15W69.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM15W72,WAT,Bubbles,M,Kenya,tomato,tomato,N/A,-3.33,40.02,absent,absent,light,SM15W72.DSW44976.170724.Dchry2.2.bwa.default.rmdup.bam
+SM15W74,WAT,Alfie,M,Kenya,tomato,tomato,N/A,-3.33,40.02,absent,absent,light,SM15W74.DSW31519.170110.Dchry2.2.bwa.default.rmdup.bam
+SM18W01,WAT,Happiness,M,Kenya,tomato,tomato,N/A,-3.33,40.02,absent,absent,light,SM18W01.HGWY7DSXX.190809.Dchry2.2.bwa.default.rmdup.bam
+SM19T001,TSA,Victoria ,F,Kenya,tomato,tomato,N/A,-2.675,38.226,absent,absent,light,SM19T001.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T002,TSA,Kiki,F,Kenya,tomato,tomato,N/A,-2.675,38.226,absent,absent,light,SM19T002.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T003,TSA,Florence,F,Kenya,tomato,tomato,N/A,-2.675,38.226,absent,absent,light,SM19T003.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T005,TSA,Stefan ,M,Kenya,tomato,tomato,N/A,-2.675,38.226,absent,absent,light,SM19T005.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T006,TSA,Tyler,M,Kenya,tomato,tomato,N/A,-2.647,38.367,absent,absent,light,SM19T006.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T007,TSA,Fifi,F,Kenya,tomato,tomato,N/A,-2.647,38.367,absent,partial,light,SM19T007.EDSW200000307-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM19T008,TSA,Lulu ,F,Kenya,tomato,tomato,N/A,-2.647,38.367,absent,absent,light,SM19T008.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T009,TSA,Mimi,F,Kenya,tomato,tomato,N/A,-2.647,38.367,absent,absent,light,SM19T009.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T010,TSA,Mia,F,Kenya,tomato,tomato,N/A,-2.647,38.367,absent,absent,light,SM19T010.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T011,TSA,Maya,F,Kenya,tomato,tomato,N/A,-2.676,38.199,partial,partial,light,SM19T011.EDSW200000308-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM19T012,TSA,Clive,M,Kenya,tomato,tomato,N/A,-2.676,38.199,absent,absent,light,SM19T012.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19T014,TSA,Benny,M,Kenya,tomato,tomato,N/A,-2.675,38.226,absent,partial,light,SM19T014.EDSW200018986-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM19T015,TSA,Ava,F,Kenya,tomato,tomato,N/A,-2.675,38.226,absent,partial,intermediate,SM19T015.EDSW200018987-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16S03,MAG,Finbar,M,RSA,lightseagreen,royalblue2,N/A,-26.031,27.494,absent,present,dark,SM16S03.DSW31514.170110.Dchry2.2.bwa.default.rmdup.bam
+SM16S06,MAG,Kevin,M,RSA,lightseagreen,royalblue2,N/A,-26.031,27.494,absent,present,dark,SM16S06.DSW31515.170110.Dchry2.2.bwa.default.rmdup.bam
+SM16S11,MAG,Stu,M,RSA,lightseagreen,royalblue2,N/A,-26.031,27.494,absent,present,dark,SM16S11.DSW44981.170724.Dchry2.2.bwa.default.rmdup_twosets.bam
+SM16S12,MAG,Cian,M,RSA,lightseagreen,royalblue2,N/A,-26.031,27.494,absent,present,dark,SM16S12.DSW44980.170724.Dchry2.2.bwa.default.rmdup.bam
+SM16S14,MAG,Teddy,M,RSA,lightseagreen,royalblue2,N/A,-26.031,27.494,absent,present,dark,SM16S14.DSW44970.170724.Dchry2.2.bwa.default.rmdup.bam
+SM16S15,MAG,Lawrence,M,RSA,lightseagreen,royalblue2,N/A,-26.031,27.494,absent,present,dark,SM16S15.DSW44979.170724.Dchry2.2.bwa.default.rmdup_twosets.bam
+SM17S01,MAG,Bennet,M,RSA,lightseagreen,royalblue2,Father of SM175,-26.031,27.494,absent,present,dark,SM17S01.DSW44989.170724.Dchry2.2.bwa.default.rmdup.bam
+SM21SP01,SPA,Dwayne,M,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,partial,present,dark,SM21SP01.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21SP04,SPA,Monty,M,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,absent,present,dark,SM21SP04.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21SP06,SPA,Kaya,F,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,absent,present,dark,SM21SP06.304.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21SP07,SPA,Elna,F,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,absent,present,dark,SM21SP07.305.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21SP08,SPA,Margot,F,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,absent,present,dark,SM21SP08.306.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21SP09,SPA,Britney,F,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,absent,present,dark,SM21SP09.307.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21SP10,SPA,Graham,M,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,absent,present,dark,SM21SP10.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21SP12,SPA,Rowan,M,RSA,lightseagreen,royalblue2,N/A,-24.982,31.467,absent,present,dark,SM21SP12.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM20BE01,KNM,Vernon,M,RSA,lightseagreen,royalblue2,N/A,-29.356,29.873,absent,present,dark,SM20BE01.EDSW210008702-1a.220314.Dchry2.2.bwa.default.rmdup.bam
+SM21BE01,KNM,Carla,F,RSA,lightseagreen,royalblue2,N/A,-29.356,29.873,absent,present,dark,SM21BE01.303.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21BE02,KNM,Bruno ,M,RSA,lightseagreen,royalblue2,N/A,-29.356,29.873,absent,present,dark,SM21BE02.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21BE03,KNM,Bandile,M,RSA,lightseagreen,royalblue2,N/A,-29.356,29.873,absent,present,dark,SM21BE03.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21BE04,KNM,Otis,M,RSA,lightseagreen,royalblue2,N/A,-29.356,29.873,absent,present,dark,SM21BE04.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21TS03,TSW,Mandla,M,RSA,lightseagreen,royalblue2,N/A,-27.295,22.482,absent,present,dark,SM21TS03.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21TS05,TSW,Archie,M,RSA,lightseagreen,royalblue2,N/A,-27.295,22.482,absent,present,dark,SM21TS05.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21TS16,TSW,Christalle,F,RSA,lightseagreen,royalblue2,N/A,-27.295,22.482,absent,present,dark,SM21TS16.308.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21TS33,TSW,Mandy,F,RSA,lightseagreen,royalblue2,N/A,-27.295,22.482,absent,present,dark,SM21TS33.309.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21TS34,TSW,Salome,F,RSA,lightseagreen,royalblue2,N/A,-27.295,22.482,absent,present,dark,SM21TS34.310.220202.Dchry2.2.bwa.default.rmdup.bam
+SM21TS35,TSW,Mimi,F,RSA,lightseagreen,royalblue2,N/A,-27.295,22.482,absent,present,dark,SM21TS35.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM21TS36,TSW,Lillian,F,RSA,lightseagreen,royalblue2,N/A,-27.295,22.482,absent,present,dark,SM21TS36.EDSW220000311-1a.220215.Dchry2.2.bwa.default.rmdup_2sets.bam
+SM17H01,STH,Estella,F,StHelena,royalblue2,royalblue2,N/A,-15.9249,-5.7175,absent,present,dark,SM17H01.302.200115.Dchry2.2.bwa.default.rmdup.bam_twosets.bam
+SM17H02,STH,Biddy,F,StHelena,royalblue2,royalblue2,N/A,-15.9249,-5.7175,absent,present,dark,SM17H02.303.200115.Dchry2.2.bwa.default.rmdup.bam
+SM17H03,STH,Fanny,F,StHelena,royalblue2,royalblue2,N/A,-15.9249,-5.7175,absent,present,dark,SM17H03.UKDSW02728.190728.Dchry2.2.bwa.default.rmdup.bam
+SM17H04,STH,Pip,M,StHelena,royalblue2,royalblue2,N/A,-15.9249,-5.7175,absent,present,dark,SM17H04.UKDSW02729.220308.Dchry2.2.bwa.default.rmdup.bam
+SM17H05,STH,Herbert,M,StHelena,royalblue2,royalblue2,N/A,-15.9249,-5.7175,absent,present,dark,SM17H05.EDSW200018973.2101.Dchry2.2.bwa.default.rmdup.bam
+SM17H07,STH,Fagin,M,StHelena,royalblue2,royalblue2,N/A,-15.9249,-5.7175,absent,present,light,SM17H07.EDSW200018975.2101.Dchry2.2.bwa.default.rmdup.bam
+SM16N01,NGA,Jenny,F,Nigeria,springgreen4,springgreen4,N/A,6.24,8.97,present,present,light,SM16N01.DSW44968.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16N04,NGA,Alanna,F,Nigeria,springgreen4,springgreen4,N/A,6.24,8.97,present,present,light,SM16N04.DSW31516.170110.Dchry2.2.bwa.default.rmdup.bam
+SM16N05,NGA,Bubba,M,Nigeria,springgreen4,springgreen4,N/A,6.24,8.97,present,present,light,SM16N05.DSW44977.170724.Dchry2.2.bwa.default.rmdup.bam
+SM16N06,NGA,Lorchan,M,Nigeria,springgreen4,springgreen4,N/A,6.24,8.97,present,present,light,SM16N06.DSW31517.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16N20,NGA,Callum,M,Nigeria,springgreen4,springgreen4,N/A,6.24,8.97,present,present,light,SM16N20.DSW44964.170724.Dchry2.2.bwa.default.rmdup.bam
+SM16N37,NGA,Jackson,M,Nigeria,springgreen4,springgreen4,N/A,6.24,8.97,present,present,light,SM16N37.DSW44975.170724.Dchry2.2.bwa.default.rmdup.bam
+OBGHA0010,GHA,Mercedes,F,Ghana,yellow3,springgreen4,N/A,6.85,0.42,present,present,light,OBGHA0010.293.220202.Dchry2.2.bwa.default.rmdup.bam
+OBGHA0205,GHA,Tia,F,Ghana,yellow3,springgreen4,N/A,6.87,0.44,present,present,dark,OBGHA0205.294.220202.Dchry2.2.bwa.default.rmdup.bam
+OBGHA0540,GHA,Chanel,F,Ghana,yellow3,springgreen4,N/A,6.13,-0.58,present,present,light,OBGHA0540.295.220202.Dchry2.2.bwa.default.rmdup.bam
+OBGHA0542,GHA,Valerie,F,Ghana,yellow3,springgreen4,N/A,6.13,-0.58,present,present,light,OBGHA0542.296.220202.Dchry2.2.bwa.default.rmdup.bam
+IG19G105,GHA,Kisi,F,Ghana,yellow3,springgreen4,Mother collected in Ghana. Mother of AB192,5.121,-1.293,present,present,light,IG19G105.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG19G114,GHA,Abina,F,Ghana,yellow3,springgreen4,"Female ""Abina"". Mother collected in Ghana. Father not collected. Mother of AB194.",5.121,-1.293,present,present,light,IG19G114.EDSW200000315-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM17FV04,FUV,Mandy,F,Spain,wheat1,goldenrod,N/A,28.331,-13.923,absent,present,dark,SM17FV04.UKDSW02207-C.220307.Dchry2.2.bwa.default.rmdup.bam
+SM17FV05,FUV,Marlin,M,Spain,wheat1,goldenrod,N/A,28.331,-13.923,absent,present,dark,SM17FV05.HCMCFDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM17FV11,FUV,Zoe,F,Spain,wheat1,goldenrod,N/A,28.331,-13.923,absent,present,dark,SM17FV11.UKDSW02208.220307.Dchry2.2.bwa.default.rmdup.bam
+RV12N317,TUN,Luna,F,Tunisia,goldenrod,goldenrod,N/A,35.549,9.754,absent,present,dark,RV12N317.DSW44978.220307.Dchry2.2.bwa.default.rmdup_2sets.bam
+SM19SY01,SCY,Giancarlo,M,Italy,hotpink,goldenrod,N/A,37.466,13.197,absent,present,dark,SM19SY01.EDSW200000305-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM19SY02,SCY,Adriano,M,Italy,hotpink,goldenrod,N/A,37.466,13.197,absent,present,dark,SM19SY02.301.220202.Dchry2.2.bwa.default.rmdup.bam
+SM19SY03,SCY,Elisa,F,Italy,hotpink,goldenrod,N/A,37.466,13.197,absent,present,dark,SM19SY03.EDSW200018979-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM19SY05,SCY,Gino,M,Italy,hotpink,goldenrod,N/A,37.466,13.197,absent,present,dark,SM19SY05.302.220202.Dchry2.2.bwa.default.rmdup.bam
+SM19SY06,SCY,Glenda,F,Italy,hotpink,goldenrod,N/A,37.466,13.197,absent,present,light,SM19SY06.EDSW200000306-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM17P01,PHL,Fionnula,F,Philippines,mediumorchid1,goldenrod,N/A,none,none,absent,present,light,SM17P01.DSW44982.220314.Dchry2.2.bwa.default.rmdup.bam
+SM17R23,NYA,Dorothy,F,Rwanda,tomato4,tomato4,N/A,-2.22,30.12,absent,present,dark,SM17R23.EDSW190027016-1a.220307.Dchry2.2.bwa.default.rmdup_2sets.bam
+IG17NY001,NYA,Macavity,M,Rwanda,tomato4,tomato4,N/A,-2.22,30.12,partial,present,dark,IG17NY001.EDSW200000304-1a.220307.Dchry2.2.bwa.default.rmdup.bam
+SM18R001,NYA,Ed,M,Rwanda,tomato4,tomato4,N/A,-2.22,30.12,partial,present,dark,SM18R001.UKDSW02210-C.220307.Dchry2.2.bwa.default.rmdup.bam
+SM18R012,NYA,Aloysius,M,Rwanda,tomato4,tomato4,N/A,-2.22,30.12,partial,present,dark,SM18R012.EDSW200018977-1a.220307.Dchry2.2.bwa.default.rmdup_2sets.bam
+IG18RN01,NYA,Steve,M,Rwanda,tomato4,tomato4,N/A,-2.22,30.12,absent,present,light,IG18RN01.UKDSW02211-1.220307.Dchry2.2.bwa.default.rmdup.bam
+IG18RN02,NYA,Marion,F,Rwanda,tomato4,tomato4,N/A,-2.22,30.12,absent,present,light,IG18RN02.UKDSW02212-C-1.220307.Dchry2.2.bwa.default.rmdup.bam
+IG20NY001,NYA,Maria,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,partial,light,IG20NY001.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY003,NYA,Sabin,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY003.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY006,NYA,Yvan,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,intermediate,IG20NY006.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY009,NYA,Wilfred,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY009.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY012,NYA,Nadine,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,light,IG20NY012.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY014,NYA,Enatha,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,light,IG20NY014.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY015,NYA,Tharcisse,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,partial,light,IG20NY015.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY016,NYA,Noah ,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY016.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY017,NYA,Abel,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,intermediate,IG20NY017.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY018,NYA,Alec,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,partial,light,IG20NY018.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY019,NYA,Gilbert,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY019.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY020,NYA,Kirsty ,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY020.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY021,NYA,Davina,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY021.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY023,NYA,Yvonne,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,partial,light,IG20NY023.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY024,NYA,Kevin,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,light,IG20NY024.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY025,NYA,Adam ,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,present,light,IG20NY025.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY026,NYA,Thomas,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,present,present,light,IG20NY026.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY029,NYA,Sive,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,partial,light,IG20NY029.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY030,NYA,Nathan,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY030.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY031,NYA,Natalie ,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,intermediate,IG20NY031.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY032,NYA,Mike,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,present,dark,IG20NY032.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY033,NYA,Larry ,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,present,dark,IG20NY033.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY034,NYA,Lenny ,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY034.H5HJMDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY035,NYA,Gavin,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,present,dark,IG20NY035.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY036,NYA,Garfield,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY036.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY039,NYA,Trevor,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,intermediate,IG20NY039.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY040,NYA,Percy ,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,light,IG20NY040.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY041,NYA,Tommy,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,intermediate,IG20NY041.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY042,NYA,Drake,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,present,partial,light,IG20NY042.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY043,NYA,Francisca,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY043.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY045,NYA,Kiran,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,intermediate,IG20NY045.292.220202.Dchry2.2.bwa.default.rmdup.bam
+IG20NY046,NYA,Callie,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY046.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY047,NYA,Jess,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY047.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY048,NYA,Betty ,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY048.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY049,NYA,Bertha,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,light,IG20NY049.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY053,NYA,Aoibheann ,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,light,IG20NY053.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY054,NYA,Arthur ,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,absent,light,IG20NY054.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY056,NYA,Balthazar,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY056.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY057,NYA,Carine,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,dark,IG20NY057.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY058,NYA,Caspar,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,partial,intermediate,IG20NY058.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY060,NYA,Bruno,M,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,present,dark,IG20NY060.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY062,NYA,Chanise,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,partial,absent,light,IG20NY062.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY063,NYA,Claudine,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,absent,present,light,IG20NY063.H5J5MDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+IG20NY066,NYA,Cynthia,F,Rwanda,tomato4,tomato4,N/A,-2.154,30.077,present,present,light,IG20NY066.H5CKGDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+RB20110,NYA,Cora,F,Rwanda,tomato4,tomato4,Daughter of 1G20.NY002. Mother of SB211.,-2.154,30.077,absent,present,dark,RB20110.EDSW210008701-1a.220621.Dchry2.2.bwa.default.rmdup.bam
+SM16K567,NRB,Harriet,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,absent,light,SM16K567.DSW31520.220307.Dchry2.2.bwa.default.rmdup_2sets.bam
+SM16K570,NRB,Sparkle,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K570.DSW31521.220307.Dchry2.2.bwa.default.rmdup_2sets.bam
+SM16K571,NRB,Peggy,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,absent,light,SM16K571.DSW44974.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16K577,NRB,Sorcha,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,present,partial,light,SM16K577.DSW31522.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16K580,NRB,Nadia,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K580.DSW44983.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16K584,NRB,Agnes,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,absent,light,SM16K584.DSW44973-1.220307.Dchry2.2.bwa.default.rmdup_2sets.bam
+SM16K585,NRB,Maureen,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,present,dark,SM16K585.DSW31523.220307.Dchry2.2.bwa.default.rmdup_2sets.bam
+SM16K618,NRB,Ralph,M,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,absent,intermediate,SM16K618.DSW44969.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16K620,NRB,Oisin,M,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,absent,intermediate,SM16K620.DSW44967.220308.Dchry2.2.bwa.default.rmdup.bam
+SM16K622,NRB,Fergus,M,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,absent,light,SM16K622.DSW44988.220308.Dchry2.2.bwa.default.rmdup.bam
+SM16K626,NRB,Tim,M,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K626.DSW31524.220308.Dchry2.2.bwa.default.rmdup_2sets.bam
+SM16K627,NRB,Danielle,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K627.DSW31525.220308.Dchry2.2.bwa.default.rmdup.bam
+SM16K628,NRB,Marlie,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K628.DSW44985.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16K630,NRB,Oonagh,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K630.DSW44972.220307.Dchry2.2.bwa.default.rmdup.bam
+SM16K631,NRB,Niamh,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K631.DSW44984.220308.Dchry2.2.bwa.default.rmdup.bam
+SM16K633,NRB,Aisling,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,partial,light,SM16K633.DSW44986.220308.Dchry2.2.bwa.default.rmdup.bam
+SM16K634,NRB,Laoise,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,absent,present,light,SM16K634.DSW44987.220308.Dchry2.2.bwa.default.rmdup.bam
+SM16K641,NRB,Orla,F,Kenya,tomato,tomato4,N/A,-1.39,36.82,missing,missing,missing,SM16K641.DSW44965.220308.Dchry2.2.bwa.default.rmdup.bam
+ABRI183097,NRB,Jane,F,Kenya,tomato,tomato4,N/A,-1.304,36.693,absent,absent,light,ABRI183097.EDSW200018989-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM16L05,MPL,Tinkerbell,F,Kenya,tomato,tomato4,N/A,0.189,37.139064,absent,present,light,SM16L05.UKDSW02206.220308.Dchry2.2.bwa.default.rmdup.bam
+SM19M009,MPL,Asali,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M009.EDSW200000310-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM19M015,MPL,Njoki,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M015.EDSW200000311-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM19M019,MPL,Diana,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,present,light,SM19M019.EDSW200000312-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM19M020,MPL,Salma,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M020.EDSW200000313-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM19M021,MPL,Selma,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,present,light,SM19M021.EDSW200018988-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM19M025,MPL,Christina,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M025.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M026,MPL,Alicia,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M026.H3YGMDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M027,MPL,Isabella,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,absent,light,SM19M027.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M030,MPL,Camilla ,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M030.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M036,MPL,Milo,M,Kenya,tomato,tomato4,N/A,0.352,36.896,partial,partial,light,SM19M036.EDSW200018983-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM19M038,MPL,Akinyi,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,absent,light,SM19M038.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M042,MPL,Zawadi ,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,absent,light,SM19M042.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M043,MPL,Athena,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M043.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M044,MPL,Rehema,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M044.merged.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M045,MPL,Esther,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,absent,light,SM19M045.H5GL5DSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M051,MPL,Mercy,F,Kenya,tomato,tomato4,N/A,0.352,36.896,absent,partial,light,SM19M051.H3YGMDSX5.221107.Dchry2.2.bwa.default.rmdup.bam
+SM19M056,MPL,Ross,M,Kenya,tomato,tomato4,Father of AB194,0.352,36.896,absent,partial,dark,SM19M056.EDSW200000314-1a.220308.Dchry2.2.bwa.default.rmdup.bam
+SM17X01,missing,Giselle,F,missing,darkgrey,darkgrey,Mother of brood MB175. Cured of spiroplasma,missing,missing,present,present,light,SM17X01.H355CCCXY.170724.Dchry2.2.bwa.default.rmdup.bam
+MB17501,missing,MB17501,M,missing,darkgrey,darkgrey,MB175 appears to be two broods that were accidentally merged,missing,missing,absent,present,dark,MB17501.HGV2GDSXX.190705.Dchry2.2.bwa.default.rmdup.bam
+MB17502,missing,MB17502,F,missing,darkgrey,darkgrey,MB175 appears to be two broods that were accidentally merged,missing,missing,absent,present,intermediate,MB17502.HGV2GDSXX.190705.Dchry2.2.bwa.default.rmdup.bam
+MB17503,missing,MB17503,F,missing,darkgrey,darkgrey,MB175 appears to be two broods that were accidentally merged,missing,missing,absent,present,dark,MB17503.HGV2GDSXX.190706.Dchry2.2.bwa.default.rmdup.bam
+MB17507,missing,MB17507,M,missing,darkgrey,darkgrey,MB175 appears to be two broods that were accidentally merged,missing,missing,absent,partial,light,MB17507.HGV2GDSXX.190705.Dchry2.2.bwa.default.rmdup.bam
+MB17521,missing,MB17521,M,missing,darkgrey,darkgrey,MB175 appears to be two broods that were accidentally merged,missing,missing,absent,partial,light,MB17521.HGV2GDSXX.190705.Dchry2.2.bwa.default.rmdup.bam
+SM18S10,missing,Amore,F,missing,darkgrey,darkgrey,Suspected aunt of brood MB181. Suspected captive bred individual,missing,missing,absent,present,intermediate,SM18S10.UKDSW02199.220314.Dchry2.2.bwa.default.rmdup.bam
+MB18102,missing,Coco,F,missing,darkgrey,darkgrey,Brood MB181,missing,missing,absent,partial,light,MB18102.18990.210209.Dchry2.2.bwa.default.rmdup.bam
+MB18103,missing,MB18103,F,missing,darkgrey,darkgrey,Brood MB182,missing,missing,partial,partial,light,MB18103.merged.211111.Dchry2.2.bwa.default.rmdup.bam
+MB18111,missing,Prunella,F,missing,darkgrey,darkgrey,Pupa not actually part of brood MB181,missing,missing,missing,missing,missing,MB18111.UKDSW02198.190810.Dchry2.2.bwa.default.rmdup.bam
+AB19401,missing,Nyika,F,missing,darkgrey,darkgrey,Brood AB194,missing,missing,absent,present,dark,AB19401.EDSW200000316-1a.220314.Dchry2.2.bwa.default.rmdup.bam
+SB21102,missing,SB21102,F,missing,darkgrey,darkgrey,Brood SB211,missing,missing,absent,present,dark,SB21102.merged.211111.Dchry2.2.bwa.default.rmdup.bam
