@@ -31,4 +31,4 @@ And various processing scripts including:
 
 <br />  
 
-Finally, the gIMble full model output can be found in [`placeholder`]
+Finally, the gIMble full model output can be found in [`FINAL_GIMBLE_RESULTS_3morphs.xlsx`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/FINAL_GIMBLE_RESULTS_3morphs.xlsx)
