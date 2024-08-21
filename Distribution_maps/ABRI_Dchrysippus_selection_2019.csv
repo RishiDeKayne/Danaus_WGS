@@ -1,0 +1,82 @@
+ID,LOCATION ,DATE,decimalLatitude,decimalLongitude,sex,hindwingWhite,forewingTip,groundColour,Collector
+ABR1-2019-0001,Le Morne Mauritius,2018/09,-20.443,57.33,male,absent,present,intermediate,I. Bampton
+ABR1-2019-0002,Goodlands Maurius,2017/10/05,-20.04345,57.67048,male,absent,present,intermediate,I. Bampton
+ABR1-2019-0003,Macabe B. river Mauritius,1995/12/28,-20.425,57.453,female,absent,present,light,S. Collins
+ABR1-2019-0004,Mauritius Chamarel Bois Ebene,2014/04/18,-20.43,57.375,female,absent,present,intermediate,na
+ABR1-2019-0005,River 40K Maevatanana Majunga - Tana Rd W. Madagascar,2003//26,-17.237,46.925,male,absent,present,light,S. Collins
+ABR1-2019-0006,Zombitze F. 20k E. Sakaraha S. W. Madagascar; 900m,2003//26,-22.886,44.692,male,absent,present,light,S. Collins
+ABR1-2019-0007,Maronsetra NE Madagascar 8km,2011/12/24,-15.574,49.58,male,absent,present,light,N. Voloina
+ABR1-2019-0008,Sarondrano; 20k S Tulear; Madagascar,2006/14/15,-23.51,43.753,female,absent,present,intermediate,na
+ABR1-2019-0009,St Francis; La reunion,2014/6,-20.925,55.466,male,absent,present,intermediate,na
+ABR1-2019-0010,St Francis; La reunion,2014/6,-20.925,55.466,female,absent,present,dark,na
+ABR1-2019-0011,G. Comore; Comoro islands,1981/3,-11.707,43.264,male,absent,present,light,S. Collins
+ABR1-2019-0012,G. Comore; Comoro islands,1980/9,-11.707,43.264,male,absent,present,light,S. Collins
+ABR1-2019-0013,G. Comore; Comoro islands,1981/3,-11.707,43.264,female,absent,present,light,S. Collins
+ABR1-2019-0014,G. Comore; Comoro islands,1981/3,-11.707,43.264,female,absent,present,light,S. Collins
+ABR1-2019-0015,Rodrigues,2014/04/24,-19.715,63.375,male,absent,present,light,na
+ABR1-2019-0016,Env Sangui C. Africa Rep.,2014/04/03,NA,NA,male,absent,partial,light,na
+ABR1-2019-0017,Rodrigues,2014/04/24,-19.715,63.375,female,absent,present,light,na
+ABR1-2019-0018,Rodrigues,2014/04/24,-19.715,63.375,female,absent,present,light,na
+ABR1-2019-0019,Lume DRC,2014/6,-19.715,63.375,male,absent,present,light,na
+ABR1-2019-0020,Kasuo N. Kivu E. DRC,2014/07,-0.249,29.001,male,absent,present,intermediate,na
+ABR1-2019-0021,Manzumbu Kivu E. DRC,2014/08,0.914,29.234,male,partial,present,light,na
+ABR1-2019-0022,L. Wiro E. Zaire ,1990/05,-2.244,28.813,male,partial,present,dark,S. Collins
+ABR1-2019-0023,Harare; Zimbabwe,1998/05/12,NA,NA,female,absent,present,dark,R.D Stephen
+ABR1-2019-0024,Marowe R. Uzumba Dist; Zimbabwe,1986/05/04,-17.234,31.942,male,partial,present,dark,RD Pare
+ABR1-2019-0025,Mtoroshanga; Rhodesia,1973/02/25,-17.148,30.678,male,absent,present,dark,RD Pare
+ABR1-2019-0026,Mt. Demera Inyanga Mts; Zimbabwe,1998/11/29,-18.247,32.606,female,absent,partial,light,RD Pare
+ABR1-2019-0027,Moucha island Djibouti,1998/11/25,11.724,43.212,male,absent,absent,light,A. Archer
+ABR1-2019-0028,Moucha island Djibouti,1998/11/25,11.724,43.212,female,absent,absent,light,A. Archer
+ABR1-2019-0029,Ghibe Riv. C. Ethiopia,1990/05,8.23,37.58,male,present,partial,light,S. Collins
+ABR1-2019-0030,Dire Dawa E. Ethiopia,1990/05,9.6,41.8,female,absent,absent,light,S. Collins
+ABR1-2019-0031,Wenela Caprivi,1987/01/10,-17.479,24.248,male,absent,present,dark,R.D Stephen
+ABR1-2019-0032,Windhoek ,1988/03/05,NA,NA,male,partial,present,intermediate,R.D Stephen
+ABR1-2019-0033,Quenera River E. Cape,1981/05/24,-32.972,27.965,male,absent,absent,intermediate,N.J Duke
+ABR1-2019-0034,Maun; Botswana,1981/04/30,-20,23.4,male,partial,present,intermediate,R.D Stephen
+ABR1-2019-0035,Angola; Cuanza Sul,1999/04/11,-10,15,male,absent,present,intermediate,T. Bouyer & m. Hasson
+ABR1-2019-0036,Angola; Cuanza Sul,1999/04,-10,15,male,absent,present,dark,T. Bouyer & m. Hasson
+ABR1-2019-0037,Angola; Cuanza Sul,1999/04,-10,15,male,absent,present,dark,T. Bouyer & m. Hasson
+ABR1-2019-0038,Angola; Cuanza Sul,1999/04,-10,15,female,absent,present,dark,T. Bouyer & m. Hasson
+ABR1-2019-0039,Endebes w. Kenya,1981/3,1.06,34.86,male,absent,partial,intermediate,S. Collins
+ABR1-2019-0040,Endebes w. Kenya,1961/,1.06,34.86,male,absent,absent,light,s. Collins
+ABR1-2019-0041,Endebes w. Kenya,1988/,1.06,34.86,female,present,absent,light,s. Collins
+ABR1-2019-0042,Endebes w. Kenya,1988/,1.06,34.86,female,absent,partial,intermediate,s. Collins
+ABR1-2019-0043,Sao Tome,1981/01,NA,NA,male,absent,present,dark,s. Collins
+ABR1-2019-0044,Bitam Gabon,2007/04/15,2.08,11.49,male,absent,present,light,vandeweghe
+ABR1-2019-0045,foulakari R. S. W. Brazza; congo,1993/01,-4.59,14.98,female,absent,partial,intermediate,s. Collins
+ABR1-2019-0046,Endebes w. Kenya,1967/,1.06,34.86,male,absent,present,dark,s. Collins
+ABR1-2019-0047,Endebes w. Kenya,1963/4,1.06,34.86,female,absent,present,light,s. Collins
+ABR1-2019-0048,Endebes w. Kenya,1963/4,1.06,34.86,male,partial,present,light,s. Collins
+ABR1-2019-0049,Endebes w. Kenya,1961/4,1.06,34.86,female,present,present,dark,s. Collins
+ABR1-2019-0050,Turiani morogoro; Tanzania,1974/02/18,-6.15,37.59,male,absent,absent,light,J Kielland 
+ABR1-2019-0051,Ambang alley W Usambara; Tanzania,1981/02/24,NA,NA,female,absent,absent,light,J Kielland 
+ABR1-2019-0052,Tanganika; nDerema; Tanazania,1936/07/,NA,NA,female,absent,absent,light,G. van Son
+ABR1-2019-0053,Tanganika; nDerema; Tanazania,1936/07/,NA,NA,female,absent,absent,light,G. van Son
+ABR1-2019-0054,Zambezi bridge; Jimbe; N W Zambia,2002/10/14,-11.106,24.016,male,absent,present,dark,na
+ABR1-2019-0055,Lunzua falls,1976/09/12,-8.927,31.158,female,absent,absent,light,na
+ABR1-2019-0056,Zambezi bridge; Jimbe; N W Zambia,1999/05,-11.106,24.016,female,absent,present,dark,na
+ABR1-2019-0057,Mufulira; Zambia,1973/07/28,-12.56,28.24,female,absent,present,dark,A. Heath
+ABR1-2019-0058,Katera; Uganda,? 1987,0.691,32.01,male,absent,present,light,s. Collins
+ABR1-2019-0059,Katera; Uganda,? 1987,0.691,32.01,female,absent,present,dark,s. Collins
+ABR1-2019-0060,Katera; Uganda,1982/,0.691,32.01,male,absent,present,dark,s. Collins
+ABR1-2019-0061,Katera; Uganda,1982/,0.691,32.01,female,absent,present,dark,s. Collins
+ABR1-2019-0062,Juba; Sudan,1956/,4.848,31.583,male,absent,present,light,Milligan
+ABR1-2019-0063,Juba; Sudan,1956/,4.848,31.583,male,absent,present,light,Milligan
+ABR1-2019-0064,Imatong Mtns. S. Sudan,1979/,NA,NA,female,absent,present,light,s. Collins
+ABR1-2019-0065,Imatong Mtns. S. Sudan,1981/03,NA,NA,female,absent,present,light,s. Collins
+ABR1-2019-0066,Usumburu Burundi; Congo;,1963/05,NA,NA,male,absent,present,intermediate,Y. Allard
+ABR1-2019-0067,Londo lodge; Pemba; mozambique,2010/06/14,-12.9199,40.508,male,absent,present,dark,H S Staude
+ABR1-2019-0068,Mount Namuli; Muketa plateau; mozambique,2007/11/15,-15.357,37.026,male,absent,present,dark,J Bayliss
+ABR1-2019-0069,Halali; Etosha; Namibia,1985/01/04,-19.034,16.471,male,absent,present,intermediate,HC Fica
+ABR1-2019-0070,Mapimbi; DRC,2014/07,NA,NA,female,present,present,dark,na
+ABR1-2019-0071,Lume; Kivu; DRC,2007/01,NA,NA,female,present,present,dark,na
+ABR1-2019-0072,Samboko; Kivu; DRC,2018/03,NA,NA,male,absent,present,light,na
+ABR1-2019-0073,Idjwi Island; lake kivu; DRC,2013/02,-2.09,29.06,male,absent,absent,light,na
+ABR1-2019-0074,staude farm; magaliesberg; South Africa,2015/12,-26.031,27.494,male,absent,present,intermediate,S. Collins
+ABR1-2019-0075,staude farm; magaliesberg; South Africa,2015/12,-26.031,27.494,male,absent,present,dark,S. Collins
+ABR1-2019-0076,staude farm; magaliesberg; South Africa,2015/12,-26.031,27.494,female,absent,present,dark,S. Collins
+ABR1-2019-0077,staude farm; magaliesberg; South Africa,2015/12,-26.031,27.494,female,partial,present,dark,S. Collins
+ABR1-2019-0078,mapimbi; DRC,2014/07,NA,NA,male,partial,present,dark,na
+ABR1-2019-0079,Kivu; DRC,2015/04,NA,NA,male,absent,present,dark,na
+ABR1-2019-0080,Lume DRC,2014/11,NA,NA,female,absent,present,dark,na
+ABR1-2019-0081,Lume DRC,2014/11,NA,NA,female,absent,present,dark,na

@@ -1,0 +1,648 @@
+ID,Species,sex,Given. Name,Location,Country/Region,decimalLatitude,decimalLongitude,Date (yy.mm.dd),year,month,day,Collected By,hindwingWhite,forewingTip,groundColour
+SM16N01,Danaus chrysippus,F,Jenny,Nigeria (Kanyang; Nigeria),Nigeria,6.24,8.97,16.01.16,2016,1,16,Oskar Brattstrom,present,present,light
+SM16N04,Danaus chrysippus,F,Magda,Nigeria (Kanyang; Nigeria),Nigeria,6.24,8.97,16.01.19,2016,1,19,Oskar Brattstrom,present,present,light
+SM16N05,Danaus chrysippus,M,Bubba,Nigeria (Kanyang; Nigeria),Nigeria,6.24,8.97,16.01.19,2016,1,19,Oskar Brattstrom,present,present,light
+SM16N06,Danaus chrysippus,M,Lorchan,Nigeria (Kanyang; Nigeria),Nigeria,6.24,8.97,16.01.19,2016,1,19,Oskar Brattstrom,present,present,light
+SM16N18,Danaus chrysippus,F,Roisin,Nigeria,Nigeria,6.24,8.97,16.01.21,2016,1,21,Oskar Brattstrom,present,present,light
+SM16N19,Danaus chrysippus,M,Forrest ,Nigeria,Nigeria,6.24,8.97,16.01.22,2016,1,22,Oskar Brattstrom,present,present,light
+SM16N20,Danaus chrysippus,M,Callum,Nigeria (Kanyang; Nigeria),Nigeria,6.24,8.97,16.01.22,2016,1,22,Oskar Brattstrom,present,present,light
+SM16N37,Danaus chrysippus,M,Jackson,Nigeria (Kanyang; Nigeria),Nigeria,6.24,8.97,16.01.23,2016,1,23,Oskar Brattstrom,present,present,light
+SM16N38,Danaus chrysippus,M,Tadhg,Nigeria,Nigeria,6.24,8.97,16.01.23,2016,1,23,Oskar Brattstrom,present,present,light
+SM16N40,Danaus chrysippus,M,Tubs,Nigeria,Nigeria,6.24,8.97,16.01.29,2016,1,29,Oskar Brattstrom,present,present,light
+SM16N41,Danaus chrysippus,M,Ciaran,Nigeria,Nigeria,6.24,8.97,16.01.29,2016,1,29,Oskar Brattstrom,present,present,light
+SM16N42,Danaus chrysippus,M,Ronan,Nigeria,Nigeria,6.24,8.97,16.01.29,2016,1,29,Oskar Brattstrom,present,present,light
+SM16N43,Danaus chrysippus,M,Sebastian,Nigeria,Nigeria,6.24,8.97,16.01.29,2016,1,29,Oskar Brattstrom,present,present,light
+SM16N44,Danaus chrysippus,M,Ryan,Nigeria,Nigeria,6.24,8.97,16.01.29,2016,1,29,Oskar Brattstrom,present,present,light
+SM16N45,Danaus chrysippus,M,Sean,Nigeria,Nigeria,6.24,8.97,16.01.29,2016,1,29,Oskar Brattstrom,present,present,light
+SM15W59,Danaus chrysippus,M,Tim,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W61,Danaus chrysippus,M,Denis,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W66,Danaus chrysippus,M,Seamus,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W67,Danaus chrysippus,M,Darcy,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W69,Danaus chrysippus,M,Anthony,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W71,Danaus chrysippus,M,Alain,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W72,Danaus chrysippus,M,Bubbles,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W73,Danaus chrysippus,M,Zorro,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W74,Danaus chrysippus,M,Alfie,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W75,Danaus chrysippus,M,Reuben ,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W78,Danaus chrysippus,M,Jeff,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W79,Danaus chrysippus,M,James,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W80,Danaus chrysippus,M,Fred,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W81,Danaus chrysippus,M,Stan,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,partial,partial,light
+SM15W82,Danaus chrysippus,M,Max,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W86,Danaus chrysippus,M,Conal,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,partial,light
+SM15W90,Danaus chrysippus,M,Jake,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W91,Danaus chrysippus,M,Paddy,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W94,Danaus chrysippus,M,Vlad,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W95,Danaus chrysippus,M,Dmitri ,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W97,Danaus chrysippus,M,Cathal,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,absent,absent,light
+SM15W99,Danaus chrysippus,M,Ruairi,Watamu,Kenya,-3.33,40.02,15.12.31,2015,12,31,Ian Gordon,partial,present,dark
+SM15K01,Danaus chrysippus,F,Caoimhe,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.25,2015,12,25,Steve Collins,absent,absent,light
+SM15K02,Danaus chrysippus,M,Finn,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.30,2015,12,30,Steve Collins,absent,partial,light
+SM15K03,Danaus chrysippus,F,Nina,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.30,2015,12,30,Steve Collins,absent,absent,light
+SM15K04,Danaus chrysippus,M,Fionn,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.28,2015,12,28,Steve Collins,absent,absent,light
+SM15K05,Danaus chrysippus,F,Aine,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.30,2015,12,30,Steve Collins,absent,absent,light
+SM15K06,Danaus chrysippus,M,Eric,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.16,2015,12,16,Steve Collins,absent,absent,light
+SM15K07,Danaus chrysippus,F,Aoibheann,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.30,2015,12,30,Steve Collins,absent,partial,light
+SM15K08,Danaus chrysippus,M,Ollie,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.30,2015,12,30,Steve Collins,absent,absent,light
+SM15K09,Danaus chrysippus,M,Rocky ,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.15,2015,12,15,Steve Collins,absent,absent,light
+SM15K10,Danaus chrysippus,M,Finton,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.28,2015,12,28,Steve Collins,absent,absent,light
+SM15K11,Danaus chrysippus,M,Hugh,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.27,2015,12,27,Steve Collins,absent,absent,light
+SM15K12,Danaus chrysippus,F,Aoife,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.23,2015,12,23,Steve Collins,absent,partial,light
+SM15K13,Danaus chrysippus,M,Grant,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.29,2015,12,29,Steve Collins,absent,absent,light
+SM15K14,Danaus chrysippus,F,Karen,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.23,2015,12,23,Steve Collins,absent,partial,light
+SM15K15,Danaus chrysippus,F,Abigail,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.30,2015,12,30,Steve Collins,absent,absent,light
+SM15K16,Danaus chrysippus,F,Fiachra,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.25,2015,12,25,Steve Collins,absent,absent,light
+SM15K17,Danaus chrysippus,M,Brendan,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.23,2015,12,23,Steve Collins,absent,absent,light
+SM15K18,Danaus chrysippus,F,Nancy,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.20,2015,12,20,Steve Collins,absent,partial,light
+SM15K19,Danaus chrysippus,M,Seth,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.29,2015,12,29,Steve Collins,absent,absent,light
+SM15K20,Danaus chrysippus,F,Ailbhe,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.23,2015,12,23,Steve Collins,absent,absent,light
+SM15K21,Danaus chrysippus,F,Melle,Karen; Nairobi; Kenya,Kenya,-1.304,36.693,15.12.23,2015,12,23,Steve Collins,absent,present,light
+SM16S01,Danaus chrysippus,M,William,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S02,Danaus chrysippus,M,Leopold,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S03,Danaus chrysippus,M,Finbar,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S04,Danaus chrysippus,M,Bob,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S05,Danaus chrysippus,M,Jamie,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S06,Danaus chrysippus,M,Kevin ,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S07,Danaus chrysippus,M,Tony,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,intermediate
+SM16S08,Danaus chrysippus,M,Elton,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S09,Danaus chrysippus,M,Taz,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S10,Danaus chrysippus,M,Humphrey,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,intermediate
+SM16S11,Danaus chrysippus,M,Stu,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S12,Danaus chrysippus,M,Cian ,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S13,Danaus chrysippus,M,Leo ,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S14,Danaus chrysippus,M,Teddy ,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S15,Danaus chrysippus,M,Lawrence,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S16,Danaus chrysippus,M,Christy ,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S17,Danaus chrysippus,M,John,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,intermediate
+SM16S18,Danaus chrysippus,M,Cuthbert,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16S19,Danaus chrysippus,M,Don,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16.01.13,2016,1,13,Steve Collins,absent,present,dark
+SM16K567,Danaus chrysippus,F,Harriet,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,absent,light
+SM16K570,Danaus chrysippus,F,Sparkle,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,partial,light
+SM16K571,Danaus chrysippus,F,Peggy,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,absent,light
+SM16K576,Danaus chrysippus,F,Eilidh,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,absent,light
+SM16K577,Danaus chrysippus,F,Sorcha,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,present,partial,light
+SM16K578,Danaus chrysippus,F,Saoirse ,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,absent,light
+SM16K579,Danaus chrysippus,F,Candice,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,partial,light
+SM16K580,Danaus chrysippus,F,Nadia,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,partial,light
+SM16K582,Danaus chrysippus,F,Betty,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,partial,light
+SM16K583,Danaus chrysippus,F,Madeline ,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,partial,light
+SM16K584,Danaus chrysippus,F,Agnes,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,absent,light
+SM16K585,Danaus chrysippus,F,Maureen,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,15.03.16,2015,3,16,Ian Gordon,absent,present,dark
+SM16K616,Danaus chrysippus,F,Tiffany ,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K618,Danaus chrysippus,M,Ralph,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,absent,intermediate
+SM16K619,Danaus chrysippus,M,Thor,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,dark
+SM16K620,Danaus chrysippus,M,Oisin ,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,absent,intermediate
+SM16K621,Danaus chrysippus,M,Liam ,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,absent,light
+SM16K622,Danaus chrysippus,M,Fergus,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,absent,intermediate
+SM16K623,Danaus chrysippus,F,Pearl,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,absent,light
+SM16K624,Danaus chrysippus,F,Clare,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,absent,light
+SM16K625,Danaus chrysippus,M,Cillian ,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,absent,intermediate
+SM16K626,Danaus chrysippus,M,Tim,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K627,Danaus chrysippus,F,Danielle,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K628,Danaus chrysippus,F,Marlie,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K629,Danaus chrysippus,F,Jolie,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K630,Danaus chrysippus,F,Oonagh,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K631,Danaus chrysippus,F,Niamh,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K632,Danaus chrysippus,F,Ciara,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K633,Danaus chrysippus,F,Aisling,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K634,Danaus chrysippus,F,Laoise,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K641,Danaus chrysippus,F,Orla,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.04.16,2016,4,16,Ian Gordon,absent,partial,light
+SM16K700,Danaus chrysippus,F,Grainne,Kitengela Hot Glass; Nairobi; Kenya,Kenya,-1.39,36.82,16.08.01,2016,8,1,Ian Gordon,absent,partial,light
+SM16L01,Danaus chrysippus,M,Monty ,Lolldaiga,Kenya,0.189,37.139064,16.09.16,2016,9,16,Richard ffrench-Constant,,,
+SM16L02,Danaus chrysippus,F,,Lolldaiga,Kenya,0.189,37.139064,16.09.16,2016,9,16,Richard ffrench-Constant,,,
+SM16L03,Danaus chrysippus,F,Layla,Lolldaiga,Kenya,0.189,37.139064,16.09.16,2016,9,16,Richard ffrench-Constant,,,
+SM16L04,Danaus chrysippus,F,Saidhbh,Lolldaiga,Kenya,0.189,37.139064,16.09.16,2016,9,16,Richard ffrench-Constant,,,
+SM16L05,Danaus chrysippus,F,Tinkerbell,Lolldaiga,Kenya,0.189,37.139064,16.09.16,2016,9,16,Richard ffrench-Constant,absent,present,light
+SM16L06,Danaus chrysippus,F,Marianne,Lolldaiga,Kenya,0.189,37.139064,16.09.16,2016,9,16,Richard ffrench-Constant,,,
+SM16L07,Danaus chrysippus,F,Fiona,Mpala,Kenya,0.302,36.908,16.09.17,2016,9,17,Richard ffrench-Constant,,,
+SM16L08,Danaus chrysippus,F,Nuala,Mpala,Kenya,0.302,36.908,16.09.17,2016,9,17,Richard ffrench-Constant,,,
+SM16L09,Danaus chrysippus,M,Daragh,Mpala,Kenya,0.302,36.908,16.09.17,2016,9,17,Richard ffrench-Constant,,,
+SM16L10,Danaus chrysippus,M,Bowie,Mpala,Kenya,0.302,36.908,16.09.23,2016,9,23,Dino Martins,,,
+SM16L11,Danaus chrysippus,F,Poppy ,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L12,Danaus chrysippus,F,Dearbhla,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L13,Danaus chrysippus,F,Colette,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L14,Danaus chrysippus,F,Meryl,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L15,Danaus chrysippus,M,Ray,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L16,Danaus chrysippus,M,Ferghal,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L17,Danaus chrysippus,F,Minnie,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L18,Danaus chrysippus,F,Cleo,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L19,Danaus chrysippus,F,Mary ,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L20,Danaus chrysippus,F,Linda,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L21,Danaus chrysippus,F,Kellie,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L22,Danaus chrysippus,M,Rudolph,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L23,Danaus chrysippus,M,Andre,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L24,Danaus chrysippus,M,Fernando,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L25,Danaus chrysippus,M,Naoise,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L26,Danaus chrysippus,M,Donnacha,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L27,Danaus chrysippus,M,Brendan,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L28,Danaus chrysippus,M,Tristan,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L29,Danaus chrysippus,F,Una,Mpala,Kenya,0.302,36.908,16.09.21,2016,9,21,Dino Martins,,,
+SM16L30,Danaus chrysippus,F,Aicha,Mpala,Kenya,0.302,36.908,,,,,Dino Martins,,,
+SM16L31,Danaus chrysippus,M,Percy,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L32,Danaus chrysippus,F,Helene,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L33,Danaus chrysippus,F,Margaret,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L34,Danaus chrysippus,F,Nicola,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L35,Danaus chrysippus,F,Matilda,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L36,Danaus chrysippus,M,Jurgen ,Mpala,Kenya,0.302,36.908,16.09.21,2016,9,21,Dino Martins,,,
+SM16L37,Danaus chrysippus,F,Flo,Mpala,Kenya,0.302,36.908,16.09.21,2016,9,21,Dino Martins,,,
+SM16L38,Danaus chrysippus,F,Mya,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L39,Danaus chrysippus,F,Mimi,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L40,Danaus chrysippus,M,Samson,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L41,Danaus chrysippus,M,Diarmud,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L42,Danaus chrysippus,F,Tara,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L43,Danaus chrysippus,M,Noel,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L44,Danaus chrysippus,F,Freckles,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+Sm16L45,Danaus chrysippus,M,Paudie,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+Sm16L46,Danaus chrysippus,F,Michelle,Mpala,Kenya,0.302,36.908,16.09.22,2016,9,22,Dino Martins,,,
+SM16L47,Danaus chrysippus,F,Risette,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L48,Danaus chrysippus,F,Clementine,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L49,Danaus chrysippus,M,Declan,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L50,Danaus chrysippus,M,Boris,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L51,Danaus chrysippus,F,Ada,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L52,Danaus chrysippus,M,Rochester,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L53,Danaus chrysippus,M,Theodore,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L54,Danaus chrysippus,M,Yeats,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L55,Danaus chrysippus,M,Shay ,Mpala,Kenya,0.302,36.908,16.09.26,2016,9,26,Dino Martins,,,
+SM16L56,Danaus chrysippus,M,Ronald,Mpala,Kenya,0.302,36.908,16.09.20,2016,9,20,Dino Martins,,,
+SM16L57,Danaus chrysippus,M,Donald,Mpala,Kenya,0.302,36.908,16.09.21,2016,9,21,Dino Martins,,,
+SM16L58,Danaus chrysippus,M,Marvin,Mpala,Kenya,0.302,36.908,16.09.21,2016,9,21,Dino Martins,,,
+SM16C01,Danaus chrysippus,F,Luna,Karen,Kenya,-1.304,36.693,16.09.16,2016,9,16,Steve Collins,,,
+SM16M03,Danaus chrysippus,F,Darina,Mpala,Kenya,0.302,36.908,16.10.,2016,10,,David Smith,,,
+SM17H01,Danaus chrysippus,F,Estella,St Helena Jamestown Castle Gardens,South Atlantic Ocean,-15.9249,-5.7175,17.01.30,2017,1,30,David. J. Pryce,absent,present,dark
+SM17H02,Danaus chrysippus,F,Biddy,St Helena Jamestown Castle Gardens,South Atlantic Ocean,-15.9249,-5.7175,17.01.26,2017,1,26,David. J. Pryce,absent,present,dark
+SM17H03,Danaus chrysippus,F,Fanny ,St Helena Jamestown Castle Gardens,South Atlantic Ocean,-15.9249,-5.7175,17.01.30,2017,1,30,David. J. Pryce,absent,present,dark
+SM17H04,Danaus chrysippus,M,Pip,St Helena Jamestown Castle Gardens,South Atlantic Ocean,-15.9249,-5.7175,17.01.26,2017,1,26,David. J. Pryce,absent,present,dark
+SM17H05,Danaus chrysippus,M,Herbert,St Helena Jamestown Castle Gardens,South Atlantic Ocean,-15.9249,-5.7175,17.01.26,2017,1,26,David. J. Pryce,absent,present,dark
+SM17H06,Danaus chrysippus,M,Pat ,St Helena Jamestown Castle Gardens,South Atlantic Ocean,-15.9249,-5.7175,17.01.26,2017,1,26,David. J. Pryce,absent,present,dark
+SM17H07,Danaus chrysippus,M,Fagin,St Helena Jamestown Castle Gardens,South Atlantic Ocean,-15.9249,-5.7175,17.01.26,2017,1,26,David. J. Pryce,absent,present,light
+SM17P01,Danaus chrysippus,F,Fionnula,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P02,Danaus chrysippus,M,Magwitch,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P03,Danaus chrysippus,F,Sharon,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P04,Danaus chrysippus,M,Dickens,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P05,Danaus chrysippus,M,Jock ,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P06,Danaus chrysippus,F,Havisham ,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P07,Danaus chrysippus,M,Dodger,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P08,Danaus chrysippus,M,Sikes,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17P09,Danaus chrysippus,F,Bronte,Philippines (via Stratford Butterfly Farm),Philippines,NA,NA,17.06.,2017,6,,,absent,present,light
+SM17S01,Danaus chrysippus,M,Bennet,Golden Valley; Magaliesburg; South Africa,South Africa,-26.031,27.494,16?,2016,,,Steve Collins,absent,present,dark
+SM17X01,Danaus chrysippus,F,Giselle,Stock; Kitengela,Kenya,NA,NA,16?,2016,,,2016 ‘Cured Line’,present,present,light
+SM17W01,Danaus chrysippus,F,Meg ,Watamu,Kenya,-3.33,40.02,17,2017,,,Ian Gordon,,,
+SM17R20,Danaus chrysippus,F,Enid,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.08.26,2017,8,26,Ian Gordon,absent,partial,intermediate
+SM17R21,Danaus chrysippus,M,Austen,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.08.,2017,8,,Ian Gordon,partial,present,dark
+SM17R22,Danaus chrysippus,M,Elvis,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.08.,2017,8,,Ian Gordon,absent,present,intermediate
+SM17R23,Danaus chrysippus,F,Dorothy ,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.08.,2017,8,,Ian Gordon,absent,present,dark
+SM17R24,Danaus chrysippus,M,SlimJim,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.08.26,2017,8,26,Ian Gordon,absent,present,dark
+IG17NY001,Danaus chrysippus,M,Macavity,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,partial,present,dark
+IG17NY002,Danaus chrysippus,M,Kent,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,absent,absent,light
+IG17NY003,Danaus chrysippus,F,Jemima,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,,,
+IG17NY004,Danaus chrysippus,F,Serena,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,absent,present,light
+IG17NY005,Danaus chrysippus,F,Lynsay ,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,absent,present,light
+IG17NY006,Danaus chrysippus,F,Ariel ,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,absent,present,light
+IG17NY007,Danaus chrysippus,F,Isabella,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,absent,present,dark
+IG17NY008,Danaus chrysippus,F,Bindi,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,absent,present,light
+IG17NY009,Danaus chrysippus,F,Star,Nyamata; Rwanda,Rwanda,-2.22,30.12,17.12.,2017,12,,Ian Gordon,absent,present,dark
+SM18S01,Danaus chrysippus,F,Felicity ,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S02,Danaus chrysippus,M,Bumble ,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S03,Danaus chrysippus,F,Scarlet ,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S04,Danaus chrysippus,F,Malia ,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S05,Danaus chrysippus,M,Greg,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S06,Danaus chrysippus,,Harper,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S07,Danaus chrysippus,,Lee,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S08,Danaus chrysippus,,Jessie,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+SM18S09,Danaus chrysippus,M,Brad,Sondela; SA,South Africa,-24.922,28.408182,17.12.29,2017,12,29,Simon Martin,,,
+ABRI20183087,Danaus chrysippus,F,Jezebel ,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,partial,light
+ABRI20183088,Danaus chrysippus,M,Norman ,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,absent,light
+ABRI20183089,Danaus chrysippus,F,Portia,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,present,light
+ABRI20183090,Danaus chrysippus,F,Una,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,absent,light
+ABRI20183091,Danaus chrysippus,F,Lana,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,partial,intermediate
+ABRI20183092,Danaus chrysippus,F,Kate ,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,absent,light
+ABRI20183093,Danaus chrysippus,F,Antoinette ,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,partial,partial,light
+ABRI20183094,Danaus chrysippus,F,Kiki >_<,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,partial,light
+ABRI20183095,Danaus chrysippus,F,Mareid,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,present,present,light
+ABRI20183096,Danaus chrysippus,F,Lydia,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,partial,light
+ABRI20183097,Danaus chrysippus,F,Jane,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,absent,light
+ABRI20183098,Danaus chrysippus,F,Kitty ,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,partial,light
+ABRI20183099,Danaus chrysippus,F,Eleanor ,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,present,present,light
+ABRI20183100,Danaus chrysippus,F,Marie,Karen; Kenya,Kenya,-1.304,36.693,18.02.,2018,2,,Steve Collins,absent,partial,light
+SM18M001,Danaus chrysippus,M,Ebeneezer,Nguruman Escarpment,Kenya,-1.9,36.048,18.03.,2018,3,,Dino Martins,absent,partial,light
+SM18M002,Danaus chrysippus,M,Ian ,Nguruman Escarpment,Kenya,-1.9,36.048,18.03.,2018,3,,Dino Martins,present,absent,light
+SM18M003,Danaus chrysippus,F,Eryn ,Nguruman Escarpment,Kenya,-1.9,36.048,18.03.,2018,3,,Dino Martins,present,present,dark
+SM18M004,Danaus chrysippus,M,Oscar,Nguruman Escarpment,Kenya,-1.9,36.048,18.03.,2018,3,,Dino Martins,absent,partial,dark
+SM18R001,Danaus chrysippus,M,Ed,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,partial,present,dark
+SM18R002,Danaus chrysippus,M,Mark,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,partial,present,dark
+SM18R003,Danaus chrysippus,M,Adam,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,absent,present,light
+SM18R004,Danaus chrysippus,M,Anton,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,absent,present,dark
+SM18R005,Danaus chrysippus,M,Craig,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,absent,present,light
+SM18R006,Danaus chrysippus,M,Felix,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,absent,present,dark
+SM18R007,Danaus chrysippus,M,Ricky ,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,absent,present,dark
+SM18R008,Danaus chrysippus,M,Santa,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,partial,present,light
+SM18R009,Danaus chrysippus,M,Shep,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,absent,present,dark
+SM18R010,Danaus chrysippus,F,Juliet,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,partial,present,dark
+SM18R011,Danaus chrysippus,F,Lyra,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,absent,present,light
+SM18R012,Danaus chrysippus,M,Aloysius,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,partial,present,dark
+SM18R013,Danaus chrysippus,F,Angela,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.03.29,2018,3,29,Ian Gordon,present,present,dark
+SM18R015,Danaus chrysippus,F,Heather,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.06.23,2018,6,23,Ian Gordon,,,
+SM18R016,Danaus chrysippus,M,Andy ,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.06.23,2018,6,23,Ian Gordon,,,
+IG18RN01,Danaus chrysippus,M,Steve,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN02,Danaus chrysippus,F,Marion,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN03,Danaus chrysippus,M,Marie-louise,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN04,Danaus chrysippus,F,Marple,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN05,Danaus chrysippus,M,Hercule,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN06,Danaus chrysippus,M,Poirot,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN07,Danaus chrysippus,M,Hastings,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN08,Danaus chrysippus,M,George,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,partial,light
+IG18RN09,Danaus chrysippus,M,Paul,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN10,Danaus chrysippus,M,Elliot,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,present,present,light
+IG18RN11,Danaus chrysippus,M,Chris,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,intermediate
+IG18RN12,Danaus chrysippus,M,Vic,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN13,Danaus chrysippus,M,Vincent,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN14,Danaus chrysippus,F,Agatha,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,partial,present,dark
+IG18RN15,Danaus chrysippus,F,Lemon,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,present,present,dark
+IG18RN16,Danaus chrysippus,M,Bill,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,,,
+IG18RN17,Danaus chrysippus,F,Veronica,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN18,Danaus chrysippus,M,Chuck ,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN19,Danaus chrysippus,M,Bonzo,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN20,Danaus chrysippus,F,Belinda,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN21,Danaus chrysippus,M,Albert,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,present,present,light
+IG18RN22,Danaus chrysippus,M,Ringo,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN23,Danaus chrysippus,M,Dylan,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN24,Danaus chrysippus,F,Hermione,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN25,Danaus chrysippus,M,Percy,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN26,Danaus chrysippus,M,Brian ,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN27,Danaus chrysippus,M,Charles,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,,,
+IG18RN28,Danaus chrysippus,F,Samantha,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,dark
+IG18RN29,Danaus chrysippus,M,London,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,absent,light
+IG18RN30,Danaus chrysippus,M,Homer,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,,,
+IG18RN31,Danaus chrysippus,M,Huxley,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN32,Danaus chrysippus,M,Marion,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,,,
+IG18RN33,Danaus chrysippus,F,Miranda,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.05.13,2018,5,13,Ian Gordon,absent,present,light
+IG18RN34,Danaus chrysippus,F,Anatha,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN35,Danaus chrysippus,M,Dougal ,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN36,Danaus chrysippus,M,Claude,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN37,Danaus chrysippus,M,Francois,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,intermediate
+IG18RN38,Danaus chrysippus,M,Jacques,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN39,Danaus chrysippus,M,Benjamin,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,light
+IG18RN40,Danaus chrysippus,F,Jeanne,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,light
+IG18RN41,Danaus chrysippus,F,Solange,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN42,Danaus chrysippus,F,Rose,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN43,Danaus chrysippus,F,Angelique,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN44,Danaus chrysippus,F,Odette,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,intermediate
+IG18RN45,Danaus chrysippus,F,Jacqueline,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN46,Danaus chrysippus,M,Maurice,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,intermediate
+IG18RN47,Danaus chrysippus,F,Yvette,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,light
+IG18RN48,Danaus chrysippus,F,Winny,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,dark
+IG18RN49,Danaus chrysippus,M,Isaac,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,light
+IG18RN50,Danaus chrysippus,M,Marcel,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,,,
+IG18RN51,Danaus chrysippus,M,Olivier,Nyamata; Rwanda,Rwanda,-2.22,30.12,18.07.25,2018,7,25,Ian Gordon,absent,present,light
+SM17FV01,Danaus chrysippus,F,Nana,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV02,Danaus chrysippus,F,Greta,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV03,Danaus chrysippus,F,Kalisa,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV04,Danaus chrysippus,F,Mandy,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV05,Danaus chrysippus,M,Marlin,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV06,Danaus chrysippus,M,Paul,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,,,
+SM17FV07,Danaus chrysippus,?,Nicky ,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,,,
+SM17FV08,Danaus chrysippus,?,Sam ,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,,,
+SM17FV09,Danaus chrysippus,?,Alex,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,,,
+SM17FV10,Danaus chrysippus,?,Evelyn,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,,,
+SM17FV11,Danaus chrysippus,F,Zoe,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV12,Danaus chrysippus,M,Javier,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,partial,present,dark
+SM17FV13,Danaus chrysippus,M,Diego,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV14,Danaus chrysippus,F,Sara,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV15,Danaus chrysippus,F,Carla,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV16,Danaus chrysippus,F,Martina,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV17,Danaus chrysippus,F,Elena,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV18,Danaus chrysippus,M,Mario,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+SM17FV19,Danaus chrysippus,M,Marcus,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,17.08.,2017,8,,David Smith,absent,present,dark
+DS18FV20,Danaus chrysippus,F,Alba,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV21,Danaus chrysippus,M,Sergio,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV22,Danaus chrysippus,M,Jorge,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV23,Danaus chrysippus,F,Sofia,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV24,Danaus chrysippus,F,Claudia,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV25,Danaus chrysippus,?,Jan,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV26,Danaus chrysippus,F,Marta,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV27,Danaus chrysippus,M,Gonzalo,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV28,Danaus chrysippus,M,Adrian,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV29,Danaus chrysippus,M,Daniel,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV30,Danaus chrysippus,F,Irena,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV31,Danaus chrysippus,F,Adriana,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV32,Danaus chrysippus,M,Pablo,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV33,Danaus chrysippus,F,Laura,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV34,Danaus chrysippus,F,Noa,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV35,Danaus chrysippus,F,Daniela,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV36,Danaus chrysippus,F,Valeria,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV37,Danaus chrysippus,M,Lucia,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV38,Danaus chrysippus,M,Hugo,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV39,Danaus chrysippus,M,Alejandro,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV40,Danaus chrysippus,F,Judith ,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV41,Danaus chrysippus,M,Fernando ,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV42,Danaus chrysippus,M,Antonio,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV43,Danaus chrysippus,F,Maria,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV44,Danaus chrysippus,F,Mariana,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV45,Danaus chrysippus,M,Alvaro,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV46,Danaus chrysippus,M,Iker,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV47,Danaus chrysippus,F,Cher,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV48,Danaus chrysippus,M,Ivan,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV49,Danaus chrysippus,M,Carlos,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV50,Danaus chrysippus,F,Frederica,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV51,Danaus chrysippus,M,Mateo,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV52,Danaus chrysippus,M,Izan,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV53,Danaus chrysippus,F,Ariana,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV54,Danaus chrysippus,F,Alejandra,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV55,Danaus chrysippus,F,Ona,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV56,Danaus chrysippus,F,Arlet,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV57,Danaus chrysippus,M,Mikel,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV58,Danaus chrysippus,M,Jon,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV59,Danaus chrysippus,M,Gael,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV60,Danaus chrysippus,F,Chloe,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV61,Danaus chrysippus,F,Iris,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV62,Danaus chrysippus,M,Omar,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV63,Danaus chrysippus,F,Nadia,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV64,Danaus chrysippus,F,Jana,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV65,Danaus chrysippus,M,Cesar,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+DS18FV66,Danaus chrysippus,M,Julio,Pozo Negro; Fuerteventura; Canary Islands,northwest Africa,28.331,-13.923,18.10.,2018,10,,David Smith,,,
+SM18S10,Danaus chrysippus,F,Amore,,,,,2018,2018,,,Steve Collins,absent,present,intermediate
+SM18W01,Danaus chrysippus,M,Happiness,Watamu,Kenya,-3.33,40.02,2018,2018,,,Ian Gordon,absent,absent,light
+SM18W02,Danaus chrysippus,M,Derrick,Watamu,Kenya,-3.33,40.02,2018,2018,,,Ian Gordon,,,
+DS06A07,Danaus chrysippus,F,Bahati,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS06A12,Danaus chrysippus,F,Anna,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS06A13,Danaus chrysippus,F,Elsa,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS06A14,Danaus chrysippus,F,Coco,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS06A16,Danaus chrysippus,F,Adele,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS06A17,Danaus chrysippus,F,Cherise,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS06A18,Danaus chrysippus,F,Mary ,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS06A19,Danaus chrysippus,F,Alice,Amani; Tanzania,Tanzania,-5.1,38.63,2006,2006,,,David Smith,,,
+DS98324,Danaus chrysippus,F,Wendy,Salalah; Dhofar; Oman,Oman,17.12,54.1,1998,1998,,,David Smith,,,
+RV12N314,Danaus chrysippus,F,Hajar,El Haouareb; Tunisia,Tunisia,35.549,9.754,2012.05.29,2012,5,29,,absent,present,dark
+RV12N315,Danaus chrysippus,M,Mo,El Haouareb; Tunisia,Tunisia,35.549,9.754,2012.05.29,2012,5,29,,absent,present,dark
+RV12N317,Danaus chrysippus,F,Luna,El Haouareb; Tunisia,Tunisia,35.549,9.754,2012.05.29,2012,5,29,,absent,present,dark
+SM19M001,Danaus chrysippus,F,Miriam,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M002,Danaus chrysippus,M,Emmanuel,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M003,Danaus chrysippus,M,Dishon,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,partial,partial,light
+SM19M004,Danaus chrysippus,M,Tatenda,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M005,Danaus chrysippus,M,Munya,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M006,Danaus chrysippus,M,Mwangi ,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,partial,partial,light
+SM19M007,Danaus chrysippus,M,Amara,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,partial,light
+SM19M008,Danaus chrysippus,M,Adamu,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,partial,partial,light
+SM19M009,Danaus chrysippus,F,Asali,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,partial,light
+SM19M010,Danaus chrysippus,M,Kamau,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M011,Danaus chrysippus,M,James,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M012,Danaus chrysippus,M,Mike,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,partial,light
+SM19M013,Danaus chrysippus,M,Arnold,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M014,Danaus chrysippus,M,Ian ,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M015,Danaus chrysippus,F,Njoki,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,partial,light
+SM19M016,Danaus chrysippus,M,Nick ,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,absent,light
+SM19M017,Danaus chrysippus,M,Kyle,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,partial,absent,light
+SM19M018,Danaus chrysippus,M,Francisco,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,partial,light
+SM19M019,Danaus chrysippus,F,Diana,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.13,2019,1,13,Simon Martin,absent,present,light
+SM19M020,Danaus chrysippus,F,Salma,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,partial,light
+SM19M021,Danaus chrysippus,F,Selma,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,present,light
+SM19M022,Danaus chrysippus,F,Penelope,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,present,light
+SM19M023,Danaus chrysippus,M,Iago,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,absent,light
+SM19M024,Danaus chrysippus,F,Yaya,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,partial,light
+SM19M025,Danaus chrysippus,F,Christina,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,partial,light
+SM19M026,Danaus chrysippus,F,Alicia,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,partial,light
+SM19M027,Danaus chrysippus,F,Isabella,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.10,2019,1,10,Simon Martin,absent,absent,light
+SM19M028,Danaus chrysippus,M,Max,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M029,Danaus chrysippus,M,Jacob,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,partial,light
+SM19M030,Danaus chrysippus,F,Camilla ,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,partial,light
+SM19M031,Danaus chrysippus,M,Feye,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,partial,light
+SM19M032,Danaus chrysippus,F,Faye,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,partial,present,light
+SM19M033,Danaus chrysippus,M,Asher,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M034,Danaus chrysippus,M,Henry ,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M035,Danaus chrysippus,M,Jasper,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M036,Danaus chrysippus,M,Milo,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,partial,partial,light
+SM19M037,Danaus chrysippus,M,Silas,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,partial,absent,light
+SM19M038,Danaus chrysippus,F,Akinyi,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M039,Danaus chrysippus,M,Theodore,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M040,Danaus chrysippus,M,Chiumbo,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M041,Danaus chrysippus,M,Jaali,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M042,Danaus chrysippus,F,Zawadi ,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M043,Danaus chrysippus,F,Athena,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,partial,light
+SM19M044,Danaus chrysippus,F,Rehema,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,partial,light
+SM19M045,Danaus chrysippus,F,Esther,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M046,Danaus chrysippus,M,Alfie,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,partial,partial,light
+SM19M047,Danaus chrysippus,M,Sokoro,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M048,Danaus chrysippus,M,Wilfred,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M049,Danaus chrysippus,M,Willie,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M050,Danaus chrysippus,M,Hartley,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M051,Danaus chrysippus,F,Mercy,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,partial,light
+SM19M053,Danaus chrysippus,M,Kioko,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,partial,absent,light
+SM19M054,Danaus chrysippus,M,Emilian,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M055,Danaus chrysippus,M,Jonathan ,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M056,Danaus chrysippus,M,Ross,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,partial,dark
+SM19M057,Danaus chrysippus,M,Greg,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19M058,Danaus chrysippus,M,Philip,Mpala; Laikipia; Kenya,Kenya,0.352,36.896,2019.01.15,2019,1,15,Simon Martin,absent,absent,light
+SM19T001,Danaus chrysippus,F,Victoria ,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T002,Danaus chrysippus,F,Kiki >_<,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T003,Danaus chrysippus,F,Florence,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T004,Danaus chrysippus,M,Robert,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.21,2019,1,21,Simon Martin,partial,absent,light
+SM19T005,Danaus chrysippus,M,Stefan ,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T006,Danaus chrysippus,M,Tyler,Galana (Athi) River; Makueni; Kenya,Kenya,-2.647,38.367,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T007,Danaus chrysippus,F,Fifi,Galana (Athi) River; Makueni; Kenya,Kenya,-2.647,38.367,2019.01.21,2019,1,21,Simon Martin,absent,partial,light
+SM19T008,Danaus chrysippus,F,Lulu ,Galana (Athi) River; Makueni; Kenya,Kenya,-2.647,38.367,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T009,Danaus chrysippus,F,Mimi,Galana (Athi) River; Makueni; Kenya,Kenya,-2.647,38.367,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T010,Danaus chrysippus,F,Mia,Galana (Athi) River; Makueni; Kenya,Kenya,-2.647,38.367,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T011,Danaus chrysippus,F,Maya,Mtito Andei; Makueni; Kenya,Kenya,-2.676,38.199,2019.01.21,2019,1,21,Simon Martin,partial,partial,light
+SM19T012,Danaus chrysippus,M,Clive,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.21,2019,1,21,Simon Martin,absent,absent,light
+SM19T013,Danaus chrysippus,M,Anderson,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.22,2019,1,22,Simon Martin,absent,absent,light
+SM19T014,Danaus chrysippus,M,Benny ,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.22,2019,1,22,Simon Martin,absent,partial,light
+SM19T015,Danaus chrysippus,F,Ava,Nyika Bird Sanctuary; Mtito Andei; Makueni; Kenya,Kenya,-2.675,38.226,2019.01.22,2019,1,22,Simon Martin,absent,partial,intermediate
+IG19G102,Danaus chrysippus,F,Angela,Ghana (?),Ghana,,,2018.12.15,2018,12,15,Ian Gordon,present,present,light
+IG19G104,Danaus chrysippus,F,Amma,Ghana (?),Ghana,,,2018.12.15,2018,12,15,Ian Gordon,present,present,light
+IG19G105,Danaus chrysippus,F,Kisi,Ghana (?),Ghana,,,2019.01,2019,1,,Ian Gordon,present,present,light
+IG19G107,Danaus chrysippus,F,Jojo,Ghana (?),Ghana,,,2019.01,2019,1,,Ian Gordon,present,present,light
+IG19G108,Danaus chrysippus,M,Jonah,Ghana (?),Ghana,,,2019.01.22,2019,1,22,Ian Gordon,present,present,intermediate
+IG19G110,Danaus chrysippus,F,Thema,Ghana (?),Ghana,,,2019.01,2019,1,,Ian Gordon,present,present,dark
+IG19G112,Danaus chrysippus,M,Tano,Ghana (?),Ghana,,,2019.01.22,2019,1,22,Ian Gordon,present,present,light
+IG19G113,Danaus chrysippus,M,Enam,Ghana (?),Ghana,,,2019.01.22,2019,1,22,Ian Gordon,present,present,light
+IG19G114,Danaus chrysippus,F,Abina,Ghana (?),Ghana,,,2019.01,2019,1,,Ian Gordon,present,present,light
+SM18I01,Danaus chrysippus,M,Leo,Israel,Israel,,,2018.06.14,2018,6,14,Steve Collins,present,present,dark
+SM18I02,Danaus chrysippus,F,Noya,Israel,Israel,,,2018.06.15,2018,6,15,Steve Collins,present,present,dark
+SM18I03,Danaus chrysippus,F,Ariel,Israel,Israel,,,2018.06.16,2018,6,16,Steve Collins,present,present,dark
+SM18I04,Danaus chrysippus,M,Ofek,Israel,Israel,,,2018.06.17,2018,6,17,Steve Collins,present,present,dark
+SM18I05,Danaus chrysippus,M,Ron,Israel,Israel,,,2018.06.18,2018,6,18,Steve Collins,present,present,light
+SM18I06,Danaus chrysippus,M,Leroy ,Israel,Israel,,,2018.06.19,2018,6,19,Steve Collins,present,present,dark
+SM18I07,Danaus chrysippus,F,Shira,Israel,Israel,,,2018.06.20,2018,6,20,Steve Collins,present,present,dark
+SM18I08,Danaus chrysippus,M,Ray ,Israel,Israel,,,2018.06.21,2018,6,21,Steve Collins,present,present,intermediate
+SM18I09,Danaus chrysippus,F,Adele,Israel,Israel,,,2018.06.22,2018,6,22,Steve Collins,present,present,dark
+SM18I10,Danaus chrysippus,F,Talia,Israel,Israel,,,2018.06.23,2018,6,23,Steve Collins,present,present,dark
+OB-GHA-0010,Danaus chrysippus,F,Mercedes,Mountain Paradise; Biakpa; Volta; Ghana,Ghana,6.85,0.42,2018.12.06,2018,12,6,Oskar Brattstrom,present,present,light
+OB-GHA-0205,Danaus chrysippus,F,Tia,Gbadzeme; Volta; Ghana,Ghana,6.87,0.44,2018.12.08,2018,12,8,Oskar Brattstrom,present,present,dark
+OB-GHA-0206,Danaus chrysippus,F,Sabrina,Gbadzeme; Volta; Ghana,Ghana,6.87,0.44,2018.12.08,2018,12,8,Oskar Brattstrom,present,present,light
+OB-GHA-0207,Danaus chrysippus,M,Lewis,Gbadzeme; Volta; Ghana,Ghana,6.87,0.44,2018.12.08,2018,12,8,Oskar Brattstrom,present,present,light
+OB-GHA-0323,Danaus chrysippus,M,Max,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,light
+OB-GHA-0324,Danaus chrysippus,M,Toto,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,dark
+OB-GHA-0325,Danaus chrysippus,M,Wolff,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,light
+OB-GHA-0326,Danaus chrysippus,M,Hamilton,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,dark
+OB-GHA-0327,Danaus chrysippus,M,Salem,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,light
+OB-GHA-0328,Danaus chrysippus,M,Jason,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,light
+OB-GHA-0329,Danaus chrysippus,M,Brett,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,light
+OB-GHA-0330,Danaus chrysippus,M,Maurice,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,light
+OB-GHA-0331,Danaus chrysippus,F,Christine,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.10,2018,12,10,Oskar Brattstrom,present,present,light
+OB-GHA-0527,Danaus chrysippus,M,Oscar,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,dark
+OB-GHA-0528,Danaus chrysippus,M,Walter,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,dark
+OB-GHA-0529,Danaus chrysippus,M,Samson,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0530,Danaus chrysippus,M,Tony,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0531,Danaus chrysippus,M,Toby,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,intermediate
+OB-GHA-0532,Danaus chrysippus,M,Harry ,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0533,Danaus chrysippus,M,Edward,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0534,Danaus chrysippus,M,Rudolph,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0535,Danaus chrysippus,M,Bruce,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0536,Danaus chrysippus,M,Paul,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,intermediate
+OB-GHA-0537,Danaus chrysippus,M,Ronald,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0538,Danaus chrysippus,M,Harvey,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0539,Danaus chrysippus,M,Josh,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0540,Danaus chrysippus,F,Chanel,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0541,Danaus chrysippus,F,Serena,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0542,Danaus chrysippus,F,Valerie,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0543,Danaus chrysippus,F,Bernadette,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,light
+OB-GHA-0544,Danaus chrysippus,F,Tiffany,Apedwa; Atewa; Ghana,Ghana,6.13,-0.58,2018.12.11,2018,12,11,Oskar Brattstrom,present,present,dark
+SM19SY01,Danaus chrysippus,M,Giancarlo,Verdura Resort Sicily,Italy,37.466,13.197,2019.10.27,2019,10,27,Richard ffrench-Constant,absent,present,dark
+SM19SY02,Danaus chrysippus,M,Adriano,Verdura Resort Sicily,Italy,37.466,13.197,2019.10.27,2019,10,27,Richard ffrench-Constant,absent,present,dark
+SM19SY03,Danaus chrysippus,F,Elisa,Verdura Resort Sicily,Italy,37.466,13.197,2019.10.27,2019,10,27,Richard ffrench-Constant,absent,present,dark
+SM19SY04,Danaus chrysippus,M,Matteo,Verdura Resort Sicily,Italy,37.466,13.197,2019.10.27,2019,10,27,Richard ffrench-Constant,absent,present,dark
+SM19SY05,Danaus chrysippus,M,Gino,Verdura Resort Sicily,Italy,37.466,13.197,2019.10.27,2019,10,27,Richard ffrench-Constant,absent,present,dark
+SM19SY06,Danaus chrysippus,F,Glenda,Verdura Resort Sicily,Italy,37.466,13.197,2019.10.27,2019,10,27,Richard ffrench-Constant,absent,present,light
+IG20NY001,Danaus chrysippus,F,Maria,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.25,2020,11,25,Ian Gordon,partial,partial,light
+IG20NY002,Danaus chrysippus,F,Verity ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.25,2020,11,25,Ian Gordon,absent,present,dark
+IG20NY003,Danaus chrysippus,F,Sabin,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.25,2020,11,25,Ian Gordon,absent,present,dark
+IG20NY006,Danaus chrysippus,M,Yvan,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.25,2020,11,25,Ian Gordon,absent,present,intermediate
+IG20NY009,Danaus chrysippus,M,Wilfred,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.25,2020,11,25,Ian Gordon,absent,present,dark
+IG20NY011,Danaus chrysippus,M,Leon,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.25,2020,11,25,Ian Gordon,absent,present,dark
+IG20NY012,Danaus chrysippus,F,Nadine,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,absent,light
+IG20NY013,Danaus chrysippus,M,Swaibu,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,present,dark
+IG20NY014,Danaus chrysippus,F,Enatha,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,absent,light
+IG20NY015,Danaus chrysippus,M,Tharcisse,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,partial,light
+IG20NY016,Danaus chrysippus,M,Noah ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,present,dark
+IG20NY017,Danaus chrysippus,M,Abel,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,absent,intermediate
+IG20NY018,Danaus chrysippus,M,Alec,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,partial,partial,light
+IG20NY019,Danaus chrysippus,M,Gilbert,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,present,dark
+IG20NY020,Danaus chrysippus,F,Kirsty ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,present,dark
+IG20NY021,Danaus chrysippus,F,Davina,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,present,dark
+IG20NY022,Danaus chrysippus,M,Ian ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,partial,present,intermediate
+IG20NY023,Danaus chrysippus,F,Yvonne,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,partial,light
+IG20NY024,Danaus chrysippus,M,Kevin,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,absent,light
+IG20NY025,Danaus chrysippus,M,Adam ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,partial,present,light
+IG20NY026,Danaus chrysippus,M,Thomas,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,present,present,light
+IG20NY029,Danaus chrysippus,F,Sive,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,partial,light
+IG20NY030,Danaus chrysippus,M,Nathan,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,present,dark
+IG20NY031,Danaus chrysippus,F,Natalie ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,absent,intermediate
+IG20NY032,Danaus chrysippus,M,Mike,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,partial,present,dark
+IG20NY033,Danaus chrysippus,M,Larry ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,partial,present,dark
+IG20NY034,Danaus chrysippus,M,Lenny ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.11.28,2020,11,28,Ian Gordon,absent,present,dark
+IG20NY035,Danaus chrysippus,M,Gavin,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,partial,present,dark
+IG20NY036,Danaus chrysippus,M,Garfield,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,dark
+IG20NY037,Danaus chrysippus,M,Gary ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,dark
+IG20NY038,Danaus chrysippus,F,Gigi,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,intermediate
+IG20NY039,Danaus chrysippus,M,Trevor,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,intermediate
+IG20NY040,Danaus chrysippus,M,Percy ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,absent,light
+IG20NY041,Danaus chrysippus,M,Tommy,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,intermediate
+IG20NY042,Danaus chrysippus,M,Drake,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,present,partial,light
+IG20NY043,Danaus chrysippus,F,Francisca,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,dark
+IG20NY045,Danaus chrysippus,F,Kiran ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,intermediate
+IG20NY046,Danaus chrysippus,F,Callie,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,dark
+IG20NY047,Danaus chrysippus,F,Jess,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,dark
+IG20NY048,Danaus chrysippus,F,Betty ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,dark
+IG20NY049,Danaus chrysippus,F,Bertha,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,absent,light
+IG20NY050,Danaus chrysippus,M,Morris,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.06,2020,12,6,Ian Gordon,absent,present,light
+IG20NY051,Danaus chrysippus,F,Kim,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,absent,present,dark
+IG20NY052,Danaus chrysippus,M,Stuart,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,partial,present,light
+IG20NY053,Danaus chrysippus,F,Aoibheann ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,absent,present,light
+IG20NY054,Danaus chrysippus,M,Arthur ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,absent,absent,light
+IG20NY055,Danaus chrysippus,M,Amir,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,present,partial,light
+IG20NY056,Danaus chrysippus,M,Balthazar,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,absent,present,dark
+IG20NY057,Danaus chrysippus,F,Carine,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,absent,present,dark
+IG20NY058,Danaus chrysippus,M,Caspar,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,absent,partial,intermediate
+IG20NY059,Danaus chrysippus,M,Bob,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,present,present,intermediate
+IG20NY060,Danaus chrysippus,M,Bruno,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,partial,present,dark
+IG20NY062,Danaus chrysippus,F,Chanise,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,partial,absent,light
+IG20NY063,Danaus chrysippus,F,Claudine,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,absent,present,light
+IG20NY066,Danaus chrysippus,F,Cynthia,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,present,present,light
+IG20NY067,Danaus chrysippus,?,Billie,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY068,Danaus chrysippus,?,Sam ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY069,Danaus chrysippus,?,Taylor,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY070,Danaus chrysippus,?,Harley,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY071,Danaus chrysippus,?,Addison,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY072,Danaus chrysippus,?,Ashley,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY073,Danaus chrysippus,?,Avery,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY074,Danaus chrysippus,?,Bevan ,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY075,Danaus chrysippus,?,Blair,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+IG20NY076,Danaus chrysippus,?,Bowie,Nyamata; Rwanda,Rwanda,-2.154,30.077,2020.12.16,2020,12,16,Ian Gordon,,,
+RB20110,Danaus chrysippus,F,Cora,Bred in Kigali eclosed in RSA (RB20110 was descendent from a female collected in Nyamata; Rwanda),Rwanda,-2.154,30.077,2020.12.25,2020,12,25,,,,
+RB20109,Danaus chrysippus,F,Sisi,Bred in Kigali eclosed in RSA,Rwanda,-2.154,30.077,2020.12.26,2020,12,26,,,,
+SM20BE01,Danaus chrysippus,M,Vernon,The Bend Nature Estate; Kwa-Zulu Natal,South Africa,-29.356,29.873,2020.12.26,2020,12,26,Simon Martin,absent,present,dark
+SM21TS29,Danaus chrysippus,M,Cornelius,TSWALU; 3K east of Dedeben,South Africa,-27.282,22.517,2021.01.13,2021,1,13,Simon Martin,absent,present,dark
+SM21TS26,Danaus chrysippus,M,Mani,TSWALU; 3K east of Dedeben,South Africa,-27.282,22.517,2021.01.13,2021,1,13,Simon Martin,absent,present,dark
+SM21TS25,Danaus chrysippus,M,Damon,TSWALU; 3K east of Dedeben,South Africa,-27.282,22.517,2021.01.13,2021,1,13,Simon Martin,absent,present,dark
+SM21TS21,Danaus chrysippus,M,Anton,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS18,Danaus chrysippus,M,Lexington,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS15,Danaus chrysippus,M,Lucas,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS14,Danaus chrysippus,M,Alvin,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS12,Danaus chrysippus,M,Elon,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS11,Danaus chrysippus,M,Frikkie,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,,,
+SM21TS10,Danaus chrysippus,M,Andre,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS09,Danaus chrysippus,M,Nelson,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS08,Danaus chrysippus,M,Thabo,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS07,Danaus chrysippus,M,Johannes,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS06,Danaus chrysippus,M,Themba,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS03,Danaus chrysippus,M,Mandla,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS02,Danaus chrysippus,M,Jacob,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS01,Danaus chrysippus,M,Alfred,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS04,Danaus chrysippus,F,Astrid,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS05,Danaus chrysippus,M,Archie,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS13,Danaus chrysippus,F,Rachel,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS16,Danaus chrysippus,F,Christalle ,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS17,Danaus chrysippus,F,Desiree,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,intermediate
+SM21TS19,Danaus chrysippus,F,Elsie,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,intermediate
+SM21TS20,Danaus chrysippus,F,Annika,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS22,Danaus chrysippus,F,Charlize,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS23,Danaus chrysippus,F,Rehema,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS24,Danaus chrysippus,M,Kamagelo,TSWALU; Little Kloof (Dedeban Hills; Tswalu Kalahari Reserve; South Africa),South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS27,Danaus chrysippus,M,Hector,TSWALU; 3K east of Dedeben,South Africa,-27.282,22.517,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS28,Danaus chrysippus,F,Ria,TSWALU; 3K east of Dedeben,South Africa,-27.282,22.517,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SM21TS30,Danaus chrysippus,F,Hester,TSWALU; Dedeben hills,South Africa,-27.295,22.482,2021.01.13,2021,1,13,Simon Martin,absent,present,dark
+SM21TS31,Danaus chrysippus,M,Gus,TSWALU; Dedeben hills,South Africa,-27.295,22.482,2021.01.13,2021,1,13,Simon Martin,partial,present,dark
+SM21TS32,Danaus chrysippus,M,Ernest,TSWALU; Low Ridge N. of Dedeben,South Africa,-27.282,22.486,2021.01.13,2021,1,13,Simon Martin,partial,present,intermediate
+SM21TS33,Danaus chrysippus,F,Mandy ,TSWALU; Dedeben hills,South Africa,-27.295,22.482,2021.01.13,2021,1,13,Simon Martin,absent,present,dark
+SM21BE01,Danaus chrysippus,F,Carla ,BEND (Full name; The Bend Nature Estate; Kwa-Zulu Natal; South Africa) ,South Africa,-29.356,29.873,2021.01.22,2021,1,22,Simon Martin,absent,present,dark
+SM21BE02,Danaus chrysippus,M,Bruno ,BEND (Full name; The Bend Nature Estate; Kwa-Zulu Natal; South Africa),South Africa,-29.356,29.873,2021.01.22,2021,1,22,Simon Martin,absent,present,dark
+SM21BE03,Danaus chrysippus,M,Bandile,The BEND (Full name; The Bend Nature Estate; Kwa-Zulu Natal; South Africa),South Africa,-29.356,29.873,2021.02.01,2021,2,1,Simon Martin,absent,present,dark
+SM21TS34,Danaus chrysippus,F,Salome,G. Tomantosis Dedeben hills,South Africa,-27.295,22.482,2021.01.13,2021,1,13,Simon Martin,absent,present,dark
+SM21BE04,Danaus chrysippus,M,Otis,The BEND (Full name; The Bend Nature Estate; Kwa-Zulu Natal; South Africa),South Africa,-29.356,29.873,2020.12.30,2020,12,30,Simon Martin,absent,present,dark
+SB21105,Danaus chrysippus,F,Mirabelle,,South Africa,,,2021.02.06,2021,2,6,Simon Martin,,,
+SB21106,Danaus chrysippus,F,Tara,,South Africa,,,2021.02.06,2021,2,6,Simon Martin,,,
+SB21107,Danaus chrysippus,F,Andrea,,South Africa,,,2021.02.06,2021,2,6,Simon Martin,,,
+SM21SP01,Danaus chrysippus,M,Dwayne,SABIEPARK 150,South Africa,-24.982,31.467,2021.02.06,2021,2,6,Simon Martin,partial,present,dark
+SM21SP02,Danaus chrysippus,F,Isabelle,SABIEPARK; Green Mamba,South Africa,-24.961,31.448,2021.02.07,2021,2,7,Simon Martin,absent,present,dark
+SB21109,Danaus chrysippus,F,Shoki,,South Africa,,,2021.02.06,2021,2,6,Simon Martin,,,
+SB2121,Danaus chrysippus,F,Marie,,South Africa,,,2021.03.02,2021,3,2,Simon Martin,,,
+SM21SP12,Danaus chrysippus,M,Rowan,SABIEPARK,South Africa,-24.982,31.467,2021.02.20,2021,2,20,Simon Martin,absent,present,dark
+SM21SP11,Danaus chrysippus,M,Leonard,SABIEPARK,South Africa,-24.982,31.467,2021.02.20,2021,2,20,Simon Martin,absent,present,dark
+SM21SP10,Danaus chrysippus,M,Graham,SABIEPARK,South Africa,-24.982,31.467,2021.02.20,2021,2,20,Simon Martin,absent,present,dark
+SM21SP09,Danaus chrysippus,F,Britney ,SABIEPARK,South Africa,-24.982,31.467,2021.02.20,2021,2,20,Simon Martin,absent,present,dark
+SM21SP08,Danaus chrysippus,F,Margot,SABIEPARK,South Africa,-24.982,31.467,2021.02.20,2021,2,20,Simon Martin,absent,present,dark
+SM21SP07,Danaus chrysippus,F,Elna,SABIEPARK,South Africa,-24.982,31.467,2021.02.20,2021,2,20,Simon Martin,absent,present,dark
+SM21SP06,Danaus chrysippus,F,Kaya,SABIEPARK,South Africa,-24.982,31.467,2021.02.20,2021,2,20,Simon Martin,absent,present,dark
+SB21110,Danaus chrysippus,F,Lindiwe,,South Africa,,,2021.02.07,2021,2,7,Simon Martin,,,
+SM21TS35,Danaus chrysippus,F,Mimi,TSWALU; Dedeben hills,South Africa,-27.295,22.482,2021.01.12,2021,1,12,Simon Martin,absent,present,dark
+SB21108,Danaus chrysippus,F,Angelica,,South Africa,,,2021.02.05,2021,2,5,Simon Martin,,,
+SM21TS36,Danaus chrysippus,F,Lillian,TSWALU; Dedeben,South Africa,-27.295,22.482,2021.01.13,2021,1,13,Simon Martin,absent,present,dark
+SM21SP05,Danaus chrysippus,F,Beatrice,SABIEPARK 150,South Africa,-24.982,31.467,2021.02.10,2021,2,10,Simon Martin,absent,present,dark
+SM21SP04,Danaus chrysippus,M,Monty,SABIEPARK 150,South Africa,-24.982,31.467,2021.02.08,2021,2,8,Simon Martin,absent,present,dark
+SM21SP03,Danaus chrysippus,M,Emile,SABIEPARK 150,South Africa,-24.982,31.467,2021.02.08,2021,2,8,Simon Martin,absent,present,dark
+JCW230821-1,Danaus chrysippus,,Jules,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.826713,3.10747,14.09.02,2014,9,2,Jamie C. Weir,,,
+JCW230821-2,Danaus chrysippus,,Dia,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.826713,3.10747,14.09.02,2014,9,2,Jamie C. Weir,,,
+JCW230821-3,Danaus chrysippus,,Desi,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.09,2019,9,9,Jamie C. Weir,,,
+JCW230821-4,Danaus chrysippus,,Solis,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.09,2019,9,9,Jamie C. Weir,,,
+JCW230821-5,Danaus chrysippus,,Lupe,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.09,2019,9,9,Jamie C. Weir,,,
+JCW230821-6,Danaus chrysippus,,Santana,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.09,2019,9,9,Jamie C. Weir,,,
+JCW230821-7,Danaus chrysippus,,Ray,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.09,2019,9,9,Jamie C. Weir,,,
+JCW230821-8,Danaus chrysippus,,Rio,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.03,2019,9,3,Jamie C. Weir,,,
+JCW230821-9,Danaus chrysippus,,Cruz,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.03,2019,9,3,Jamie C. Weir,,,
+JCW230821-10,Danaus chrysippus,,Rafa,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.06,2019,9,6,Jamie C. Weir,,,
+JCW230821-11,Danaus chrysippus,,Lani,Carrer can Vauma; Alcudia; Majorca; Balearic Islands,Spain,39.82666,3.10956,19.09.06,2019,9,6,Jamie C. Weir,,,
+EJ23CY01,Danaus chrysippus,?,,Cyprus,,,,,,,,Eddie John,,,
+EJ23CY02,Danaus chrysippus,?,,Cyprus,,,,,,,,Eddie John,,,
+EJ23CY03,Danaus chrysippus,?,,Cyprus,,,,,,,,Eddie John,,,
+EJ23CY04,Danaus chrysippus,?,,Cyprus,,,,,,,,Eddie John,,,
+EJ23CY05,Danaus chrysippus,?,,Cyprus,,,,,,,,Eddie John,,,
