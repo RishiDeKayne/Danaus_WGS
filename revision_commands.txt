@@ -1,5 +1,39 @@
-bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz
+#calculating LD along contig15.1
 
+#first check SNP count:
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -H | wc -l
+#626148
+
+conda activate /global/scratch/users/rdekayne/envs/pca
+
+## calculate_LD.sh
+
+#!/bin/bash
+#SBATCH --job-name=LD
+#SBATCH --account=co_genomicdata
+#SBATCH --partition=savio4_htc
+#SBATCH --qos=genomicdata_htc4_normal
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=20G
+#SBATCH --time=24:00:00
+#SBATCH --output=LD%j.out
+#SBATCH --error=LD%j.err
+
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0 --make-bed --allow-extra-chr --out LD_whole_VCF
+
+touch plink_complete.done
+
+#now split by haplotype using core groups (same as gimble)
+
+bcftools view -Oz -S chrysippus_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz | bcftools view --min-ac=1 > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CHRYSIPPUS.vcf.gz
+bcftools view -Oz -S klugii_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz | bcftools view -m2 -M2 -v snps > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KLUGII.vcf.gz
+bcftools view -Oz -S orientis_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz | bcftools view -m2 -M2 -v snps > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.ORIENTIS.vcf.gz
+
+
+#############################################################################################################################
+#############################################################################################################################
 #!/bin/bash
 #SBATCH --job-name=LD
 #SBATCH --account=co_genomicdata
@@ -75,7 +109,6 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 ### plink_test.sh
 
 module load bio/bcftools/1.16-gcc-11.4.0
-bcftools view -Oz -S orientis_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz > test.vcf.gz
 
 
 
