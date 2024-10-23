@@ -71,6 +71,11 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 --thin 0.1 --r2 gz --ld-window-kb 999999999 --ld-window-r2 0 /
 --out test
 
+### plink_test.sh
+
+module load bio/bcftools/1.16-gcc-11.4.0
+bcftools view -Oz -S orientis_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz > test.vcf.gz
+
 
 
 plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --r2-phased --ld-window-kb --thin 0.1 --make-bed --out test
