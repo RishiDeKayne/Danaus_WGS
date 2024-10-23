@@ -50,6 +50,22 @@ vcftools --gzvcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs
 
 touch orientis_done.txt
 
+conda create -p /global/scratch/users/rdekayne/envs/plink2
+conda activate /global/scratch/users/rdekayne/envs/plink2
+conda install bioconda::plink2
 
+# run_plink_LD.sh
+#!/bin/bash
+#SBATCH --job-name=plink
+#SBATCH --account=co_genomicdata
+#SBATCH --partition=savio4_htc
+#SBATCH --qos=genomicdata_htc4_normal
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=20G
+#SBATCH --time=24:00:00
+#SBATCH --output=plink%j.out
+#SBATCH --error=plink%j.err
 
 plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --r2 --ld-window-r2 0.9 --thin 0.1 --make-bed --out test
