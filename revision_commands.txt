@@ -1,3 +1,4 @@
+bcftools view DC174_allchroms_nochr1HAP_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs.b.vcf.gz -T chr15_info_remove.txt -Oz > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz
 
 #!/bin/bash
 #SBATCH --job-name=LD
