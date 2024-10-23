@@ -50,11 +50,9 @@ vcftools --gzvcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs
 
 touch orientis_done.txt
 
-conda create -p /global/scratch/users/rdekayne/envs/plink2
-conda activate /global/scratch/users/rdekayne/envs/plink2
-conda install bioconda::plink2
+conda activate /global/scratch/users/rdekayne/envs/pca
 
-# run_plink_LD.sh
+# 
 #!/bin/bash
 #SBATCH --job-name=plink
 #SBATCH --account=co_genomicdata
@@ -68,4 +66,11 @@ conda install bioconda::plink2
 #SBATCH --output=plink%j.out
 #SBATCH --error=plink%j.err
 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --r2 --ld-window-r2 0.9 --thin 0.1 --make-bed --out test
+vcftools 
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --make-bed --allow-extra-chr --maf 0.05 --chr contig15.1 / 
+--thin 0.1 --r2 gz --ld-window-kb 999999999 --ld-window-r2 0 /
+--out test
+
+
+
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --r2-phased --ld-window-kb --thin 0.1 --make-bed --out test
