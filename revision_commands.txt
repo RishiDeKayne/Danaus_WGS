@@ -1,35 +1,32 @@
 #calculating LD along contig15.1
 
+###########################
+#     MAKE VCFS
+###########################
 #first check SNP count:
 bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz -H | wc -l
 #626148
 
-conda activate /global/scratch/users/rdekayne/envs/pca
-
-## calculate_LD.sh
-
-#!/bin/bash
-#SBATCH --job-name=LD
-#SBATCH --account=co_genomicdata
-#SBATCH --partition=savio4_htc
-#SBATCH --qos=genomicdata_htc4_normal
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=20G
-#SBATCH --time=24:00:00
-#SBATCH --output=LD%j.out
-#SBATCH --error=LD%j.err
-
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0 --make-bed --allow-extra-chr --out LD_whole_VCF
-
-touch plink_complete.done
+conda activate /global/scratch/users/rdekayne/envs/geno
 
 #now split by haplotype using core groups (same as gimble)
 
 bcftools view -Oz -S chrysippus_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz | bcftools view --min-ac=1 > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CHRYSIPPUS.vcf.gz
 bcftools view -Oz -S klugii_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz | bcftools view --min-ac=1 > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KLUGII.vcf.gz
 bcftools view -Oz -S orientis_core.txt DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz | bcftools view --min-ac=1 > DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.ORIENTIS.vcf.gz
+
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CHRYSIPPUS.vcf.gz -H | wc -l
+#228925
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KLUGII.vcf.gz -H | wc -l
+#191723
+bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.ORIENTIS.vcf.gz -H | wc -l
+#237618
+
+
+###########################
+#     RUN LD CALC
+###########################
+conda activate /global/scratch/users/rdekayne/envs/PCA
 
 ## calculate_LD_C.sh
 
@@ -46,7 +43,9 @@ bcftools view -Oz -S orientis_core.txt DC174_output_filt_mindepth7_minqual30_mac
 #SBATCH --output=LD%j.out
 #SBATCH --error=LD%j.err
 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CHRYSIPPUS.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.2 --make-bed --allow-extra-chr --out LD_C_VCF
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CHRYSIPPUS.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.5 --make-bed --allow-extra-chr --out LD_C_VCF
+
+plink --bfile LD_C_VCF --r2 gz square --allow-extra-chr --thin 0.1 --make-bed --out Square_LD_C
 
 touch plink_C_complete.done
 
@@ -65,7 +64,9 @@ touch plink_C_complete.done
 #SBATCH --output=LD%j.out
 #SBATCH --error=LD%j.err
 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KLUGII.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.2 --make-bed --allow-extra-chr --out LD_K_VCF
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KLUGII.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.5 --make-bed --allow-extra-chr --out LD_K_VCF
+
+plink --bfile LD_K_VCF --r2 gz square --allow-extra-chr --thin 0.1 --make-bed --out Square_LD_K
 
 touch plink_K_complete.done
 
@@ -84,89 +85,13 @@ touch plink_K_complete.done
 #SBATCH --output=LD%j.out
 #SBATCH --error=LD%j.err
 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.ORIENTIS.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.2 --make-bed --allow-extra-chr --out LD_O_VCF
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.ORIENTIS.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.5 --make-bed --allow-extra-chr --out LD_O_VCF
+
+plink --bfile LD_O_VCF --r2 gz square --allow-extra-chr --thin 0.1 --make-bed --out Square_LD_O
 
 touch plink_O_complete.done
 
 
-#############################################################################################################################
-#############################################################################################################################
-#!/bin/bash
-#SBATCH --job-name=LD
-#SBATCH --account=co_genomicdata
-#SBATCH --partition=savio4_htc
-#SBATCH --qos=genomicdata_htc4_normal
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=20G
-#SBATCH --time=24:00:00
-#SBATCH --output=LD%j.out
-#SBATCH --error=LD%j.err
-
-vcftools --gzvcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --keep chrysippus_core.txt --hap-r2 --ld-window-bp 10000 --out ld_window_10000_chrysippus
-
-touch chrysippus_done.txt
-
-#!/bin/bash
-#SBATCH --job-name=LD
-#SBATCH --account=co_genomicdata
-#SBATCH --partition=savio4_htc
-#SBATCH --qos=genomicdata_htc4_normal
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=20G
-#SBATCH --time=24:00:00
-#SBATCH --output=LD%j.out
-#SBATCH --error=LD%j.err
-
-vcftools --gzvcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --keep klugii_core.txt --hap-r2 --ld-window-bp 10000 --out ld_window_10000_klugii
-
-touch klugii_done.txt
-
-#!/bin/bash
-#SBATCH --job-name=LD
-#SBATCH --account=co_genomicdata
-#SBATCH --partition=savio4_htc
-#SBATCH --qos=genomicdata_htc4_normal
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=20G
-#SBATCH --time=24:00:00
-#SBATCH --output=LD%j.out
-#SBATCH --error=LD%j.err
-
-vcftools --gzvcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --keep orientis_core.txt --hap-r2 --ld-window-bp 10000 --out ld_window_10000_orientis
-
-touch orientis_done.txt
-
-conda activate /global/scratch/users/rdekayne/envs/pca
-
-# 
-#!/bin/bash
-#SBATCH --job-name=plink
-#SBATCH --account=co_genomicdata
-#SBATCH --partition=savio4_htc
-#SBATCH --qos=genomicdata_htc4_normal
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=20G
-#SBATCH --time=24:00:00
-#SBATCH --output=plink%j.out
-#SBATCH --error=plink%j.err
-
-vcftools 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --make-bed --allow-extra-chr --maf 0.05 --chr contig15.1 / 
---thin 0.1 --r2 gz --ld-window-kb 999999999 --ld-window-r2 0 /
---out test
-
-### plink_test.sh
-
-module load bio/bcftools/1.16-gcc-11.4.0
-
-
-
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --r2-phased --ld-window-kb --thin 0.1 --make-bed --out test
+###########################
+#     PLOT IN R
+###########################
