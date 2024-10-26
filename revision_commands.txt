@@ -93,5 +93,75 @@ touch plink_O_complete.done
 
 
 ###########################
+#     RUN LD CALC2
+###########################
+conda activate /global/scratch/users/rdekayne/envs/PCA
+
+## calculate_LD_C.sh
+
+#!/bin/bash
+#SBATCH --job-name=LD
+#SBATCH --account=co_genomicdata
+#SBATCH --partition=savio4_htc
+#SBATCH --qos=genomicdata_htc4_normal
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=100G
+#SBATCH --time=24:00:00
+#SBATCH --output=LD%j.out
+#SBATCH --error=LD%j.err
+
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CHRYSIPPUS.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 2000 --ld-window-r2 0.5 --make-bed --allow-extra-chr --out LD_C_VCF2
+
+plink --bfile LD_C_VCF2 --r2 gz square --allow-extra-chr --thin 0.1 --make-bed --out Square_LD_C
+
+touch plink_C_complete.done
+
+## calculate_LD_K.sh
+
+#!/bin/bash
+#SBATCH --job-name=LD
+#SBATCH --account=co_genomicdata
+#SBATCH --partition=savio4_htc
+#SBATCH --qos=genomicdata_htc4_normal
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=100G
+#SBATCH --time=24:00:00
+#SBATCH --output=LD%j.out
+#SBATCH --error=LD%j.err
+
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KLUGII.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.5 --make-bed --allow-extra-chr --out LD_K_VCF
+
+plink --bfile LD_K_VCF --r2 gz square --allow-extra-chr --thin 0.1 --make-bed --out Square_LD_K
+
+touch plink_K_complete.done
+
+## calculate_LD_O.sh
+
+#!/bin/bash
+#SBATCH --job-name=LD
+#SBATCH --account=co_genomicdata
+#SBATCH --partition=savio4_htc
+#SBATCH --qos=genomicdata_htc4_normal
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=100G
+#SBATCH --time=24:00:00
+#SBATCH --output=LD%j.out
+#SBATCH --error=LD%j.err
+
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.ORIENTIS.vcf.gz --maf 0.05 -r2 gz --ld-window 999999 --ld-window-kb 1000 --ld-window-r2 0.5 --make-bed --allow-extra-chr --out LD_O_VCF
+
+plink --bfile LD_O_VCF --r2 gz square --allow-extra-chr --thin 0.1 --make-bed --out Square_LD_O
+
+touch plink_O_complete.done
+
+
+
+###########################
 #     PLOT IN R
 ###########################
