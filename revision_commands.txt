@@ -88,7 +88,7 @@ conda activate /global/scratch/users/rdekayne/envs/pca
 #SBATCH --output=LD%j.out
 #SBATCH --error=LD%j.err
 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CK_CORE.vcf.gz --make-bed --maf 0.2 --thin 0.85 --r2 gz square --allow-extra-chr --out Square_LD_CK_VCF
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CK_CORE.vcf.gz --make-bed --maf 0.2 --thin 0.4 --r2 gz square --allow-extra-chr --out Square_LD_CK_VCF
 
 touch plink_CK_complete.done
 
@@ -107,7 +107,7 @@ touch plink_CK_complete.done
 #SBATCH --output=LD%j.out
 #SBATCH --error=LD%j.err
 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CO_CORE.vcf.gz --make-bed --maf 0.2 --thin 0.85 --r2 gz square --allow-extra-chr --out Square_LD_CO_VCF
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CO_CORE.vcf.gz --make-bed --maf 0.2 --thin 0.35 --r2 gz square --allow-extra-chr --out Square_LD_CO_VCF
 
 touch plink_CO_complete.done
 
@@ -126,7 +126,7 @@ touch plink_CO_complete.done
 #SBATCH --output=LD%j.out
 #SBATCH --error=LD%j.err
 
-plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KO_CORE.vcf.gz --make-bed --maf 0.2 --thin 0.85 --r2 gz square --allow-extra-chr --out Square_LD_KO_VCF
+plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.KO_CORE.vcf.gz --make-bed --maf 0.2 --thin 0.35 --r2 gz square --allow-extra-chr --out Square_LD_KO_VCF
 
 touch plink_KO_complete.done
 
