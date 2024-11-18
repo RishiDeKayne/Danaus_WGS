@@ -46,6 +46,8 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 
 touch plink_WHOLE_complete.done
 
+##22348
+
 ###########################
 #     RUN LD CALC
 ###########################
@@ -92,6 +94,8 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 
 touch plink_CK_complete.done
 
+##23673
+
 ## Square_LD_CO_VCF.sh
 
 #!/bin/bash
@@ -110,6 +114,8 @@ touch plink_CK_complete.done
 plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr15.b.CO_CORE.vcf.gz --make-bed --maf 0.2 --thin 0.35 --r2 gz square --allow-extra-chr --out Square_LD_CO_VCF
 
 touch plink_CO_complete.done
+
+##23598
 
 ## Square_LD_KO_VCF.sh
 
@@ -130,6 +136,7 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 
 touch plink_KO_complete.done
 
+##23612
 
 #     PLOT IN R
 ###########################
