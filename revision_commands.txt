@@ -26,6 +26,8 @@ bcftools view DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_ch
 #     RUN LD CALC whole VCF high thin
 ###########################
 
+first exclude region3 - between 7829094 and 14803486
+
 ## calculate_LD_wholeVCF.sh
 
 #!/bin/bash
