@@ -94,7 +94,7 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 
 touch plink_CK_complete.done
 
-##23673
+##17998
 
 ## Square_LD_CO_VCF.sh
 
@@ -115,7 +115,7 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 
 touch plink_CO_complete.done
 
-##23598
+##20407
 
 ## Square_LD_KO_VCF.sh
 
@@ -136,7 +136,7 @@ plink --vcf DC174_output_filt_mindepth7_minqual30_mac4_AN313_nosmallcontigs_chr1
 
 touch plink_KO_complete.done
 
-##23612
+##20239
 
 #     PLOT IN R
 ###########################
