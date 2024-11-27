@@ -32,3 +32,7 @@ And various processing scripts including:
 <br />  
 
 Finally, the gIMble full model output can be found in [`FINAL_GIMBLE_RESULTS_3morphs.xlsx`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/FINAL_GIMBLE_RESULTS_3morphs.xlsx)
+
+<br />  
+
+LD heatmaps across chr15 were produce using code in [`revision_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/revision_commands.txt)
