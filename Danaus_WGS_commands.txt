@@ -1,4 +1,4 @@
-#commands for ***
+#commands for De-Kayne et al.
 
 #check queue
 qstat -f -u "*"
