@@ -20,7 +20,7 @@ The background file [`DC174_background.csv`](https://github.com/RishiDeKayne/Dan
 **Admixture** - [`DC174_makeAdmixtureplots_sub_regions.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_makeAdmixtureplots_sub_regions.R)  
 **GWAS** - Input:[`DC174_make_gemma_input.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_make_gemma_input.R) and Plotting Output: [`DC174_plot_plink_assoc_output.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_plot_plink_assoc_output.R)  
 **Population Statistics** - e.g. Input: [`make_popsfile.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/make_popsfile.R) and Plotting Output: Pi/FST/DXY/Da [`DC174_make_popsfile_plot_pi_50kb.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_make_popsfile_plot_pi_50kb.R)  
-**LD Heatmap** - [`plot_heat_ma_LD.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/plot_heat_ma_LD.R)
+
 <br />  
 
 
@@ -35,4 +35,4 @@ Finally, the gIMble full model output can be found in [`FINAL_GIMBLE_RESULTS_3mo
 
 <br />  
 
-LD heatmaps across chr15 were produce using code in [`revision_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/revision_commands.txt)
+LD heatmaps across chr15 were produce using code in [`revision_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/revision_commands.txt) and plotted in R using [`plot_heat_ma_LD.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/plot_heat_ma_LD.R)
