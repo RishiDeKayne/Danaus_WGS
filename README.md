@@ -1,6 +1,6 @@
 This directory will have all processing scripts for Danaus whole genome paper De-Kayne et al.
 
-All bash scripts can be found in the files [`Danaus_WGS_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/Danaus_WGS_commands.txt) and [`phasing_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/phasing/phasing_commands.txt)
+All bash scripts can be found in the files [`Danaus_WGS_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/Danaus_WGS_commands.txt), [`phasing_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/phasing/phasing_commands.txt), and additional commands requested during revision in [`revision_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/revision_commands.txt)
 
 These files explain the following analyses/methods
 1. genotype calling
