@@ -9,9 +9,10 @@ These files explain the following analyses/methods
 1. genotype calling
 2. PCAs
 3. Admixture plots
-4. Gemma GWAS
+4. PLINK GWAS
 5. Phasing
 6. gIMble
+7. Popgen statistics (including nucleotide diversity, DXY, FST)
 
 <br />  
 
