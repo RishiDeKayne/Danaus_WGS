@@ -1,23 +1,23 @@
-source("plot_twisst.R")
+source("~/Research/dev/twisst2/plot_twisst/plot_twisst.R")
 
 setwd("/home/simon/Dropbox/Research/Danaus_spiroplasma/HAPLOTYPE_ANCESTRY/Trees/")
 
 ############################## input files ######################################
 
 prefix = "DC174OG.contig15.1.realigned.DP7GQ30het75min87minVar2.Twisst2_K3.contig15.1"
-weights_file <- paste0(prefix,".topocounts.tsv.gz")
-window_data_file <- paste0(prefix,".windowdata.tsv.gz")
+topocounts_file <- paste0(prefix,".topocounts.tsv.gz")
+intervals_file <- paste0(prefix,".intervals.tsv.gz")
 topo_cols = c(orientis="#2143d1", chrysippus="#bc4754", klugii="#ffac07")
 
-prefix = "DC174OG.contig15.1.realigned.DP7GQ30het75min87minVar2.Twisst2_2nd_kar_klu_ori.contig15.1"
-weights_file <- paste0(prefix,".topocounts.tsv.gz")
-window_data_file <- paste0(prefix,".windowdata.tsv.gz")
+prefix = "DC174OG.contig15.1.realigned.DP7GQ30het75min87minVar2.Twisst2_kar_klu_ori.contig15.1"
+topocounts_file <- paste0(prefix,".topocounts.tsv.gz")
+intervals_file <- paste0(prefix,".intervals.tsv.gz")
 topo_cols = c(klugii="#ffac07", orientis="#2143d1", karamu="#CCCCCC")
 
 
 prefix = "DC174OG.contig15.1.realigned.DP7GQ30het75min87minVar2.Twisst2_chryD_chry_ori.contig15.1"
-weights_file <- paste0(prefix,".topocounts.tsv.gz")
-window_data_file <- paste0(prefix,".windowdata.tsv.gz")
+topocounts_file <- paste0(prefix,".topocounts.tsv.gz")
+intervals_file <- paste0(prefix,".intervals.tsv.gz")
 topo_cols = c(chrysippus="#bc4754", orientis="#2143d1", "#CCCCCC")
 
 
@@ -27,8 +27,8 @@ topo_cols = c(chrysippus="#bc4754", orientis="#2143d1", "#CCCCCC")
 # If there are multiple weights files, or a single file with different chromosomes/scaffolds/contigs
 # in the window data file, these will be separated when importing.
 
-twisst_data <- import.twisst(weights_files=weights_file,
-                             window_data_files=window_data_file, ignore_extra_columns=TRUE, min_combos=50, max_window = 50000)
+twisst_data <- import.twisst(topocounts_files=topocounts_file,
+                             intervals_files=intervals_file, ignore_extra_columns=TRUE, min_subtrees=50, max_interval = 50000)
 
 
                              
@@ -92,9 +92,9 @@ par(mar=c(4,2,2,1), xpd=NA, xaxt="n", yaxt="n")
 left_trim = 6251636
 right_trim = 7829094
 
-rows <- which(twisst_data$window_data[[1]]$start >= left_trim & twisst_data$window_data[[1]]$end <= right_trim)
+rows <- which(twisst_data$interval_data[[1]]$start >= left_trim & twisst_data$interval_data[[1]]$end <= right_trim)
 
-plot.weights(twisst_data$weights[[1]][rows,], twisst_data$window_data[[1]][rows,c("start","end")],lwd=0,stacked=TRUE, xlim=c(left_trim,right_trim),
+plot.weights(twisst_data$weights[[1]][rows,], twisst_data$interval_data[[1]][rows,c("start","end")],lwd=0,stacked=TRUE, xlim=c(left_trim,right_trim),
              fill_cols = topo_cols, line_cols=NA, xlab="", ylab="")
 
 arrows(6251636, 1.05, 7829094, 1.05, length=0.1, code=3, lwd=2, col="#a775ee")
@@ -119,8 +119,8 @@ dev.off()
 cut_left <- 7829094
 cut_right <- 14803486
 
-left <- which(twisst_data$window_data[[1]]$start >= 4035981 & twisst_data$window_data[[1]]$start < cut_left)
-right <- which(twisst_data$window_data[[1]]$end > cut_right & twisst_data$window_data[[1]]$end <= 15299732)
+left <- which(twisst_data$interval_data[[1]]$start >= 4035981 & twisst_data$interval_data[[1]]$start < cut_left)
+right <- which(twisst_data$interval_data[[1]]$end > cut_right & twisst_data$interval_data[[1]]$end <= 15299732)
 gap <- cut_right - cut_left -2e5
 
 
@@ -146,10 +146,10 @@ par(mar=c(4,4,2,1), xpd=NA, xaxt="n")
 left_trim = 4e6
 right_trim = 15.5e6-gap
 
-plot.weights(twisst_data$weights[[1]][left,], twisst_data$window_data[[1]][left, c("start", "end")],lwd=0, stacked=TRUE, xlim=c(left_trim,right_trim),
+plot.weights(twisst_data$weights[[1]][left,], twisst_data$interval_data[[1]][left, c("start", "end")],lwd=0, stacked=TRUE, xlim=c(left_trim,right_trim),
              fill_cols = topo_cols, line_cols=NA, xlab="Position (MB)")
 
-plot.weights(twisst_data$weights[[1]][right,], twisst_data$window_data[[1]][right, c("start", "end")] - gap, lwd=0, stacked=TRUE, xlim=c(left_trim,right_trim),
+plot.weights(twisst_data$weights[[1]][right,], twisst_data$interval_data[[1]][right, c("start", "end")] - gap, lwd=0, stacked=TRUE, xlim=c(left_trim,right_trim),
              fill_cols = topo_cols, line_cols=NA, add=T)
 
 arrows(4035981, 1.05, 6220875, 1.05, length=0.1, code=3, lwd=2, col="#006437")

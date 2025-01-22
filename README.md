@@ -1,5 +1,5 @@
-This directory will have all processing scripts for Danaus whole genome paper De-Kayne et al.
 
+### Commands and scripts for "Incomplete recombination suppression fuels extensive haplotype diversity in a butterfly color pattern supergene", De-Kayne et al. 2025 PLOS Biology
 
 All bash scripts can be found in the files [`Danaus_WGS_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/Danaus_WGS_commands.txt), [`phasing_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/phasing/phasing_commands.txt), and additional commands requested during revision in [`revision_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/revision_commands.txt)
 
