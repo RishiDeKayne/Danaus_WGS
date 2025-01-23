@@ -1,42 +1,21 @@
 
-### Commands and scripts for "Incomplete recombination suppression fuels extensive haplotype diversity in a butterfly color pattern supergene", De-Kayne et al. 2025 PLOS Biology
+## Commands and scripts for "Incomplete recombination suppression fuels extensive haplotype diversity in a butterfly color pattern supergene", De-Kayne et al. 2025 PLOS Biology
 
-All bash scripts can be found in the files [`Danaus_WGS_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/Danaus_WGS_commands.txt), [`phasing_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/phasing/phasing_commands.txt), and additional commands requested during revision in [`revision_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/revision_commands.txt)
+The following analyses presented in the final paper are detailed as follows:
 
-The corresponding code and data to plot each figure in the manuscript is archived at: [![DOI](https://zenodo.org/badge/389911930.svg)](https://doi.org/10.5281/zenodo.14718778)
+Distribution maps: [Distribution_maps](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/Distribution_maps)
+Read alignemnt and bam filtering: [Mapping_reads](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/Mapping_reads)
+Indel realignment: [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts)
+Genotype calling and filtering: [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts)
+Phasing: [phasing](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/phasing)
+PCA (Figure S1A): [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts)
+GWAS (Figure 1C-D, S1B-C): [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts)
+Neighbor-Net (Figure 2A): [NeighborNet_network](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/NeighborNet_network) 
+ADMIXTURE (Figure 2A, 2B, S1D, E-H): [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts), [Plot_Admixture_pies](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/Plot_Admixture_pies)
+Popgen window statistics (Figure 3): [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts)
+Ancestry painting (Figure 2C, 4B, 4D, S1I, S1I-K): [distPaint](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/distPaint), [Loter](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/Loter) 
+Topology weighting (Figure 4A, 4C, S1L): [Twisst2](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/Twisst2)
+LD heatmaps (Figure S1M): [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts)
+gIMble (Table S2, Figure S1N): [other_analysis_scripts](https://github.com/RishiDeKayne/Danaus_WGS/tree/main/other_analysis_scripts)
 
-These files explain the following analyses/methods
-1. genotype calling
-2. PCAs
-3. Admixture plots
-4. PLINK GWAS
-5. Phasing
-6. gIMble
-7. Popgen statistics (including nucleotide diversity, DXY, FST)
-
-<br />  
-
-
-Additionally there are specific R scripts for the processing, analysing, and plotting output from the follwing steps.
-The background file [`DC174_background.csv`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_background.csv) contains phenotype and indiv. information for all individuals and is used in most R scripts.
-
-**PCA** - [`DC174_PCAs_SVs_only.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_PCAs_SVs_only.R) and [`DC174_makePCAs.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_makePCAs.R)  
-**Admixture** - [`DC174_makeAdmixtureplots_sub_regions.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_makeAdmixtureplots_sub_regions.R)  
-**GWAS** - Input:[`DC174_make_gemma_input.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_make_gemma_input.R) and Plotting Output: [`DC174_plot_plink_assoc_output.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_plot_plink_assoc_output.R)  
-**Population Statistics** - e.g. Input: [`make_popsfile.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/make_popsfile.R) and Plotting Output: Pi/FST/DXY/Da [`DC174_make_popsfile_plot_pi_50kb.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_make_popsfile_plot_pi_50kb.R)  
-
-<br />  
-
-
-And various processing scripts including:
-[`DC174_get_ploidy.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_get_ploidy.R)  
-[`DC174_phase_statistics.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_phase_statistics.R)  
-[`DC174_supp_table_background.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/DC174_supp_table_background.R)  
-
-<br />  
-
-Finally, the gIMble full model output can be found in [`FINAL_GIMBLE_RESULTS_3morphs.xlsx`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/FINAL_GIMBLE_RESULTS_3morphs.xlsx)
-
-<br />  
-
-LD heatmaps across chr15 were produce using code in [`revision_commands.txt`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/revision_commands.txt) and plotted in R using [`plot_heat_ma_LD.R`](https://github.com/RishiDeKayne/Danaus_WGS/blob/main/plot_heat_ma_LD.R)
+The code and data underlying each each figure in the manuscript is archived at: [![DOI](https://zenodo.org/badge/389911930.svg)](https://doi.org/10.5281/zenodo.14718778)
